@@ -1,0 +1,39 @@
+name: story_viewer
+description: Story Viewer
+version: 0.0.1
+author:
+homepage:
+
+environment:
+  sdk: ">=2.7.0 <3.0.0"
+  flutter: ">=1.17.0 <2.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  
+  extended_image: 1.1.1
+  flutter_screenutil: 2.3.1
+  flutter_sfsymbols: ^1.0.0
+  fleva_icons: 1.0.2
+  screenshot_callback:
+    git:
+        url: https://github.com/Zazo032/flutter_screenshot_callback.git
+        ref: 40b96679f1ad8d5220223206e501e28991d5745b
+  flutter_spinkit: 4.1.2+1
+  spring_button: 1.0.13
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+# For information on the generic Dart part of this file, see the
+# following page: https://dart.dev/tools/pub/pubspec
+
+# The following section is specific to Flutter.
+flutter:
+
+  fonts:
+    - family: sficonsets
+      fonts:
+        - asset: packages/flutter_sfsymbols/fonts/sficonsets.ttf
