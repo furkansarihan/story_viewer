@@ -1,4 +1,3 @@
-import 'package:fleva_icons/fleva_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:story_viewer/viewer.dart';
@@ -24,7 +23,7 @@ class SourceRow extends StatelessWidget {
             ScreenUtil().setWidth(16),
           ),
           child: Icon(
-            camera ? Icons.camera_alt : FlevaIcons.image_2,
+            camera ? Icons.camera_alt : Icons.image,
             color: Colors.white,
             size: ScreenUtil().setWidth(64),
           ),

@@ -1,7 +1,5 @@
-import 'package:fleva_icons/fleva_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
-import 'package:spring_button/spring_button.dart';
 import 'package:story_viewer/models/user.dart';
 import 'package:story_viewer/viewer.dart';
 import 'package:story_viewer/viewer_controller.dart';
@@ -81,31 +79,26 @@ class StoryProfileRow extends StatelessWidget {
           Row(children: [
             viewer.onEditStory == null
                 ? Container()
-                : SpringButton(
-                    SpringButtonType.WithOpacity,
-                    Icon(FlevaIcons.more_horizontal,
-                        size: ScreenUtil().setWidth(86), color: Colors.white),
-                    onTap: onEditPressed,
-                    useCache: false,
-                    scaleCoefficient: 1.0,
+                : IconButton(
+                    icon: Icon(Icons.add),
+                    iconSize: ScreenUtil().setWidth(86),
+                    color: Colors.white,
+                    splashColor: Colors.transparent,
+                    onPressed: onEditPressed,
                   ),
             Container(
               width: ScreenUtil().setWidth(32),
             ),
             viewer.inline
                 ? Container()
-                : SpringButton(
-                    SpringButtonType.WithOpacity,
-                    Icon(
-                      FlevaIcons.close,
-                      color: Colors.white,
-                      size: ScreenUtil().setWidth(86),
-                    ),
-                    onTap: () {
+                : IconButton(
+                    icon: Icon(Icons.close),
+                    iconSize: ScreenUtil().setWidth(86),
+                    color: Colors.white,
+                    splashColor: Colors.transparent,
+                    onPressed: () {
                       viewerController.complated();
                     },
-                    useCache: false,
-                    scaleCoefficient: 1.0,
                   ),
           ]),
         ],

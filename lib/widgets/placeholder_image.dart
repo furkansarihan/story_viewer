@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_sfsymbols/flutter_sfsymbols.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class PlaceholderImage extends StatelessWidget {
@@ -65,7 +64,7 @@ class PlaceholderImage extends StatelessWidget {
       );
     } else {
       return Icon(
-        iconData == null ? SFSymbols.question : iconData,
+        iconData == null ? Icons.broken_image : iconData,
         color: Colors.white70,
       );
     }

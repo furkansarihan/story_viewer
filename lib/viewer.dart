@@ -10,12 +10,15 @@ import 'models/story_item.dart';
 import 'models/user.dart';
 import 'models/text_repo.dart';
 import 'viewer_controller.dart';
-import 'package:screenshot_callback/screenshot_callback.dart';
 
 class StoryViewer extends StatefulWidget {
   final String displayerUserID;
   final UserModel userModel;
   final List<StoryItemModel> stories;
+  final void Function({
+    StoryViewer viewer,
+    StoryViewerController viewerController,
+  }) setupCustomWidgets;
   final List<Widget> Function({
     StoryViewer viewer,
     StoryViewerController viewerController,
@@ -33,7 +36,6 @@ class StoryViewer extends StatefulWidget {
   final bool inline;
   final bool showSource;
   final Function({String storyID}) onEachStoryLoadComplated;
-  final Function({String storyID}) onScreenShotDetected;
   final Function({String storyID, String message}) onStoryReplied;
   final Function({
     StoryViewer viewer,
@@ -56,6 +58,7 @@ class StoryViewer extends StatefulWidget {
   final double progressHeight;
   final Color progressColor;
   final TextStyle titleStyle;
+  final EdgeInsets padding;
 
   TextRepo get textRepo => customTexts ?? TextRepo();
 
@@ -83,7 +86,6 @@ class StoryViewer extends StatefulWidget {
       this.heroKey,
       this.initIndex = 0,
       this.onEachStoryLoadComplated,
-      this.onScreenShotDetected,
       this.onEditStory,
       this.onDispose,
       this.heroTag,
@@ -109,7 +111,9 @@ class StoryViewer extends StatefulWidget {
       this.progressBorderRadius = BorderRadius.zero,
       this.progressColor = Colors.white,
       this.progressHeight = 4,
-      this.titleStyle})
+      this.titleStyle,
+      this.setupCustomWidgets,
+      this.padding = EdgeInsets.zero})
       : super(key: key);
   @override
   _StoryViewerState createState() => _StoryViewerState();
@@ -118,7 +122,6 @@ class StoryViewer extends StatefulWidget {
 class _StoryViewerState extends State<StoryViewer>
     with TickerProviderStateMixin {
   StoryViewerController viewController;
-  ScreenshotCallback screenshotCallback;
 
   bool get trusted => viewController.trusted;
 
@@ -148,7 +151,10 @@ class _StoryViewerState extends State<StoryViewer>
       }
     });
     viewController.addCallBacks(onComplated: onComplated, onPlayed: onPlayed);
-    initScreenShot(trusted);
+    widget.setupCustomWidgets?.call(
+      viewerController: viewController,
+      viewer: widget,
+    );
     super.initState();
   }
 
@@ -164,28 +170,9 @@ class _StoryViewerState extends State<StoryViewer>
     }
     loadedStories.add(currentStoryID);
     widget.onEachStoryLoadComplated?.call(storyID: currentStoryID);
-    initScreenShot(trusted);
-  }
-
-  void initScreenShot(bool trusted) {
-    if (!trusted) {
-      return null;
-    }
-    if (screenshotCallback != null) {
-      return null;
-    }
-    screenshotCallback = ScreenshotCallback(requestPermissions: false);
-    screenshotCallback.initialize().then((value) {
-      screenshotCallback.addListener(() {
-        print('screenshot detected');
-        widget.onScreenShotDetected
-            ?.call(storyID: viewController.currentStory.id);
-      });
-    });
   }
 
   void endblur() {
-    initScreenShot(true);
     viewController.trusted = true;
     refreshState();
     viewController.play();
@@ -194,7 +181,7 @@ class _StoryViewerState extends State<StoryViewer>
   @override
   void dispose() {
     viewController.animationController.dispose();
-    screenshotCallback?.dispose();
+
     widget.onDispose?.call();
     super.dispose();
   }
@@ -282,7 +269,10 @@ class _StoryViewerState extends State<StoryViewer>
             : null,
         child: body);
     if (widget.inline) {
-      return body;
+      return Padding(
+        padding: widget.padding,
+        child: IntrinsicHeight(child: body),
+      );
     }
     return ExtendedImageSlidePage(
       slidePageBackgroundHandler: (Offset offset, Size pageSize) {

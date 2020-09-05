@@ -77,52 +77,45 @@ class _HomeState extends State<Home> {
                   "Inline Story",
                   style: TextStyle(fontSize: 24),
                 ),
-                Container(
-                  height: 300,
-                  padding: EdgeInsets.all(16),
-                  child: StoryViewer(
-                    displayerUserID: "displayer",
-                    progressBorderRadius: BorderRadius.all(Radius.circular(12)),
-                    backgroundColor: Colors.blueGrey,
-                    inline: true,
-                    stories: [
-                      StoryItemModel(
-                          displayDuration: Duration(seconds: 10),
-                          url:
-                              "https://lh3.googleusercontent.com/r87lupz1w9JaLb6_8UZtBWnR1bu4rjC6yWV69pqfSy2PZzB7lAwNjR8fyWyruShu_dk"),
-                      StoryItemModel(
-                          displayDuration: Duration(seconds: 10),
-                          url:
-                              "https://lh3.googleusercontent.com/r87lupz1w9JaLb6_8UZtBWnR1bu4rjC6yWV69pqfSy2PZzB7lAwNjR8fyWyruShu_dk"),
-                    ],
-                    userModel: UserModel(
-                      username: "monotony",
-                      profilePictureUrl:
-                          "https://lh3.googleusercontent.com/vzstCu3rediu8YxljS-3oA7qNDVmet-Wl2VQpoWCOMN4zqirKdOAhNJZXU98Y6QMOiE=s180",
-                    ),
+                StoryViewer(
+                  displayerUserID: "displayer",
+                  progressBorderRadius: BorderRadius.all(Radius.circular(12)),
+                  backgroundColor: Colors.blueGrey,
+                  inline: true,
+                  stories: [
+                    StoryItemModel(
+                        displayDuration: Duration(seconds: 10),
+                        url:
+                            "https://lh3.googleusercontent.com/r87lupz1w9JaLb6_8UZtBWnR1bu4rjC6yWV69pqfSy2PZzB7lAwNjR8fyWyruShu_dk"),
+                    StoryItemModel(
+                        displayDuration: Duration(seconds: 10),
+                        url:
+                            "https://lh3.googleusercontent.com/r87lupz1w9JaLb6_8UZtBWnR1bu4rjC6yWV69pqfSy2PZzB7lAwNjR8fyWyruShu_dk"),
+                  ],
+                  userModel: UserModel(
+                    username: "monotony",
+                    profilePictureUrl:
+                        "https://lh3.googleusercontent.com/vzstCu3rediu8YxljS-3oA7qNDVmet-Wl2VQpoWCOMN4zqirKdOAhNJZXU98Y6QMOiE=s180",
                   ),
                 ),
-                Container(
-                  height: 300,
-                  padding: EdgeInsets.all(24),
-                  child: StoryViewer(
-                    displayerUserID: "displayer",
-                    progressBorderRadius: BorderRadius.all(Radius.circular(36)),
-                    backgroundColor: Colors.white,
-                    progressColor: Colors.white,
-                    progressHeight: 8,
-                    inline: true,
-                    stories: [
-                      StoryItemModel(
-                          displayDuration: Duration(seconds: 20),
-                          url:
-                              "https://i.ytimg.com/vi/fq4N0hgOWzU/maxresdefault.jpg"),
-                    ],
-                    userModel: UserModel(
-                      username: "flutter",
-                      profilePictureUrl:
-                          "https://cdn-images-1.medium.com/max/1200/1*5-aoK8IBmXve5whBQM90GA.png",
-                    ),
+                StoryViewer(
+                  padding: EdgeInsets.all(12),
+                  displayerUserID: "displayer",
+                  progressBorderRadius: BorderRadius.all(Radius.circular(36)),
+                  backgroundColor: Colors.white,
+                  progressColor: Colors.white,
+                  progressHeight: 3,
+                  inline: true,
+                  stories: [
+                    StoryItemModel(
+                        displayDuration: Duration(seconds: 20),
+                        url:
+                            "https://i.ytimg.com/vi/fq4N0hgOWzU/maxresdefault.jpg"),
+                  ],
+                  userModel: UserModel(
+                    username: "flutter",
+                    profilePictureUrl:
+                        "https://cdn-images-1.medium.com/max/1200/1*5-aoK8IBmXve5whBQM90GA.png",
                   ),
                 ),
               ],
@@ -160,7 +153,6 @@ class _HomeState extends State<Home> {
     return StoryViewer(
       displayerUserID: "displayer",
       hasReply: true,
-      trusted: false,
       stories: [
         StoryItemModel(
             displayDuration: Duration(seconds: 20),
@@ -190,17 +182,6 @@ class _HomeState extends State<Home> {
         return [
           Container(
             decoration: BoxDecoration(
-                gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                Colors.blueGrey,
-                Colors.blueGrey,
-              ],
-            )),
-          ),
-          Container(
-            decoration: BoxDecoration(
               color: Colors.blueGrey,
             ),
           )
@@ -211,10 +192,23 @@ class _HomeState extends State<Home> {
         StoryViewerController viewerController,
       }) {
         return [
-          Text(
-            "This is an additional layer for ${viewerController.currentIndex}",
-            style: TextStyle(color: Colors.white, fontSize: 24),
-          )
+          IntrinsicHeight(
+              child: Container(
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                Colors.blue,
+                Colors.purple,
+              ],
+            )),
+            child: Text(
+              "This is an additional layer for ${viewerController.currentIndex}",
+              style: TextStyle(color: Colors.white, fontSize: 24),
+            ),
+          )),
         ];
       },
       placeholderBackground: Colors.blueGrey,

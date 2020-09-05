@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/screenutil.dart';
-import 'package:flutter_sfsymbols/flutter_sfsymbols.dart';
 import 'viewer.dart';
 import 'viewer_controller.dart';
 import 'widgets/placeholder_image.dart';
@@ -38,7 +37,7 @@ class StoryLayerMediaState extends State<StoryLayerMedia> {
     }
     return ExtendedImage(
         width: ScreenUtil.screenWidth,
-        height: ScreenUtil.screenHeight,
+        height: widget.viewer.inline ? null : ScreenUtil.screenHeight,
         image: ExtendedNetworkImageProvider(controller.currentStory.url),
         enableSlideOutPage: true,
         mode: ExtendedImageMode.gesture,
@@ -80,7 +79,6 @@ class StoryLayerMediaState extends State<StoryLayerMedia> {
               break;
             case LoadState.failed:
               return PlaceholderImage(
-                iconData: SFSymbols.question,
                 backgroundColor: widget.viewer.placeholderBackground,
                 backgroundColors: widget.viewer.placeholderBackgrounds,
               );
