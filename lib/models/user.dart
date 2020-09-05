@@ -3,8 +3,8 @@ class UserModel {
   final String username;
   final String profilePictureUrl;
   const UserModel({
-    this.id,
-    this.username,
-    this.profilePictureUrl,
+    this.id = "",
+    this.username = "",
+    this.profilePictureUrl = "",
   });
 }

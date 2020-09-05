@@ -26,7 +26,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoApp(home: Home());
+    return MaterialApp(home: Home());
   }
 }
 
@@ -40,36 +40,72 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Country Code Pick'),
+        title: const Text('story_viewer Playground'),
       ),
       body: Stack(
         children: [
           Center(
-              child: CupertinoButton(
-                  child: Icon(Icons.add),
+              child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              CupertinoButton(
+                  child: Column(
+                    children: [
+                      Text("Basic"),
+                      Icon(Icons.add),
+                    ],
+                  ),
                   onPressed: () {
-                    pushStoryView();
-                  })),
+                    pushStoryView(true);
+                  }),
+              CupertinoButton(
+                  child: Column(
+                    children: [
+                      Text("Complex"),
+                      Icon(Icons.add),
+                    ],
+                  ),
+                  onPressed: () {
+                    pushStoryView(false);
+                  }),
+            ],
+          )),
         ],
       ),
     );
   }
 
-  pushStoryView() {
+  pushStoryView(bool basic) {
     Navigator.of(context).push(MaterialPageRoute(
-        fullscreenDialog: true, builder: (context) => storyViewer()));
+        fullscreenDialog: true,
+        builder: (context) =>
+            basic ? basicStoryViewer() : complexStoryViewer()));
   }
 
-  Widget storyViewer() {
+  Widget basicStoryViewer() {
     return StoryViewer(
       displayerUserID: "displayer",
-      willPop: () {
-        return false;
-      },
-      hasReply: false,
+      hasReply: true,
+      stories: [
+        StoryItemModel(
+            storyURL:
+                "https://media.vanityfair.com/photos/5d1517768d443600098464f6/9:16/w_747,h_1328,c_limit/mark-zuckerberg-democracy.jpg"),
+      ],
+      userModel: UserModel(
+        username: "mark",
+        profilePictureUrl: "https://static.toiimg.com/photo/46453492.cms",
+      ),
+    );
+  }
+
+  Widget complexStoryViewer() {
+    return StoryViewer(
+      displayerUserID: "displayer",
+      hasReply: true,
       stories: [
         StoryItemModel(
             displayDuration: Duration(seconds: 20),
+            storyTime: DateTime(2020, 10),
             storyURL:
                 "https://media.vanityfair.com/photos/5d1517768d443600098464f6/9:16/w_747,h_1328,c_limit/mark-zuckerberg-democracy.jpg"),
         StoryItemModel(
@@ -117,8 +153,8 @@ class _HomeState extends State<Home> {
       }) {
         return [
           Text(
-            "This is an additional layer",
-            style: TextStyle(color: Colors.white, fontSize: 32),
+            "This is an additional layer for ${viewerController.currentIndex}",
+            style: TextStyle(color: Colors.white, fontSize: 24),
           )
         ];
       },

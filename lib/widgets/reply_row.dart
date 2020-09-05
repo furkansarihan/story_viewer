@@ -29,42 +29,49 @@ class StoryReplyRow extends StatelessWidget {
         height: 0,
       );
     }
-    return Material(
-        color: Colors.transparent,
-        child: Container(
-          width: ScreenUtil.screenWidth,
-          child: Column(
-            children: [
-              SourceRow(
-                viewer: viewer,
-                source: viewerController.currentStory.source,
-              ),
-              Row(
-                children: <Widget>[
-                  Expanded(
-                    child: Container(
-                      child: Focus(
-                          onFocusChange: onFocusChange,
-                          child: textField(context)),
-                    ),
-                  ),
-                  CupertinoButton(
-                    child: Icon(
-                      Icons.send,
-                      color: Colors.white,
-                    ),
-                    onPressed: () {
-                      viewer.onStoryReplied?.call(
-                        storyID: viewerController.currentStory.id,
-                        message: textController.text,
-                      );
-                    },
-                  )
-                ],
-              ),
-            ],
+    Widget returnW = Container(
+      width: ScreenUtil.screenWidth,
+      padding:
+          EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+      color: Colors.black54,
+      child: SafeArea(
+          child: Row(
+        children: <Widget>[
+          Expanded(
+            child: Container(
+              child: Focus(
+                  onFocusChange: onFocusChange, child: textField(context)),
+            ),
           ),
-        ));
+          CupertinoButton(
+            child: Icon(
+              Icons.send,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              viewer.onStoryReplied?.call(
+                storyID: viewerController.currentStory.id,
+                message: textController.text,
+              );
+            },
+          )
+        ],
+      )),
+    );
+    if (!viewer.showSource) {
+      returnW = Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SourceRow(
+            viewer: viewer,
+            source: viewerController.currentStory.source,
+          ),
+          returnW,
+        ],
+      );
+    }
+    return returnW;
   }
 
   Widget textField(BuildContext context) {

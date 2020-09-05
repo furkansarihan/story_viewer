@@ -33,18 +33,28 @@ class StoryProfileRow extends StatelessWidget {
               child: viewer.fromAnonymous
                   ? Container()
                   : GestureDetector(
-                      onTap: () {
-                        viewerController.pause();
-                        if (viewerController.owner) {
-                          viewer.onCameraTap?.call();
-                          return null;
-                        }
-                        viewer.onUserTap?.call();
-                      },
+                      onTap: viewer.onUserTap == null
+                          ? null
+                          : () {
+                              viewerController.pause();
+                              if (viewerController.owner) {
+                                viewer.onCameraTap?.call();
+                                return null;
+                              }
+                              viewer.onUserTap?.call();
+                            },
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
-                          viewer.profilePicture ?? Container(),
+                          viewer.profilePicture ??
+                              ClipOval(
+                                child: Image.network(
+                                  viewer.userModel.profilePictureUrl,
+                                  width: ScreenUtil().setWidth(86),
+                                  height: ScreenUtil().setWidth(86),
+                                  fit: BoxFit.fitHeight,
+                                ),
+                              ),
                           Container(
                             width: ScreenUtil().setWidth(24),
                           ),
@@ -64,14 +74,16 @@ class StoryProfileRow extends StatelessWidget {
                       ),
                     )),
           Row(children: [
-            SpringButton(
-              SpringButtonType.WithOpacity,
-              Icon(FlevaIcons.more_horizontal,
-                  size: ScreenUtil().setWidth(86), color: Colors.white),
-              onTap: onEditPressed,
-              useCache: false,
-              scaleCoefficient: 1.0,
-            ),
+            viewer.onEditStory == null
+                ? Container()
+                : SpringButton(
+                    SpringButtonType.WithOpacity,
+                    Icon(FlevaIcons.more_horizontal,
+                        size: ScreenUtil().setWidth(86), color: Colors.white),
+                    onTap: onEditPressed,
+                    useCache: false,
+                    scaleCoefficient: 1.0,
+                  ),
             Container(
               width: ScreenUtil().setWidth(32),
             ),
@@ -83,9 +95,7 @@ class StoryProfileRow extends StatelessWidget {
                 size: ScreenUtil().setWidth(86),
               ),
               onTap: () {
-                if (viewer.pop(context)) {
-                  viewerController.next();
-                }
+                viewerController.complated();
               },
               useCache: false,
               scaleCoefficient: 1.0,
@@ -121,14 +131,15 @@ class StoryProfileRow extends StatelessWidget {
   }
 
   String getDurationText(Duration duration) {
+    if (duration.inSeconds == 0) return "";
     if (duration.inMinutes < 1) {
-      return "${duration.inSeconds}${viewer.textRepo.seconds}";
+      return "•  ${duration.inSeconds}${viewer.textRepo.seconds}";
     } else if (duration.inMinutes < 60) {
-      return "${duration.inMinutes}${viewer.textRepo.minutes}";
+      return "•  ${duration.inMinutes}${viewer.textRepo.minutes}";
     } else if (duration.inHours < 24) {
-      return "${duration.inHours}${viewer.textRepo.hours}";
+      return "•  ${duration.inHours}${viewer.textRepo.hours}";
     } else {
-      return "${duration.inDays}${viewer.textRepo.days}";
+      return "•  ${duration.inDays}${viewer.textRepo.days}";
     }
   }
 }

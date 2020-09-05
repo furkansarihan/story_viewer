@@ -205,7 +205,7 @@ class _StoryLayerUIState extends State<StoryLayerUI> {
                 )),
           ),
           Positioned(
-            bottom: MediaQuery.of(context).viewInsets.bottom,
+            bottom: 0,
             child: StoryReplyRow(
               viewer: viewer,
               viewerController: controller,
@@ -223,7 +223,6 @@ class _StoryLayerUIState extends State<StoryLayerUI> {
         ],
       );
     }
-
     return AnimatedOpacity(
         opacity: hideState == HideState.fadeOut ? 0 : 1,
         duration: Duration(milliseconds: 90),

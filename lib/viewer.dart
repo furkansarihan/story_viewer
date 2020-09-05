@@ -2,6 +2,7 @@ import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/screenutil.dart';
+import 'package:story_viewer/layer_additional.dart';
 import 'blur_slider.dart';
 import 'layer_media.dart';
 import 'layer_ui.dart';
@@ -29,6 +30,8 @@ class StoryViewer extends StatefulWidget {
   final bool fromAnonymous;
   final bool trusted;
   final bool hasReply;
+  final bool inline;
+  final bool showSource;
   final Function({String storyID}) onEachStoryLoadComplated;
   final Function({String storyID}) onScreenShotDetected;
   final Function({String storyID, String message}) onStoryReplied;
@@ -52,6 +55,9 @@ class StoryViewer extends StatefulWidget {
   TextRepo get textRepo => customTexts ?? TextRepo();
 
   bool pop(BuildContext context) {
+    if (inline) {
+      return false;
+    }
     if (willPop == null) {
       Navigator.of(context).pop();
       return true;
@@ -91,7 +97,9 @@ class StoryViewer extends StatefulWidget {
       this.placeholderBackgrounds,
       this.serverTimeGap,
       this.willPop,
-      this.hasReply = false})
+      this.hasReply = false,
+      this.inline = false,
+      this.showSource = false})
       : super(key: key);
   @override
   _StoryViewerState createState() => _StoryViewerState();
@@ -194,26 +202,26 @@ class _StoryViewerState extends State<StoryViewer>
         color: widget.backgroundColor ?? Colors.black,
       ),
     ];
-    var beforeLayers = widget.getAdditionalLayersBeforeMedia?.call(
-      viewerController: viewController,
-      viewer: widget,
-    );
-    (beforeLayers ?? []).forEach((beforeLayer) {
-      layers.add(beforeLayer);
-    });
+    if (widget.getAdditionalLayersBeforeMedia != null) {
+      layers.add(StoryAdditionalLayer(
+        viewerController: viewController,
+        viewer: widget,
+        additions: widget.getAdditionalLayersBeforeMedia,
+      ));
+    }
     layers.addAll([
       StoryLayerMedia(
         viewerController: viewController,
         viewer: widget,
       ),
     ]);
-    var afterLayers = widget.getAdditionalLayersAfterMedia?.call(
-      viewerController: viewController,
-      viewer: widget,
-    );
-    (afterLayers ?? []).forEach((afterLayer) {
-      layers.add(afterLayer);
-    });
+    if (widget.getAdditionalLayersAfterMedia != null) {
+      layers.add(StoryAdditionalLayer(
+        viewerController: viewController,
+        viewer: widget,
+        additions: widget.getAdditionalLayersAfterMedia,
+      ));
+    }
     layers.addAll([
       BlurSlider(
         onSliderEnd: endblur,
@@ -225,11 +233,12 @@ class _StoryViewerState extends State<StoryViewer>
       ),
     ]);
     Widget body = Stack(
-      alignment: widget.mediaAlignment,
+      alignment: widget.mediaAlignment ?? Alignment.center,
       children: layers,
     );
     if (viewController.isLong) {
       body = SafeArea(
+        bottom: false,
         child: body,
       );
     }
@@ -250,8 +259,7 @@ class _StoryViewerState extends State<StoryViewer>
           viewController.cancelHider();
         },
         child: body);
-    bool a = widget.willPop?.call() ?? false;
-    if (!a) {
+    if (widget.inline) {
       return body;
     }
     return ExtendedImageSlidePage(
@@ -270,7 +278,7 @@ class _StoryViewerState extends State<StoryViewer>
           return Offset(0, 0);
         }
         if (offset.dy < 0) {
-          if (!viewController.owner && widget.hasReply) {
+          if (!viewController.owner && !widget.inline) {
             viewController.replyPause();
           } else if (viewController.owner) {
             viewController.infoPause();
