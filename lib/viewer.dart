@@ -233,10 +233,12 @@ class _StoryViewerState extends State<StoryViewer>
       ));
     }
     layers.addAll([
-      BlurSlider(
-        onSliderEnd: endblur,
-        showBlurSlier: !trusted,
-      ),
+      if (!widget.inline)
+        BlurSlider(
+          onSliderEnd: endblur,
+          showBlurSlier: !trusted,
+          slideToSee: widget.textRepo.slideToSee,
+        ),
       StoryLayerUI(
         viewerController: viewController,
         viewer: widget,
@@ -268,12 +270,16 @@ class _StoryViewerState extends State<StoryViewer>
         onTapCancel: () {
           viewController.cancelHider();
         },
-        onVerticalDragEnd: (c) {
-          viewController.handPlay(prewStory: false);
-        },
-        onHorizontalDragEnd: (c) {
-          viewController.handPlay(prewStory: false);
-        },
+        onVerticalDragEnd: widget.inline
+            ? (c) {
+                viewController.handPlay(prewStory: false);
+              }
+            : null,
+        onHorizontalDragEnd: widget.inline
+            ? (c) {
+                viewController.handPlay(prewStory: false);
+              }
+            : null,
         child: body);
     if (widget.inline) {
       return body;

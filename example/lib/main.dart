@@ -88,11 +88,11 @@ class _HomeState extends State<Home> {
                     stories: [
                       StoryItemModel(
                           displayDuration: Duration(seconds: 10),
-                          storyURL:
+                          url:
                               "https://lh3.googleusercontent.com/r87lupz1w9JaLb6_8UZtBWnR1bu4rjC6yWV69pqfSy2PZzB7lAwNjR8fyWyruShu_dk"),
                       StoryItemModel(
                           displayDuration: Duration(seconds: 10),
-                          storyURL:
+                          url:
                               "https://lh3.googleusercontent.com/r87lupz1w9JaLb6_8UZtBWnR1bu4rjC6yWV69pqfSy2PZzB7lAwNjR8fyWyruShu_dk"),
                     ],
                     userModel: UserModel(
@@ -103,19 +103,19 @@ class _HomeState extends State<Home> {
                   ),
                 ),
                 Container(
-                  height: 250,
+                  height: 300,
                   padding: EdgeInsets.all(24),
                   child: StoryViewer(
                     displayerUserID: "displayer",
                     progressBorderRadius: BorderRadius.all(Radius.circular(36)),
-                    progressColor: Colors.blue,
-                    backgroundColor: Colors.transparent,
+                    backgroundColor: Colors.white,
+                    progressColor: Colors.white,
                     progressHeight: 8,
                     inline: true,
                     stories: [
                       StoryItemModel(
-                          displayDuration: Duration(seconds: 50),
-                          storyURL:
+                          displayDuration: Duration(seconds: 20),
+                          url:
                               "https://i.ytimg.com/vi/fq4N0hgOWzU/maxresdefault.jpg"),
                     ],
                     userModel: UserModel(
@@ -146,7 +146,7 @@ class _HomeState extends State<Home> {
       hasReply: true,
       stories: [
         StoryItemModel(
-            storyURL:
+            url:
                 "https://media.vanityfair.com/photos/5d1517768d443600098464f6/9:16/w_747,h_1328,c_limit/mark-zuckerberg-democracy.jpg"),
       ],
       userModel: UserModel(
@@ -160,14 +160,15 @@ class _HomeState extends State<Home> {
     return StoryViewer(
       displayerUserID: "displayer",
       hasReply: true,
+      trusted: false,
       stories: [
         StoryItemModel(
             displayDuration: Duration(seconds: 20),
             storyTime: DateTime(2020, 10),
-            storyURL:
+            url:
                 "https://media.vanityfair.com/photos/5d1517768d443600098464f6/9:16/w_747,h_1328,c_limit/mark-zuckerberg-democracy.jpg"),
         StoryItemModel(
-            storyURL:
+            url:
                 "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQAnIurstDvh-haWAitgz09yWDcUTJ9ZMxVFg&usqp=CAU"),
       ],
       userModel: UserModel(

@@ -1,22 +1,18 @@
 class StoryItemModel {
-  final String storyID;
+  final String id;
   final String ownerID;
-  final String storyURL;
-  final String storySource;
+  final String url;
+  final String source;
   final DateTime storyTime;
   final Duration displayDuration;
   const StoryItemModel({
-    this.storyID,
-    this.ownerID,
-    this.storyURL,
-    this.storySource,
+    this.id = "",
+    this.ownerID = "",
+    this.url = "",
+    this.source = "gallery",
     this.storyTime,
     this.displayDuration,
   });
-  String get id => storyID ?? "";
-  String get ownerId => ownerID ?? "";
-  String get url => storyURL ?? "";
-  String get source => storySource ?? "gallery";
   Duration get duration => displayDuration ?? Duration(seconds: 6);
   DateTime get timestamp => storyTime ?? DateTime.now();
 }

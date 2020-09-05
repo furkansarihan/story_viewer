@@ -88,10 +88,13 @@ class _StoryLayerUIState extends State<StoryLayerUI> {
   @override
   Widget build(BuildContext context) {
     Widget returnW = Column(
+      //mainAxisSize: MainAxisSize.min,
       key: ObjectKey("layer_ui"),
       children: [
         Container(
-          height: controller.isLong ? 0 : MediaQuery.of(context).padding.top,
+          height: controller.isLong && !viewer.inline
+              ? 0
+              : MediaQuery.of(context).padding.top,
         ),
         StoryProgressRow(
           key: ObjectKey("progressrow"),
