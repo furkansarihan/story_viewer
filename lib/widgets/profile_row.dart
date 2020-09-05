@@ -41,7 +41,9 @@ class StoryProfileRow extends StatelessWidget {
                                 viewer.onCameraTap?.call();
                                 return null;
                               }
-                              viewer.onUserTap?.call();
+                              viewer.onUserTap?.call(
+                                viewerController: viewerController,
+                              );
                             },
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -50,8 +52,10 @@ class StoryProfileRow extends StatelessWidget {
                               ClipOval(
                                 child: Image.network(
                                   viewer.userModel.profilePictureUrl,
-                                  width: ScreenUtil().setWidth(86),
-                                  height: ScreenUtil().setWidth(86),
+                                  width: ScreenUtil()
+                                      .setWidth(viewer.inline ? 64 : 86),
+                                  height: ScreenUtil()
+                                      .setWidth(viewer.inline ? 64 : 86),
                                   fit: BoxFit.fitHeight,
                                 ),
                               ),
@@ -64,10 +68,11 @@ class StoryProfileRow extends StatelessWidget {
                               textAlign: TextAlign.left,
                               maxLines: 1,
                               overflow: TextOverflow.clip,
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: ScreenUtil().setSp(40),
-                                  fontWeight: FontWeight.normal),
+                              style: viewer.titleStyle ??
+                                  TextStyle(
+                                      color: Colors.white,
+                                      fontSize: ScreenUtil().setSp(40),
+                                      fontWeight: FontWeight.w500),
                             ),
                           ),
                         ],
@@ -87,19 +92,21 @@ class StoryProfileRow extends StatelessWidget {
             Container(
               width: ScreenUtil().setWidth(32),
             ),
-            SpringButton(
-              SpringButtonType.WithOpacity,
-              Icon(
-                FlevaIcons.close,
-                color: Colors.white,
-                size: ScreenUtil().setWidth(86),
-              ),
-              onTap: () {
-                viewerController.complated();
-              },
-              useCache: false,
-              scaleCoefficient: 1.0,
-            ),
+            viewer.inline
+                ? Container()
+                : SpringButton(
+                    SpringButtonType.WithOpacity,
+                    Icon(
+                      FlevaIcons.close,
+                      color: Colors.white,
+                      size: ScreenUtil().setWidth(86),
+                    ),
+                    onTap: () {
+                      viewerController.complated();
+                    },
+                    useCache: false,
+                    scaleCoefficient: 1.0,
+                  ),
           ]),
         ],
       ),
@@ -116,9 +123,8 @@ class StoryProfileRow extends StatelessWidget {
 
   Duration _storyDurationSincePosted() {
     return Duration(
-        milliseconds:
-            viewerController.currentStory.timestamp.millisecondsSinceEpoch -
-                _currentTime().millisecondsSinceEpoch);
+        milliseconds: _currentTime().millisecondsSinceEpoch -
+            viewerController.currentStory.timestamp.millisecondsSinceEpoch);
   }
 
   DateTime _currentTime() {
@@ -132,6 +138,7 @@ class StoryProfileRow extends StatelessWidget {
 
   String getDurationText(Duration duration) {
     if (duration.inSeconds == 0) return "";
+    if (duration.isNegative) return "";
     if (duration.inMinutes < 1) {
       return "•  ${duration.inSeconds}${viewer.textRepo.seconds}";
     } else if (duration.inMinutes < 60) {

@@ -82,6 +82,7 @@ class StoryViewerController {
     if (prewStory) {
       previous();
     } else if (_goingNext) {
+      play();
       next();
     } else {
       play();
@@ -152,6 +153,7 @@ class StoryViewerController {
     currentIndex = currentIndex + 1;
     if (currentIndex >= stories.length) {
       currentIndex = stories.length - 1;
+      animationController.duration = currentStory.duration;
       complated();
       return null;
     }
@@ -162,7 +164,9 @@ class StoryViewerController {
 
   void previous() {
     cancelHider();
-    currentIndex = currentIndex - 1;
+    if (animationController.value < 0.25) {
+      currentIndex = currentIndex - 1;
+    }
     if (currentIndex <= 0) {
       currentIndex = 0;
     }

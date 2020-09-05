@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:story_viewer/viewer.dart';
 import 'package:story_viewer/viewer_controller.dart';
 import 'package:story_viewer/widgets/progress_widget.dart';
@@ -12,25 +13,39 @@ class StoryProgressRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        for (var i = 0; i < viewer.stories.length; i++)
-          if (i == viewerController.currentIndex)
-            StoryProgressWidget(
-              key: GlobalKey(),
-              viewer: viewer,
-              viewerController: viewerController,
-            )
-          else
-            Flexible(
-                flex: 1,
-                child: Container(
+    Color progressColor = viewer.progressColor ?? Colors.white;
+    return Padding(
+      padding: viewer.inline
+          ? viewer.progressRowPadding ??
+              EdgeInsets.only(
+                  top: ScreenUtil().setWidth(24),
+                  right: ScreenUtil().setWidth(24),
+                  left: ScreenUtil().setWidth(24))
+          : viewer.progressRowPadding ?? EdgeInsets.zero,
+      child: Row(
+        children: [
+          for (var i = 0; i < viewer.stories.length; i++)
+            if (i == viewerController.currentIndex)
+              StoryProgressWidget(
+                key: GlobalKey(),
+                viewer: viewer,
+                viewerController: viewerController,
+              )
+            else
+              Flexible(
+                  flex: 1,
+                  child: Container(
                     margin: EdgeInsets.symmetric(horizontal: 0.5),
-                    height: 4,
-                    color: i < viewerController.currentIndex
-                        ? Colors.white
-                        : Colors.white54)),
-      ],
+                    decoration: BoxDecoration(
+                      color: i < viewerController.currentIndex
+                          ? progressColor
+                          : progressColor.withAlpha(100),
+                      borderRadius: viewer.progressBorderRadius,
+                    ),
+                    height: viewer.progressHeight,
+                  )),
+        ],
+      ),
     );
   }
 }

@@ -30,21 +30,28 @@ class StoryProgressWidget extends StatelessWidget {
       onPlayed: onPlayed,
       onPaused: onPaused,
     );
+    Color progressColor = viewer.progressColor ?? Colors.white;
     return Flexible(
       flex: 1,
       child: AnimatedBuilder(
           animation: controller.animationController,
           builder: (context, child) => Container(
-                height: 4,
+                height: viewer.progressHeight,
                 width: storyWidth,
-                color: Colors.white54,
+                decoration: BoxDecoration(
+                  color: progressColor.withAlpha(100),
+                  borderRadius: viewer.progressBorderRadius,
+                ),
                 margin: EdgeInsets.symmetric(horizontal: 0.5),
                 child: Stack(
                   children: [
                     Container(
                       width: controller.animationController.value * storyWidth,
-                      height: 4,
-                      color: Colors.white,
+                      height: viewer.progressHeight,
+                      decoration: BoxDecoration(
+                        color: progressColor,
+                        borderRadius: viewer.progressBorderRadius,
+                      ),
                     ),
                   ],
                 ),

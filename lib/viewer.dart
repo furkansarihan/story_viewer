@@ -51,6 +51,11 @@ class StoryViewer extends StatefulWidget {
   final List<Color> placeholderBackgrounds;
   final Duration serverTimeGap;
   final bool Function() willPop;
+  final EdgeInsets progressRowPadding;
+  final BorderRadius progressBorderRadius;
+  final double progressHeight;
+  final Color progressColor;
+  final TextStyle titleStyle;
 
   TextRepo get textRepo => customTexts ?? TextRepo();
 
@@ -99,7 +104,12 @@ class StoryViewer extends StatefulWidget {
       this.willPop,
       this.hasReply = false,
       this.inline = false,
-      this.showSource = false})
+      this.showSource = false,
+      this.progressRowPadding,
+      this.progressBorderRadius = BorderRadius.zero,
+      this.progressColor = Colors.white,
+      this.progressHeight = 4,
+      this.titleStyle})
       : super(key: key);
   @override
   _StoryViewerState createState() => _StoryViewerState();
@@ -257,6 +267,12 @@ class _StoryViewerState extends State<StoryViewer>
         },
         onTapCancel: () {
           viewController.cancelHider();
+        },
+        onVerticalDragEnd: (c) {
+          viewController.handPlay(prewStory: false);
+        },
+        onHorizontalDragEnd: (c) {
+          viewController.handPlay(prewStory: false);
         },
         child: body);
     if (widget.inline) {

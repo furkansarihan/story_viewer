@@ -42,35 +42,93 @@ class _HomeState extends State<Home> {
       appBar: AppBar(
         title: const Text('story_viewer Playground'),
       ),
-      body: Stack(
-        children: [
-          Center(
-              child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              CupertinoButton(
-                  child: Column(
-                    children: [
-                      Text("Basic"),
-                      Icon(Icons.add),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                CupertinoButton(
+                    child: Column(
+                      children: [
+                        Text("Basic"),
+                        Icon(Icons.add),
+                      ],
+                    ),
+                    onPressed: () {
+                      pushStoryView(true);
+                    }),
+                CupertinoButton(
+                    child: Column(
+                      children: [
+                        Text("Complex"),
+                        Icon(Icons.add),
+                      ],
+                    ),
+                    onPressed: () {
+                      pushStoryView(false);
+                    }),
+              ],
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Text(
+                  "Inline Story",
+                  style: TextStyle(fontSize: 24),
+                ),
+                Container(
+                  height: 300,
+                  padding: EdgeInsets.all(16),
+                  child: StoryViewer(
+                    displayerUserID: "displayer",
+                    progressBorderRadius: BorderRadius.all(Radius.circular(12)),
+                    backgroundColor: Colors.blueGrey,
+                    inline: true,
+                    stories: [
+                      StoryItemModel(
+                          displayDuration: Duration(seconds: 10),
+                          storyURL:
+                              "https://lh3.googleusercontent.com/r87lupz1w9JaLb6_8UZtBWnR1bu4rjC6yWV69pqfSy2PZzB7lAwNjR8fyWyruShu_dk"),
+                      StoryItemModel(
+                          displayDuration: Duration(seconds: 10),
+                          storyURL:
+                              "https://lh3.googleusercontent.com/r87lupz1w9JaLb6_8UZtBWnR1bu4rjC6yWV69pqfSy2PZzB7lAwNjR8fyWyruShu_dk"),
                     ],
+                    userModel: UserModel(
+                      username: "monotony",
+                      profilePictureUrl:
+                          "https://lh3.googleusercontent.com/vzstCu3rediu8YxljS-3oA7qNDVmet-Wl2VQpoWCOMN4zqirKdOAhNJZXU98Y6QMOiE=s180",
+                    ),
                   ),
-                  onPressed: () {
-                    pushStoryView(true);
-                  }),
-              CupertinoButton(
-                  child: Column(
-                    children: [
-                      Text("Complex"),
-                      Icon(Icons.add),
+                ),
+                Container(
+                  height: 250,
+                  padding: EdgeInsets.all(24),
+                  child: StoryViewer(
+                    displayerUserID: "displayer",
+                    progressBorderRadius: BorderRadius.all(Radius.circular(36)),
+                    progressColor: Colors.blue,
+                    backgroundColor: Colors.transparent,
+                    progressHeight: 8,
+                    inline: true,
+                    stories: [
+                      StoryItemModel(
+                          displayDuration: Duration(seconds: 50),
+                          storyURL:
+                              "https://i.ytimg.com/vi/fq4N0hgOWzU/maxresdefault.jpg"),
                     ],
+                    userModel: UserModel(
+                      username: "flutter",
+                      profilePictureUrl:
+                          "https://cdn-images-1.medium.com/max/1200/1*5-aoK8IBmXve5whBQM90GA.png",
+                    ),
                   ),
-                  onPressed: () {
-                    pushStoryView(false);
-                  }),
-            ],
-          )),
-        ],
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
