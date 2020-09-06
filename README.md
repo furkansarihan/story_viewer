@@ -2,11 +2,11 @@
 
 This package provides common story view experience for any Flutter app.
 
+<img src="https://firebasestorage.googleapis.com/v0/b/app-monotony.appspot.com/o/assets%2Fstory_viewer_01.png?alt=media&token=01e2af66-aabc-4025-bdce-36de7f6e2d3b" width="500" />
+
 ## Usage
 
 This is basic usage of story_viewer.
-
-[logo]: https://firebasestorage.googleapis.com/v0/b/app-monotony.appspot.com/o/assets%2FSimulator%20Screen%20Shot%20-%20iPhone%2011%20Pro%20-%202020-09-06%20at%2014.01.12%20(wecompress.com).png?alt=media&token=2f0f836c-c735-446e-a9ed-fccb1b4c2e1c "Screenshot"
 
 ``` Dart
 StoryViewer(

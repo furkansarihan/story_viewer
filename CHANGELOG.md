@@ -1,3 +1,7 @@
+## [0.0.8]
+
+* initializing
+
 ## [0.0.6]
 
 * alpha release - pub.dev
