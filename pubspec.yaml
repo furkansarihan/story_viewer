@@ -1,6 +1,6 @@
 name: story_viewer
-description: Story Viewer
-version: 0.0.6
+description: This package provides common story view experience for any Flutter app.
+version: 0.0.7
 homepage: https://github.com/furkansarihan/story_viewer
 
 environment:

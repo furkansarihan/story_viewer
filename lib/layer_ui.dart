@@ -135,6 +135,7 @@ class _StoryLayerUIState extends State<StoryLayerUI> {
             alphas: [0, 45, 40],
             top: true,
           ),
+          previewShadow(),
           returnW
         ],
       );
@@ -155,28 +156,7 @@ class _StoryLayerUIState extends State<StoryLayerUI> {
             alphas: [0, 150],
             top: false,
           ),
-          AnimatedOpacity(
-            opacity: prewShadowHideState == HideState.fadeIn ? 1 : 0,
-            duration: Duration(milliseconds: 30),
-            child: IgnorePointer(
-              child: Container(
-                width: ScreenUtil().setWidth(256),
-                height: ScreenUtil.screenHeight,
-                decoration: new BoxDecoration(
-                  gradient: new LinearGradient(
-                      colors: [
-                        Colors.black.withAlpha(80),
-                        Colors.black.withAlpha(20),
-                        Colors.black.withAlpha(0),
-                      ],
-                      begin: FractionalOffset(0.0, 0.5),
-                      end: FractionalOffset(1.0, 0.5),
-                      stops: [0, 0.6, 1.0],
-                      tileMode: TileMode.clamp),
-                ),
-              ),
-            ),
-          ),
+          previewShadow(),
           IgnorePointer(
             ignoring: !showEmojis,
             child: GestureDetector(
@@ -230,6 +210,31 @@ class _StoryLayerUIState extends State<StoryLayerUI> {
         opacity: hideState == HideState.fadeOut ? 0 : 1,
         duration: Duration(milliseconds: 90),
         child: returnW);
+  }
+
+  Widget previewShadow() {
+    return AnimatedOpacity(
+      opacity: prewShadowHideState == HideState.fadeIn ? 1 : 0,
+      duration: Duration(milliseconds: 30),
+      child: IgnorePointer(
+        child: Container(
+          width: ScreenUtil().setWidth(256),
+          height: ScreenUtil.screenHeight,
+          decoration: new BoxDecoration(
+            gradient: new LinearGradient(
+                colors: [
+                  Colors.black.withAlpha(60),
+                  Colors.black.withAlpha(20),
+                  Colors.transparent,
+                ],
+                begin: FractionalOffset(0.0, 0.5),
+                end: FractionalOffset(1.0, 0.5),
+                stops: [0, 0.6, 1.0],
+                tileMode: TileMode.clamp),
+          ),
+        ),
+      ),
+    );
   }
 
   void refreshState() {

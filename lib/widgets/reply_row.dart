@@ -98,9 +98,6 @@ class StoryReplyRow extends StatelessWidget {
             message: message,
           );
         },
-        onEditingComplete: () {
-          print("complate edit");
-        },
       );
     } else {
       return TextField(
@@ -129,9 +126,6 @@ class StoryReplyRow extends StatelessWidget {
             storyID: viewerController.currentStory.id,
             message: message,
           );
-        },
-        onEditingComplete: () {
-          print("complate edit");
         },
       );
     }

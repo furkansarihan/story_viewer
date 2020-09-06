@@ -14,7 +14,7 @@ class StoryProfileRow extends StatelessWidget {
     this.viewerController,
   }) : super(key: key);
 
-  UserModel get userController => viewer.userModel;
+  UserModel get userModel => viewer.userModel ?? UserModel();
 
   @override
   Widget build(BuildContext context) {
@@ -48,21 +48,23 @@ class StoryProfileRow extends StatelessWidget {
                         children: <Widget>[
                           viewer.profilePicture ??
                               ClipOval(
-                                child: Image.network(
-                                  viewer.userModel.profilePictureUrl,
-                                  width: ScreenUtil()
-                                      .setWidth(viewer.inline ? 64 : 86),
-                                  height: ScreenUtil()
-                                      .setWidth(viewer.inline ? 64 : 86),
-                                  fit: BoxFit.fitHeight,
-                                ),
+                                child: userModel.profilePictureUrl.isNotEmpty
+                                    ? Image.network(
+                                        viewer.userModel.profilePictureUrl,
+                                        width: ScreenUtil()
+                                            .setWidth(viewer.inline ? 64 : 86),
+                                        height: ScreenUtil()
+                                            .setWidth(viewer.inline ? 64 : 86),
+                                        fit: BoxFit.fitHeight,
+                                      )
+                                    : Container(),
                               ),
                           Container(
                             width: ScreenUtil().setWidth(24),
                           ),
                           Flexible(
                             child: Text(
-                              "${userController.username}  ${getDurationText(_storyDurationSincePosted())}",
+                              "${userModel.username}  ${getDurationText(_storyDurationSincePosted())}",
                               textAlign: TextAlign.left,
                               maxLines: 1,
                               overflow: TextOverflow.clip,

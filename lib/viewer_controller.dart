@@ -25,9 +25,10 @@ class StoryViewerController {
   List<Function> _onUIHides = List<Function>();
 
   int currentIndex;
-  StoryItemModel get currentStory => stories.length > currentIndex
-      ? stories.elementAt(currentIndex)
-      : StoryItemModel();
+  StoryItemModel get currentStory =>
+      stories.length > currentIndex && stories.isNotEmpty
+          ? stories.elementAt(currentIndex)
+          : StoryItemModel();
 
   bool get isLong => (ScreenUtil.screenHeight / ScreenUtil.screenWidth) > 1.78;
   bool get owner => currentStory.ownerID == ownerUserID;
@@ -63,6 +64,9 @@ class StoryViewerController {
       return null;
     }
     if (_slideInfo) {
+      return null;
+    }
+    if (stories.isEmpty) {
       return null;
     }
     if (_uiHiding) {
@@ -153,7 +157,7 @@ class StoryViewerController {
     currentIndex = currentIndex + 1;
     if (currentIndex >= stories.length) {
       currentIndex = stories.length - 1;
-      animationController.duration = currentStory.duration;
+      animationController.animateTo(animationController.upperBound);
       complated();
       return null;
     }

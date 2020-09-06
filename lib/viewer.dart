@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:story_viewer/layer_additional.dart';
+import 'package:story_viewer/story_viewer.dart';
 import 'blur_slider.dart';
 import 'layer_media.dart';
 import 'layer_ui.dart';
@@ -10,6 +11,8 @@ import 'models/story_item.dart';
 import 'models/user.dart';
 import 'models/text_repo.dart';
 import 'viewer_controller.dart';
+
+enum StoryRatio { r9_16, r16_9, r3_4, r4_3 }
 
 class StoryViewer extends StatefulWidget {
   final String displayerUserID;
@@ -33,7 +36,7 @@ class StoryViewer extends StatefulWidget {
   final bool fromAnonymous;
   final bool trusted;
   final bool hasReply;
-  final bool inline;
+  final StoryRatio ratio;
   final bool showSource;
   final Function({String storyID}) onEachStoryLoadComplated;
   final Function({String storyID, String message}) onStoryReplied;
@@ -59,8 +62,10 @@ class StoryViewer extends StatefulWidget {
   final Color progressColor;
   final TextStyle titleStyle;
   final EdgeInsets padding;
+  final bool loop;
 
   TextRepo get textRepo => customTexts ?? TextRepo();
+  bool get inline => ratio != StoryRatio.r9_16;
 
   bool pop(BuildContext context) {
     if (inline) {
@@ -105,7 +110,6 @@ class StoryViewer extends StatefulWidget {
       this.serverTimeGap,
       this.willPop,
       this.hasReply = false,
-      this.inline = false,
       this.showSource = false,
       this.progressRowPadding,
       this.progressBorderRadius = BorderRadius.zero,
@@ -113,7 +117,9 @@ class StoryViewer extends StatefulWidget {
       this.progressHeight = 4,
       this.titleStyle,
       this.setupCustomWidgets,
-      this.padding = EdgeInsets.zero})
+      this.padding = EdgeInsets.zero,
+      this.ratio = StoryRatio.r9_16,
+      this.loop = false})
       : super(key: key);
   @override
   _StoryViewerState createState() => _StoryViewerState();
@@ -208,6 +214,7 @@ class _StoryViewerState extends State<StoryViewer>
     }
     layers.addAll([
       StoryLayerMedia(
+        key: ValueKey(viewController.currentStory.url),
         viewerController: viewController,
         viewer: widget,
       ),
@@ -246,12 +253,12 @@ class _StoryViewerState extends State<StoryViewer>
     }
     body = GestureDetector(
         onTapUp: (d) {
-          bool prewStory = d.globalPosition.dx < ScreenUtil.screenWidth * 0.2;
+          bool prewStory = d.localPosition.dx < ScreenUtil.screenWidth * 0.2;
           viewController.handPlay(prewStory: prewStory);
         },
         onTapDown: (d) {
           bool prewShadowShow =
-              d.globalPosition.dx < ScreenUtil.screenWidth * 0.2;
+              d.localPosition.dx < ScreenUtil.screenWidth * 0.2;
           viewController.handPause(prewShadowShow: prewShadowShow);
         },
         onTapCancel: () {
@@ -269,9 +276,23 @@ class _StoryViewerState extends State<StoryViewer>
             : null,
         child: body);
     if (widget.inline) {
+      double _width = ScreenUtil.screenWidth - (widget.padding.horizontal);
+      double _height;
+      switch (widget.ratio) {
+        case StoryRatio.r16_9:
+          _height = (_width * 9) / 16;
+          break;
+        case StoryRatio.r3_4:
+          _height = (_width * 4) / 3;
+          break;
+        case StoryRatio.r4_3:
+          _height = (_width * 3) / 4;
+          break;
+        default:
+      }
       return Padding(
         padding: widget.padding,
-        child: IntrinsicHeight(child: body),
+        child: SizedBox(width: _width, height: _height, child: body),
       );
     }
     return ExtendedImageSlidePage(
