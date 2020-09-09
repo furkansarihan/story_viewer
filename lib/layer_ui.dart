@@ -131,8 +131,8 @@ class _StoryLayerUIState extends State<StoryLayerUI> {
           GradientShadow(
             key: GlobalKey(),
             height: ScreenUtil().setWidth(viewer.inline ? 176 : 256),
-            stops: [0.0, 0.5, 1.0],
-            alphas: [0, 45, 40],
+            stops: [0.0, 1.0],
+            alphas: [0, 70],
             top: true,
           ),
           previewShadow(),
@@ -145,8 +145,8 @@ class _StoryLayerUIState extends State<StoryLayerUI> {
           GradientShadow(
             key: GlobalKey(),
             height: ScreenUtil().setWidth(viewer.inline ? 176 : 256),
-            stops: [0.0, 0.5, 1.0],
-            alphas: [0, 45, 40],
+            stops: [0.0, 1.0],
+            alphas: [0, 70],
             top: true,
           ),
           GradientShadow(
