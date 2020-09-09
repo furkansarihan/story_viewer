@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:story_viewer/models/user.dart';
@@ -47,18 +48,12 @@ class StoryProfileRow extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
                           viewer.profilePicture ??
-                              ClipOval(
-                                child: userModel.profilePictureUrl.isNotEmpty
-                                    ? Image.network(
-                                        viewer.userModel.profilePictureUrl,
-                                        width: ScreenUtil()
-                                            .setWidth(viewer.inline ? 64 : 86),
-                                        height: ScreenUtil()
-                                            .setWidth(viewer.inline ? 64 : 86),
-                                        fit: BoxFit.fitHeight,
-                                      )
-                                    : Container(),
-                              ),
+                              (viewer.profileHeroTag != null
+                                  ? Hero(
+                                      tag: viewer.profileHeroTag,
+                                      child: profilePicture(),
+                                    )
+                                  : profilePicture()),
                           Container(
                             width: ScreenUtil().setWidth(24),
                           ),
@@ -81,31 +76,48 @@ class StoryProfileRow extends StatelessWidget {
           Row(children: [
             viewer.onEditStory == null
                 ? Container()
-                : IconButton(
-                    icon: Icon(Icons.add),
-                    iconSize: ScreenUtil().setWidth(86),
-                    color: Colors.white,
-                    splashColor: Colors.transparent,
+                : CupertinoButton(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: ScreenUtil().setWidth(16),
+                    ),
+                    child: Icon(
+                      Icons.more_horiz,
+                      color: Colors.white,
+                    ),
+                    minSize: ScreenUtil().setWidth(86),
                     onPressed: onEditPressed,
                   ),
-            Container(
-              width: ScreenUtil().setWidth(32),
-            ),
             viewer.inline
                 ? Container()
-                : IconButton(
-                    icon: Icon(Icons.close),
-                    iconSize: ScreenUtil().setWidth(86),
-                    color: Colors.white,
-                    splashColor: Colors.transparent,
+                : CupertinoButton(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: ScreenUtil().setWidth(16),
+                    ),
+                    child: Icon(
+                      Icons.close,
+                      color: Colors.white,
+                    ),
+                    minSize: ScreenUtil().setWidth(86),
                     onPressed: () {
                       viewerController.complated();
                     },
                   ),
-          ]),
+          ])
         ],
       ),
     );
+  }
+
+  Widget profilePicture() {
+    return ClipOval(
+        child: userModel.profilePictureUrl.isNotEmpty
+            ? Image.network(
+                viewer.userModel.profilePictureUrl,
+                width: ScreenUtil().setWidth(viewer.inline ? 64 : 86),
+                height: ScreenUtil().setWidth(viewer.inline ? 64 : 86),
+                fit: BoxFit.fitHeight,
+              )
+            : Container());
   }
 
   void onEditPressed() {

@@ -32,6 +32,7 @@ class StoryViewer extends StatefulWidget {
   }) getAdditionalLayersAfterMedia;
   final String heroKey;
   final String heroTag;
+  final String profileHeroTag;
   final int initIndex;
   final bool fromAnonymous;
   final bool trusted;
@@ -119,7 +120,8 @@ class StoryViewer extends StatefulWidget {
       this.setupCustomWidgets,
       this.padding = EdgeInsets.zero,
       this.ratio = StoryRatio.r9_16,
-      this.loop = false})
+      this.loop = false,
+      this.profileHeroTag})
       : super(key: key);
   @override
   _StoryViewerState createState() => _StoryViewerState();

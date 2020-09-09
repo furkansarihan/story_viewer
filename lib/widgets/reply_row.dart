@@ -100,33 +100,36 @@ class StoryReplyRow extends StatelessWidget {
         },
       );
     } else {
-      return TextField(
-        focusNode: textNode,
-        controller: textController,
-        keyboardAppearance: MediaQuery.of(context).platformBrightness,
-        decoration: InputDecoration(
-          contentPadding: EdgeInsets.all(ScreenUtil().setWidth(32)),
-          border: InputBorder.none,
-          helperStyle: TextStyle(
-            color: Colors.white60,
+      return Material(
+        color: Colors.transparent,
+        child: TextField(
+          focusNode: textNode,
+          controller: textController,
+          keyboardAppearance: MediaQuery.of(context).platformBrightness,
+          decoration: InputDecoration(
+            contentPadding: EdgeInsets.all(ScreenUtil().setWidth(32)),
+            border: InputBorder.none,
+            helperStyle: TextStyle(
+              color: Colors.white60,
+            ),
+            hintStyle: TextStyle(
+              color: Colors.white54,
+              fontSize: ScreenUtil().setSp(44),
+            ),
+            hintText: viewer.textRepo.replyPlaceholder,
           ),
-          hintStyle: TextStyle(
-            color: Colors.white54,
+          maxLines: 1,
+          style: TextStyle(
+            color: Colors.white,
             fontSize: ScreenUtil().setSp(44),
           ),
-          hintText: viewer.textRepo.replyPlaceholder,
+          onSubmitted: (String message) {
+            viewer.onStoryReplied?.call(
+              storyID: viewerController.currentStory.id,
+              message: message,
+            );
+          },
         ),
-        maxLines: 1,
-        style: TextStyle(
-          color: Colors.white,
-          fontSize: ScreenUtil().setSp(44),
-        ),
-        onSubmitted: (String message) {
-          viewer.onStoryReplied?.call(
-            storyID: viewerController.currentStory.id,
-            message: message,
-          );
-        },
       );
     }
   }

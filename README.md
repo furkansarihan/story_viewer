@@ -14,9 +14,9 @@ StoryViewer(
     backgroundColor: Colors.white,
     ratio: StoryRatio.r16_9,
     stories: [
-        StoryItemModel(url:"an_url"),
-        StoryItemModel(url:"an_url"),
-        StoryItemModel(url:"an_url"),
+        StoryItemModel(url:"a_url"),
+        StoryItemModel(url:"a_url"),
+        StoryItemModel(url:"a_url"),
     ],
     userModel: UserModel(
         username: "story_viewer",
