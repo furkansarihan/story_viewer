@@ -46,6 +46,7 @@ class StoryViewerController {
 
   AnimationController animationController;
   Timer uiHider;
+  Timer prevShadower;
   Timer nexter;
 
   bool _playing = false;
@@ -78,6 +79,7 @@ class StoryViewerController {
       _callFunctions(_onPrewShadowHides);
     }
     uiHider?.cancel();
+    prevShadower?.cancel();
     _playing = true;
     _callFunctions(_onPlays);
   }
@@ -131,8 +133,11 @@ class StoryViewerController {
 
   void handPause({bool prewShadowShow}) {
     if (prewShadowShow) {
-      _prewShadowShowing = true;
-      _callFunctions(_onPrewShadowShows);
+      prevShadower = Timer(Duration(milliseconds: 75), () {
+        _prewShadowShowing = true;
+        _callFunctions(_onPrewShadowShows);
+        prevShadower?.cancel();
+      });
     }
     _goingNext = true;
     nexter = Timer(Duration(milliseconds: 400), () {

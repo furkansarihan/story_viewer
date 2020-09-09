@@ -29,34 +29,36 @@ class StoryReplyRow extends StatelessWidget {
         height: 0,
       );
     }
+    double bottom = MediaQuery.of(context).viewInsets.bottom;
     Widget returnW = Container(
       width: ScreenUtil.screenWidth,
-      padding:
-          EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+      padding: EdgeInsets.only(bottom: bottom),
       color: Colors.black54,
       child: SafeArea(
-          child: Row(
-        children: <Widget>[
-          Expanded(
-            child: Container(
-              child: Focus(
-                  onFocusChange: onFocusChange, child: textField(context)),
+        top: false,
+        child: Row(
+          children: <Widget>[
+            Expanded(
+              child: Container(
+                child: Focus(
+                    onFocusChange: onFocusChange, child: textField(context)),
+              ),
             ),
-          ),
-          CupertinoButton(
-            child: Icon(
-              Icons.send,
-              color: Colors.white,
-            ),
-            onPressed: () {
-              viewer.onStoryReplied?.call(
-                storyID: viewerController.currentStory.id,
-                message: textController.text,
-              );
-            },
-          )
-        ],
-      )),
+            CupertinoButton(
+              child: Icon(
+                Icons.send,
+                color: Colors.white,
+              ),
+              onPressed: () {
+                viewer.onStoryReplied?.call(
+                  storyID: viewerController.currentStory.id,
+                  message: textController.text,
+                );
+              },
+            )
+          ],
+        ),
+      ),
     );
     if (!viewer.showSource) {
       returnW = Column(

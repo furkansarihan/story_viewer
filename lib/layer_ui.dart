@@ -215,7 +215,7 @@ class _StoryLayerUIState extends State<StoryLayerUI> {
   Widget previewShadow() {
     return AnimatedOpacity(
       opacity: prewShadowHideState == HideState.fadeIn ? 1 : 0,
-      duration: Duration(milliseconds: 30),
+      duration: Duration(milliseconds: 150),
       child: IgnorePointer(
         child: Container(
           width: ScreenUtil().setWidth(256),
