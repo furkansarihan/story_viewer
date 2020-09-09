@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:story_viewer/models/story_item.dart';
 import 'package:story_viewer/models/user.dart';
+import 'package:story_viewer/story_viewer.dart';
 import 'package:story_viewer/viewer.dart';
 import 'package:story_viewer/viewer_controller.dart';
 
@@ -102,6 +103,10 @@ class _DetailedHomeState extends State<DetailedHome> {
   Widget complexStoryViewer() {
     return StoryViewer(
       hasReply: true,
+      customValues: Customizer(
+        sendIcon: CupertinoIcons.right_chevron,
+        closeIcon: CupertinoIcons.down_arrow,
+      ),
       stories: [
         StoryItemModel(
             displayDuration: Duration(seconds: 20),

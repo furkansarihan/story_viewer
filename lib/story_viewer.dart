@@ -10,4 +10,4 @@ export "package:story_viewer/blur_slider.dart";
 
 export "package:story_viewer/models/story_item.dart";
 export "package:story_viewer/models/user.dart";
-export "package:story_viewer/models/text_repo.dart";
+export 'package:story_viewer/customizer.dart';

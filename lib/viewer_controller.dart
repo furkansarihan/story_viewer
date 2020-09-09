@@ -13,7 +13,7 @@ class StoryViewerController {
   bool _uiHiding = false;
   bool _prewShadowShowing = false;
   bool get uiHiding => _uiHiding;
-  bool get playing => _playing;
+  bool get isPlaying => _playing;
   bool get replying => _replying;
   List<Function> _onPlays = List<Function>();
   List<Function> _onPauseds = List<Function>();

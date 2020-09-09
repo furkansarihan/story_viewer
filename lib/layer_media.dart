@@ -81,6 +81,7 @@ class StoryLayerMediaState extends State<StoryLayerMedia> {
               return PlaceholderImage(
                 backgroundColor: widget.viewer.placeholderBackground,
                 backgroundColors: widget.viewer.placeholderBackgrounds,
+                iconData: widget.viewer.customizer.failedImageIcon,
               );
               break;
             case LoadState.completed:

@@ -46,7 +46,7 @@ class StoryReplyRow extends StatelessWidget {
             ),
             CupertinoButton(
               child: Icon(
-                Icons.send,
+                viewer.customizer.sendIcon,
                 color: Colors.white,
               ),
               onPressed: () {
@@ -87,7 +87,7 @@ class StoryReplyRow extends StatelessWidget {
           color: Colors.white54,
           fontSize: ScreenUtil().setSp(44),
         ),
-        placeholder: viewer.textRepo.replyPlaceholder,
+        placeholder: viewer.customizer.replyPlaceholder,
         decoration: BoxDecoration(),
         maxLines: 1,
         style: TextStyle(
@@ -118,7 +118,7 @@ class StoryReplyRow extends StatelessWidget {
               color: Colors.white54,
               fontSize: ScreenUtil().setSp(44),
             ),
-            hintText: viewer.textRepo.replyPlaceholder,
+            hintText: viewer.customizer.replyPlaceholder,
           ),
           maxLines: 1,
           style: TextStyle(

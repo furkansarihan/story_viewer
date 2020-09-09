@@ -23,14 +23,18 @@ class SourceRow extends StatelessWidget {
             ScreenUtil().setWidth(16),
           ),
           child: Icon(
-            camera ? Icons.camera_alt : Icons.image,
+            camera
+                ? viewer.customizer.cameraSourceIcon
+                : viewer.customizer.gallerySourceIcon,
             color: Colors.white,
             size: ScreenUtil().setWidth(64),
           ),
         ),
         Text(
           //camera ? l["camera"] : l["gallery"],
-          camera ? viewer.textRepo.cameraSource : viewer.textRepo.gallerySource,
+          camera
+              ? viewer.customizer.cameraSource
+              : viewer.customizer.gallerySource,
           textAlign: TextAlign.left,
           maxLines: 1,
           style: TextStyle(

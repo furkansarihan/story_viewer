@@ -81,7 +81,7 @@ class StoryProfileRow extends StatelessWidget {
                       horizontal: ScreenUtil().setWidth(16),
                     ),
                     child: Icon(
-                      Icons.more_horiz,
+                      viewer.customizer.infoIcon,
                       color: Colors.white,
                     ),
                     minSize: ScreenUtil().setWidth(86),
@@ -94,7 +94,7 @@ class StoryProfileRow extends StatelessWidget {
                       horizontal: ScreenUtil().setWidth(16),
                     ),
                     child: Icon(
-                      Icons.close,
+                      viewer.customizer.closeIcon,
                       color: Colors.white,
                     ),
                     minSize: ScreenUtil().setWidth(86),
@@ -147,13 +147,13 @@ class StoryProfileRow extends StatelessWidget {
     if (duration.inSeconds == 0) return "";
     if (duration.isNegative) return "";
     if (duration.inMinutes < 1) {
-      return "•  ${duration.inSeconds}${viewer.textRepo.seconds}";
+      return "•  ${duration.inSeconds}${viewer.customizer.seconds}";
     } else if (duration.inMinutes < 60) {
-      return "•  ${duration.inMinutes}${viewer.textRepo.minutes}";
+      return "•  ${duration.inMinutes}${viewer.customizer.minutes}";
     } else if (duration.inHours < 24) {
-      return "•  ${duration.inHours}${viewer.textRepo.hours}";
+      return "•  ${duration.inHours}${viewer.customizer.hours}";
     } else {
-      return "•  ${duration.inDays}${viewer.textRepo.days}";
+      return "•  ${duration.inDays}${viewer.customizer.days}";
     }
   }
 }

@@ -9,7 +9,7 @@ import 'layer_media.dart';
 import 'layer_ui.dart';
 import 'models/story_item.dart';
 import 'models/user.dart';
-import 'models/text_repo.dart';
+import 'customizer.dart';
 import 'viewer_controller.dart';
 
 enum StoryRatio { r9_16, r16_9, r3_4, r4_3 }
@@ -49,7 +49,7 @@ class StoryViewer extends StatefulWidget {
   final Function onCameraTap;
   final Function onDispose;
   final Widget profilePicture;
-  final TextRepo customTexts;
+  final Customizer customValues;
   final Alignment mediaAlignment;
   final BoxFit mediaFit;
   final Color backgroundColor;
@@ -65,7 +65,7 @@ class StoryViewer extends StatefulWidget {
   final EdgeInsets padding;
   final bool loop;
 
-  TextRepo get textRepo => customTexts ?? TextRepo();
+  Customizer get customizer => customValues ?? Customizer();
   bool get inline => ratio != StoryRatio.r9_16;
 
   bool pop(BuildContext context) {
@@ -99,7 +99,7 @@ class StoryViewer extends StatefulWidget {
       this.onUserTap,
       this.onCameraTap,
       this.profilePicture,
-      this.customTexts,
+      this.customValues,
       this.getAdditionalLayersBeforeMedia,
       this.getAdditionalLayersAfterMedia,
       this.displayerUserID,
@@ -233,7 +233,7 @@ class _StoryViewerState extends State<StoryViewer>
         BlurSlider(
           onSliderEnd: endblur,
           showBlurSlier: !trusted,
-          slideToSee: widget.textRepo.slideToSee,
+          slideToSee: widget.customizer.slideToSee,
         ),
       StoryLayerUI(
         viewerController: viewController,
