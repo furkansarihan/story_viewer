@@ -2,7 +2,7 @@
 
 This package provides common story view experience for any Flutter app.
 
-<img src="https://firebasestorage.googleapis.com/v0/b/app-monotony.appspot.com/o/assets%2Fezgif.com-optimize-3.gif?alt=media&token=565c5832-72e8-4783-a720-197cb328b113" width="400" />
+<img src="https://firebasestorage.googleapis.com/v0/b/app-monotony.appspot.com/o/assets%2Fezgif.com-resize.gif?alt=media&token=30a0bbef-fd4d-4907-9813-3a95e97e1651"/>
 
 ## Features
 
