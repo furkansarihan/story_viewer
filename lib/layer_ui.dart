@@ -135,7 +135,7 @@ class _StoryLayerUIState extends State<StoryLayerUI> {
             alphas: [0, 70],
             top: true,
           ),
-          previewShadow(),
+          prevShadow(),
           returnW
         ],
       );
@@ -156,7 +156,7 @@ class _StoryLayerUIState extends State<StoryLayerUI> {
             alphas: [0, 150],
             top: false,
           ),
-          previewShadow(),
+          prevShadow(),
           IgnorePointer(
             ignoring: !showEmojis,
             child: GestureDetector(
@@ -212,7 +212,7 @@ class _StoryLayerUIState extends State<StoryLayerUI> {
         child: returnW);
   }
 
-  Widget previewShadow() {
+  Widget prevShadow() {
     return AnimatedOpacity(
       opacity: prewShadowHideState == HideState.fadeIn ? 1 : 0,
       duration: Duration(milliseconds: 150),
