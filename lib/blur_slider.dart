@@ -20,7 +20,7 @@ class BlurSlider extends StatefulWidget {
 
 class _BlurSliderState extends State<BlurSlider> {
   bool _showing;
-  double blur = 80;
+  double blur = 60;
   @override
   void initState() {
     _showing = widget.showBlurSlier;
@@ -49,15 +49,16 @@ class _BlurSliderState extends State<BlurSlider> {
               Text(
                 widget.slideToSee,
                 style: TextStyle(
-                    fontSize: ScreenUtil().setSp(52),
-                    color: Colors.white,
-                    decoration: TextDecoration.none),
+                  fontSize: ScreenUtil().setSp(52),
+                  color: Colors.white,
+                  decoration: TextDecoration.none,
+                ),
               ),
               Container(
                 margin: EdgeInsets.all(ScreenUtil().setWidth(32)),
                 child: Slider(
                     min: 5,
-                    max: 80,
+                    max: 60,
                     activeColor: Colors.white,
                     inactiveColor: Colors.black12,
                     value: blur,

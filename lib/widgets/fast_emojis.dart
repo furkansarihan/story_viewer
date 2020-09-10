@@ -45,7 +45,10 @@ class FastEmojis extends StatelessWidget {
             padding: padd,
             child: Text(
               emoji,
-              style: TextStyle(fontSize: ScreenUtil().setSp(size)),
+              style: TextStyle(
+                decoration: TextDecoration.none,
+                fontSize: ScreenUtil().setSp(size),
+              ),
             )));
   }
 }

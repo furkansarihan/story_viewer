@@ -84,6 +84,7 @@ class StoryReplyRow extends StatelessWidget {
         keyboardAppearance: MediaQuery.of(context).platformBrightness,
         padding: EdgeInsets.all(ScreenUtil().setWidth(32)),
         placeholderStyle: TextStyle(
+          decoration: TextDecoration.none,
           color: Colors.white54,
           fontSize: ScreenUtil().setSp(44),
         ),
@@ -91,6 +92,7 @@ class StoryReplyRow extends StatelessWidget {
         decoration: BoxDecoration(),
         maxLines: 1,
         style: TextStyle(
+          decoration: TextDecoration.none,
           color: Colors.white,
           fontSize: ScreenUtil().setSp(44),
         ),
@@ -112,9 +114,11 @@ class StoryReplyRow extends StatelessWidget {
             contentPadding: EdgeInsets.all(ScreenUtil().setWidth(32)),
             border: InputBorder.none,
             helperStyle: TextStyle(
+              decoration: TextDecoration.none,
               color: Colors.white60,
             ),
             hintStyle: TextStyle(
+              decoration: TextDecoration.none,
               color: Colors.white54,
               fontSize: ScreenUtil().setSp(44),
             ),
@@ -122,6 +126,7 @@ class StoryReplyRow extends StatelessWidget {
           ),
           maxLines: 1,
           style: TextStyle(
+            decoration: TextDecoration.none,
             color: Colors.white,
             fontSize: ScreenUtil().setSp(44),
           ),

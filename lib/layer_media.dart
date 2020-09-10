@@ -23,7 +23,7 @@ class StoryLayerMediaState extends State<StoryLayerMedia> {
   @override
   void initState() {
     super.initState();
-    controller.addCallBacks(onIndexChanged: onIndexChanged);
+    controller.addListener(onIndexChanged: onIndexChanged);
   }
 
   void onIndexChanged() {

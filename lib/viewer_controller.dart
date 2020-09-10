@@ -2,13 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/animation.dart';
 import 'package:flutter_screenutil/screenutil.dart';
+import 'package:story_viewer/viewer.dart';
 import 'models/story_item.dart';
 
 class StoryViewerController {
-  final List<StoryItemModel> stories;
-  final String heroTag;
-  final String heroKey;
-  final String ownerUserID;
+  StoryViewer viewer;
   bool trusted;
   bool _uiHiding = false;
   bool _prewShadowShowing = false;
@@ -24,6 +22,11 @@ class StoryViewerController {
   List<Function> _onUIShows = List<Function>();
   List<Function> _onUIHides = List<Function>();
 
+  List<StoryItemModel> get stories => viewer?.stories ?? [];
+  String get ownerUserID => viewer?.displayerUserID ?? "?";
+  String get heroTag => viewer?.heroTag ?? "";
+  String get heroKey => viewer?.heroKey ?? "";
+
   int currentIndex;
   StoryItemModel get currentStory =>
       stories.length > currentIndex && stories.isNotEmpty
@@ -36,12 +39,7 @@ class StoryViewerController {
       heroTag != null ? heroTag : "${currentStory.id}$heroKey";
 
   StoryViewerController({
-    this.ownerUserID,
-    this.heroTag,
-    this.heroKey,
-    this.stories,
     this.currentIndex = 0,
-    this.trusted = true,
   });
 
   AnimationController animationController;
@@ -88,7 +86,6 @@ class StoryViewerController {
     if (prewStory) {
       previous();
     } else if (_goingNext) {
-      play();
       next();
     } else {
       play();
@@ -132,6 +129,9 @@ class StoryViewerController {
   }
 
   void handPause({bool prewShadowShow}) {
+    if (!_playing) {
+      return null;
+    }
     if (prewShadowShow) {
       prevShadower = Timer(Duration(milliseconds: 75), () {
         _prewShadowShowing = true;
@@ -161,10 +161,16 @@ class StoryViewerController {
     cancelHider();
     currentIndex = currentIndex + 1;
     if (currentIndex >= stories.length) {
-      currentIndex = stories.length - 1;
-      animationController.animateTo(animationController.upperBound);
-      complated();
-      return null;
+      if (viewer.loop) {
+        currentIndex = 0;
+        _callFunctions(_onIndexChangeds);
+        play();
+      } else {
+        currentIndex = stories.length - 1;
+        animationController.animateTo(animationController.upperBound);
+        complated();
+        return null;
+      }
     }
     animationController.reset();
     animationController.duration = currentStory.duration;
@@ -175,13 +181,14 @@ class StoryViewerController {
     cancelHider();
     if (animationController.value < 0.25) {
       currentIndex = currentIndex - 1;
+      _callFunctions(_onIndexChangeds);
     }
     if (currentIndex <= 0) {
       currentIndex = 0;
     }
     animationController.reset();
     animationController.duration = currentStory.duration;
-    _callFunctions(_onIndexChangeds);
+    play();
   }
 
   void complated() {
@@ -200,7 +207,7 @@ class StoryViewerController {
     _callFunctions(_onIndexChangeds);
   }
 
-  void addCallBacks({
+  void addListener({
     Function onPlayed,
     Function onPaused,
     Function onIndexChanged,

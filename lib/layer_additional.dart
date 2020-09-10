@@ -25,7 +25,7 @@ class _State extends State<StoryAdditionalLayer> {
   @override
   void initState() {
     super.initState();
-    controller.addCallBacks(
+    controller.addListener(
       onIndexChanged: onIndexChanged,
     );
   }

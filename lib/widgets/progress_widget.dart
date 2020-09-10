@@ -26,7 +26,7 @@ class StoryProgressWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double storyWidth = ScreenUtil.screenWidth / controller.stories.length - 1;
-    controller.addCallBacks(
+    controller.addListener(
       onPlayed: onPlayed,
       onPaused: onPaused,
     );

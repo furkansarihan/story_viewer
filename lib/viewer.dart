@@ -15,6 +15,7 @@ import 'viewer_controller.dart';
 enum StoryRatio { r9_16, r16_9, r3_4, r4_3 }
 
 class StoryViewer extends StatefulWidget {
+  final StoryViewerController viewerController;
   final String displayerUserID;
   final UserModel userModel;
   final List<StoryItemModel> stories;
@@ -85,6 +86,7 @@ class StoryViewer extends StatefulWidget {
 
   const StoryViewer(
       {Key key,
+      this.viewerController,
       this.userModel,
       this.stories,
       this.fromAnonymous = false,
@@ -135,13 +137,15 @@ class _StoryViewerState extends State<StoryViewer>
 
   @override
   void initState() {
-    viewController = StoryViewerController(
-        ownerUserID: widget.displayerUserID,
-        heroKey: widget.heroKey,
-        heroTag: widget.heroTag,
-        stories: widget.stories,
-        trusted: widget.trusted,
-        currentIndex: widget.initIndex);
+    if (widget.viewerController == null) {
+      viewController = StoryViewerController(
+        currentIndex: widget.initIndex,
+      );
+    } else {
+      viewController = widget.viewerController;
+    }
+    viewController.trusted = widget.trusted;
+    viewController.viewer = widget;
     viewController.animationController = AnimationController(
       vsync: this,
       value: 0,
@@ -158,7 +162,7 @@ class _StoryViewerState extends State<StoryViewer>
         viewController.pause();
       }
     });
-    viewController.addCallBacks(onComplated: onComplated, onPlayed: onPlayed);
+    viewController.addListener(onComplated: onComplated, onPlayed: onPlayed);
     widget.setupCustomWidgets?.call(
       viewerController: viewController,
       viewer: widget,
@@ -229,7 +233,7 @@ class _StoryViewerState extends State<StoryViewer>
       ));
     }
     layers.addAll([
-      if (!widget.inline)
+      if (!widget.inline && !widget.trusted)
         BlurSlider(
           onSliderEnd: endblur,
           showBlurSlier: !trusted,

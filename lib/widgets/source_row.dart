@@ -38,6 +38,7 @@ class SourceRow extends StatelessWidget {
           textAlign: TextAlign.left,
           maxLines: 1,
           style: TextStyle(
+              decoration: TextDecoration.none,
               color: Colors.white,
               fontSize: ScreenUtil().setSp(40),
               fontWeight: FontWeight.normal),

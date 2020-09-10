@@ -17,12 +17,13 @@ This package provides common story view experience for any Flutter app.
 - Listener support with callbacks for story with StoryViewerController
     - played, paused, story index changed etc.
 - Customized additional layers support for under or on the media layer.
+- Blurred layer for possible inappropriate media
 
-** Default and fully tested usage is 9:16 with full screen story.
+** Default and fully tested ratio is 9:16 with full screen.
 
 ## Usage
 
-This is basic usage of story_viewer.
+This is common usage of story_viewer
 
 ``` Dart
 StoryViewer(
@@ -40,6 +41,24 @@ StoryViewer(
     ),
 );
 ```
+Custom controller example with event listeners
+
+``` Dart
+StoryViewerController controller = StoryViewerController();
+controller.addListener(
+    onPlayed: () {
+        print("'onPlayed' callback outside of story_viewer");
+    },
+    onPaused: () {
+        print("'onPaused' callback outside of story_viewer");
+    },
+);
+return StoryViewer(
+    viewerController: controller,
+    .
+    .
+```
+
 Check out ```example/lib/detailed_example.dart``` for more!
 
 ## Dependencies

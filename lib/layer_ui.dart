@@ -36,7 +36,7 @@ class _StoryLayerUIState extends State<StoryLayerUI> {
   @override
   void initState() {
     super.initState();
-    controller.addCallBacks(
+    controller.addListener(
       onIndexChanged: onIndexChanged,
       onUIShow: onUIShow,
       onUIHide: onUIHide,
@@ -68,7 +68,9 @@ class _StoryLayerUIState extends State<StoryLayerUI> {
 
   void onPaused() {
     if (controller.replying) {
-      FocusScope.of(context).requestFocus(textNode);
+      if (context != null) {
+        FocusScope.of(context).requestFocus(textNode);
+      }
       refreshState();
     }
   }

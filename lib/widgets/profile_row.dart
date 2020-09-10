@@ -65,6 +65,7 @@ class StoryProfileRow extends StatelessWidget {
                               overflow: TextOverflow.clip,
                               style: viewer.titleStyle ??
                                   TextStyle(
+                                      decoration: TextDecoration.none,
                                       color: Colors.white,
                                       fontSize: ScreenUtil().setSp(40),
                                       fontWeight: FontWeight.w500),

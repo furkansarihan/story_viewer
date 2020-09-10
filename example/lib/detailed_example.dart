@@ -28,30 +28,44 @@ class _DetailedHomeState extends State<DetailedHome> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
+                Hero(
+                  tag: "basic_hero",
+                  child: CupertinoButton(
+                      child: Column(
+                        children: [
+                          Text("Basic"),
+                          Icon(Icons.image),
+                        ],
+                      ),
+                      onPressed: () {
+                        pushStoryView(basicStoryViewer(heroTag: "basic_hero"));
+                      }),
+                ),
                 CupertinoButton(
                     child: Column(
                       children: [
-                        Text("Basic"),
-                        Icon(Icons.image),
-                      ],
-                    ),
-                    onPressed: () {
-                      pushStoryView(true);
-                    }),
-                CupertinoButton(
-                    child: Column(
-                      children: [
-                        Text("Complex"),
+                        Text("Custom"),
                         Icon(Icons.camera),
                       ],
                     ),
                     onPressed: () {
-                      pushStoryView(false);
+                      pushStoryView(customStoryViewer());
+                    }),
+                CupertinoButton(
+                    child: Column(
+                      children: [
+                        Text("Blurred"),
+                        Icon(Icons.blur_circular),
+                      ],
+                    ),
+                    onPressed: () {
+                      pushStoryView(basicStoryViewer(trusted: false));
                     }),
               ],
             ),
             StoryViewer(
               key: ValueKey("2"),
+              loop: true,
               progressBorderRadius: BorderRadius.all(Radius.circular(12)),
               backgroundColor: Colors.blueGrey,
               ratio: StoryRatio.r4_3,
@@ -77,17 +91,25 @@ class _DetailedHomeState extends State<DetailedHome> {
     );
   }
 
-  pushStoryView(bool basic) {
-    Navigator.of(context).push(MaterialPageRoute(
-        fullscreenDialog: true,
-        builder: (context) =>
-            basic ? basicStoryViewer() : complexStoryViewer()));
+  pushStoryView(Widget storyViewer) {
+    Navigator.of(context).push(PageRouteBuilder(
+      fullscreenDialog: true,
+      transitionDuration: Duration(milliseconds: 300),
+      opaque: false, // set to false
+      pageBuilder: (_, __, ___) => storyViewer,
+    ));
   }
 
-  Widget basicStoryViewer() {
+  Widget basicStoryViewer({
+    String heroTag = "",
+    bool trusted = true,
+    bool hasReply = true,
+  }) {
     return StoryViewer(
       displayerUserID: "displayer",
-      hasReply: true,
+      heroTag: heroTag,
+      hasReply: hasReply,
+      trusted: trusted,
       stories: [
         StoryItemModel(
             url:
@@ -100,8 +122,30 @@ class _DetailedHomeState extends State<DetailedHome> {
     );
   }
 
-  Widget complexStoryViewer() {
+  Widget customStoryViewer() {
+    StoryViewerController controller = StoryViewerController();
+    controller.addListener(
+      onPlayed: () {
+        print("'onPlayed' callback outside of story_viewer");
+      },
+      onPaused: () {
+        print("'onPaused' callback outside of story_viewer");
+      },
+      onIndexChanged: () {
+        print("'onIndexChanged' callback outside of story_viewer");
+      },
+      onComplated: () {
+        print("'onComplated' callback outside of story_viewer");
+      },
+      onUIHide: () {
+        print("'onUIHide' callback outside of story_viewer");
+      },
+      onUIShow: () {
+        print("'onUIShow' callback outside of story_viewer");
+      },
+    );
     return StoryViewer(
+      viewerController: controller,
       hasReply: true,
       customValues: Customizer(
         sendIcon: CupertinoIcons.right_chevron,

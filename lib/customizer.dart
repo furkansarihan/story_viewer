@@ -28,7 +28,7 @@ class Customizer {
     this.closeIcon = Icons.close,
     this.infoIcon = Icons.more_horiz,
     this.failedImageIcon = Icons.broken_image,
-    this.sendIcon = Icons.close,
+    this.sendIcon = Icons.send,
     this.gallerySourceIcon = Icons.image,
     this.cameraSourceIcon = Icons.camera_alt,
   });
