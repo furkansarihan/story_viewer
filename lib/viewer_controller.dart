@@ -36,7 +36,7 @@ class StoryViewerController {
   bool get isLong => (ScreenUtil.screenHeight / ScreenUtil.screenWidth) > 1.78;
   bool get owner => currentStory.ownerID == ownerUserID;
   String get currentHeroTag =>
-      heroTag != null ? heroTag : "${currentStory.id}$heroKey";
+      viewer?.heroTag != null ? heroTag : "${currentStory.id}$heroKey";
 
   StoryViewerController({
     this.currentIndex = 0,

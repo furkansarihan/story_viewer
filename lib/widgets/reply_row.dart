@@ -33,7 +33,7 @@ class StoryReplyRow extends StatelessWidget {
     Widget returnW = Container(
       width: ScreenUtil.screenWidth,
       padding: EdgeInsets.only(bottom: bottom),
-      color: Colors.black54,
+      color: Colors.black12,
       child: SafeArea(
         top: false,
         child: Row(
