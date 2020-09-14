@@ -84,6 +84,7 @@ class StoryProfileRow extends StatelessWidget {
                     child: Icon(
                       viewer.customizer.infoIcon,
                       color: Colors.white,
+                      size: ScreenUtil().setWidth(86),
                     ),
                     minSize: ScreenUtil().setWidth(86),
                     onPressed: onEditPressed,
@@ -97,6 +98,7 @@ class StoryProfileRow extends StatelessWidget {
                     child: Icon(
                       viewer.customizer.closeIcon,
                       color: Colors.white,
+                      size: ScreenUtil().setWidth(86),
                     ),
                     minSize: ScreenUtil().setWidth(86),
                     onPressed: () {

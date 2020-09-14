@@ -45,9 +45,11 @@ class StoryReplyRow extends StatelessWidget {
               ),
             ),
             CupertinoButton(
+              padding: EdgeInsets.zero,
               child: Icon(
                 viewer.customizer.sendIcon,
                 color: Colors.white,
+                size: ScreenUtil().setWidth(76),
               ),
               onPressed: () {
                 viewer.onStoryReplied?.call(
@@ -60,7 +62,7 @@ class StoryReplyRow extends StatelessWidget {
         ),
       ),
     );
-    if (!viewer.showSource) {
+    if (viewer.showSource) {
       returnW = Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,

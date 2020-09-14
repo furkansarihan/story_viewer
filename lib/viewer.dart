@@ -313,7 +313,8 @@ class _StoryViewerState extends State<StoryViewer>
         return 1 - scale;
       },
       slideOffsetHandler: (Offset offset, {ExtendedImageSlidePageState state}) {
-        if (viewController.uiHiding && state.isSliding) {
+        if (viewController.uiHiding && state.isSliding ||
+            viewController.replying) {
           return Offset(0, 0);
         }
         if (offset.dy < 0) {

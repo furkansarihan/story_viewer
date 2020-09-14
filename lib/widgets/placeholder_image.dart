@@ -66,6 +66,7 @@ class PlaceholderImage extends StatelessWidget {
       return Icon(
         iconData == null ? Icons.broken_image : iconData,
         color: Colors.white70,
+        size: ScreenUtil().setWidth(76),
       );
     }
   }
