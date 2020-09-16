@@ -32,28 +32,50 @@ class StoryProfileRow extends StatelessWidget {
               child: viewer.fromAnonymous
                   ? Container()
                   : GestureDetector(
-                      onTap: viewer.onUserTap == null
-                          ? null
-                          : () {
-                              viewerController.pause();
-                              if (viewerController.owner) {
-                                viewer.onCameraTap?.call();
-                                return null;
-                              }
-                              viewer.onUserTap?.call(
-                                viewerController: viewerController,
-                              );
-                            },
+                      onTap: () {
+                        if (viewerController.owner) {
+                          viewer.onCameraTap?.call();
+                          return null;
+                        } else {
+                          viewer.onUserTap?.call(
+                            viewerController: viewerController,
+                          );
+                        }
+                        if (viewer.onCameraTap != null ||
+                            viewer.onUserTap != null) {
+                          viewerController.pause();
+                        }
+                      },
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
-                          viewer.profilePicture ??
-                              (viewer.profileHeroTag != null
-                                  ? Hero(
-                                      tag: viewer.profileHeroTag,
-                                      child: profilePicture(),
-                                    )
-                                  : profilePicture()),
+                          Stack(
+                            overflow: Overflow.visible,
+                            children: [
+                              viewer.profilePicture ??
+                                  (viewer.profileHeroTag != null
+                                      ? Hero(
+                                          tag: viewer.profileHeroTag,
+                                          child: profilePicture(),
+                                        )
+                                      : profilePicture()),
+                              if (viewerController.owner &&
+                                  viewer.onCameraTap != null)
+                                Positioned(
+                                  bottom: ScreenUtil().setSp(-8),
+                                  right: ScreenUtil().setSp(-8),
+                                  child: CircleAvatar(
+                                    backgroundColor: Colors.blueAccent,
+                                    radius: ScreenUtil().setSp(24),
+                                    child: Icon(
+                                      Icons.add,
+                                      color: Colors.white,
+                                      size: ScreenUtil().setSp(40),
+                                    ),
+                                  ),
+                                )
+                            ],
+                          ),
                           Container(
                             width: ScreenUtil().setWidth(24),
                           ),
