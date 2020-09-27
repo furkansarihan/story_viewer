@@ -71,13 +71,15 @@ class _DetailedHomeState extends State<DetailedHome> {
               ratio: StoryRatio.r4_3,
               stories: [
                 StoryItemModel(
-                    displayDuration: Duration(seconds: 10),
-                    url:
-                        "https://firebasestorage.googleapis.com/v0/b/app-monotony.appspot.com/o/assets%2Fmonotony-brand-02.png?alt=media&token=49d1d989-ac74-4d00-a816-e1680172e707"),
+                  displayDuration: Duration(seconds: 10),
+                  imageProvider: NetworkImage(
+                      "https://firebasestorage.googleapis.com/v0/b/app-monotony.appspot.com/o/assets%2Fmonotony-brand-02.png?alt=media&token=49d1d989-ac74-4d00-a816-e1680172e707"),
+                ),
                 StoryItemModel(
-                    displayDuration: Duration(seconds: 10),
-                    url:
-                        "https://lh3.googleusercontent.com/r87lupz1w9JaLb6_8UZtBWnR1bu4rjC6yWV69pqfSy2PZzB7lAwNjR8fyWyruShu_dk"),
+                  displayDuration: Duration(seconds: 10),
+                  imageProvider: NetworkImage(
+                      "https://lh3.googleusercontent.com/r87lupz1w9JaLb6_8UZtBWnR1bu4rjC6yWV69pqfSy2PZzB7lAwNjR8fyWyruShu_dk"),
+                ),
               ],
               userModel: UserModel(
                 username: "monotony",
@@ -112,8 +114,9 @@ class _DetailedHomeState extends State<DetailedHome> {
       trusted: trusted,
       stories: [
         StoryItemModel(
-            url:
-                "https://media.vanityfair.com/photos/5d1517768d443600098464f6/9:16/w_747,h_1328,c_limit/mark-zuckerberg-democracy.jpg"),
+          imageProvider: NetworkImage(
+              "https://media.vanityfair.com/photos/5d1517768d443600098464f6/9:16/w_747,h_1328,c_limit/mark-zuckerberg-democracy.jpg"),
+        ),
       ],
       userModel: UserModel(
         username: "mark",
@@ -153,13 +156,15 @@ class _DetailedHomeState extends State<DetailedHome> {
       ),
       stories: [
         StoryItemModel(
-            displayDuration: Duration(seconds: 20),
-            storyTime: DateTime(2020, 10),
-            url:
-                "https://media.vanityfair.com/photos/5d1517768d443600098464f6/9:16/w_747,h_1328,c_limit/mark-zuckerberg-democracy.jpg"),
+          displayDuration: Duration(seconds: 20),
+          storyTime: DateTime(2020, 10),
+          imageProvider: NetworkImage(
+              "https://media.vanityfair.com/photos/5d1517768d443600098464f6/9:16/w_747,h_1328,c_limit/mark-zuckerberg-democracy.jpg"),
+        ),
         StoryItemModel(
-            url:
-                "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQAnIurstDvh-haWAitgz09yWDcUTJ9ZMxVFg&usqp=CAU"),
+          imageProvider: NetworkImage(
+              "https://media.vanityfair.com/photos/5d1517768d443600098464f6/9:16/w_747,h_1328,c_limit/mark-zuckerberg-democracy.jpg"),
+        ),
       ],
       userModel: UserModel(
         username: "zuckerberg",

@@ -32,13 +32,13 @@ class StoryLayerMediaState extends State<StoryLayerMedia> {
 
   @override
   Widget build(BuildContext context) {
-    if (controller.currentStory.url.isEmpty) {
+    if (controller.currentStory.imageProvider == null) {
       return Container();
     }
     return ExtendedImage(
         width: ScreenUtil.screenWidth,
         height: widget.viewer.inline ? null : ScreenUtil.screenHeight,
-        image: ExtendedNetworkImageProvider(controller.currentStory.url),
+        image: controller.currentStory.imageProvider,
         enableSlideOutPage: true,
         mode: ExtendedImageMode.gesture,
         enableMemoryCache: true,

@@ -1,14 +1,16 @@
+import 'package:flutter/widgets.dart';
+
 class StoryItemModel {
   final String id;
   final String ownerID;
-  final String url;
+  final ImageProvider imageProvider;
   final String source;
   final DateTime storyTime;
   final Duration displayDuration;
   const StoryItemModel({
     this.id = "",
     this.ownerID = "",
-    this.url = "",
+    this.imageProvider,
     this.source = "gallery",
     this.storyTime,
     this.displayDuration,

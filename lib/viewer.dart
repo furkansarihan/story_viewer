@@ -220,7 +220,7 @@ class _StoryViewerState extends State<StoryViewer>
     }
     layers.addAll([
       StoryLayerMedia(
-        key: ValueKey(viewController.currentStory.url),
+        key: ValueKey(viewController.currentStory.imageProvider),
         viewerController: viewController,
         viewer: widget,
       ),

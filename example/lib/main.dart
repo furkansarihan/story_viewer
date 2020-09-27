@@ -36,6 +36,11 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
+    var images = [
+      "https://firebasestorage.googleapis.com/v0/b/app-monotony.appspot.com/o/assets%2FScreen%20Shot%202020-09-06%20at%2013.24.29.png?alt=media&token=30f1e802-e3f2-4cdb-b95c-b1f886bfeba2",
+      "https://firebasestorage.googleapis.com/v0/b/app-monotony.appspot.com/o/assets%2FScreen%20Shot%202020-09-06%20at%2013.24.48.png?alt=media&token=69743845-dfcb-4245-83bf-3f543715e2bd",
+      "https://firebasestorage.googleapis.com/v0/b/app-monotony.appspot.com/o/assets%2FScreen%20Shot%202020-09-06%20at%2013.27.04.png?alt=media&token=750c65a5-216b-4e6b-840d-8efe10042ed6"
+    ];
     return Scaffold(
       appBar: AppBar(
         title: const Text('story_viewer'),
@@ -48,15 +53,9 @@ class _HomeState extends State<Home> {
             backgroundColor: Colors.white,
             ratio: StoryRatio.r16_9,
             stories: [
-              StoryItemModel(
-                  url:
-                      "https://firebasestorage.googleapis.com/v0/b/app-monotony.appspot.com/o/assets%2FScreen%20Shot%202020-09-06%20at%2013.24.29.png?alt=media&token=30f1e802-e3f2-4cdb-b95c-b1f886bfeba2"),
-              StoryItemModel(
-                  url:
-                      "https://firebasestorage.googleapis.com/v0/b/app-monotony.appspot.com/o/assets%2FScreen%20Shot%202020-09-06%20at%2013.24.48.png?alt=media&token=69743845-dfcb-4245-83bf-3f543715e2bd"),
-              StoryItemModel(
-                  url:
-                      "https://firebasestorage.googleapis.com/v0/b/app-monotony.appspot.com/o/assets%2FScreen%20Shot%202020-09-06%20at%2013.27.04.png?alt=media&token=750c65a5-216b-4e6b-840d-8efe10042ed6"),
+              StoryItemModel(imageProvider: NetworkImage(images[0])),
+              StoryItemModel(imageProvider: NetworkImage(images[1])),
+              StoryItemModel(imageProvider: NetworkImage(images[2])),
             ],
             userModel: UserModel(
               username: "flutter",
