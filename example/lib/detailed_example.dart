@@ -10,6 +10,8 @@ import 'package:story_viewer/story_viewer.dart';
 import 'package:story_viewer/viewer.dart';
 import 'package:story_viewer/viewer_controller.dart';
 
+import 'main.dart';
+
 class DetailedHome extends StatefulWidget {
   @override
   _DetailedHomeState createState() => _DetailedHomeState();
@@ -72,19 +74,16 @@ class _DetailedHomeState extends State<DetailedHome> {
               stories: [
                 StoryItemModel(
                   displayDuration: Duration(seconds: 10),
-                  imageProvider: NetworkImage(
-                      "https://firebasestorage.googleapis.com/v0/b/app-monotony.appspot.com/o/assets%2Fmonotony-brand-02.png?alt=media&token=49d1d989-ac74-4d00-a816-e1680172e707"),
+                  imageProvider: NetworkImage(images2[0]),
                 ),
                 StoryItemModel(
                   displayDuration: Duration(seconds: 10),
-                  imageProvider: NetworkImage(
-                      "https://lh3.googleusercontent.com/r87lupz1w9JaLb6_8UZtBWnR1bu4rjC6yWV69pqfSy2PZzB7lAwNjR8fyWyruShu_dk"),
+                  imageProvider: NetworkImage(images2[1]),
                 ),
               ],
               userModel: UserModel(
                 username: "monotony",
-                profilePictureUrl:
-                    "https://lh3.googleusercontent.com/vzstCu3rediu8YxljS-3oA7qNDVmet-Wl2VQpoWCOMN4zqirKdOAhNJZXU98Y6QMOiE=s180",
+                profilePictureUrl: images2[2],
               ),
             ),
           ],
@@ -149,7 +148,7 @@ class _DetailedHomeState extends State<DetailedHome> {
     );
     return StoryViewer(
       viewerController: controller,
-      hasReply: true,
+      hasReply: false,
       customValues: Customizer(
         sendIcon: CupertinoIcons.right_chevron,
         closeIcon: CupertinoIcons.down_arrow,

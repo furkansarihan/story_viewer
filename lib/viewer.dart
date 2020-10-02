@@ -132,7 +132,7 @@ class StoryViewer extends StatefulWidget {
 class _StoryViewerState extends State<StoryViewer>
     with TickerProviderStateMixin {
   StoryViewerController viewController;
-
+  double lastY = 0.0;
   bool get trusted => viewController.trusted;
 
   @override
@@ -315,10 +315,11 @@ class _StoryViewerState extends State<StoryViewer>
       slideOffsetHandler: (Offset offset, {ExtendedImageSlidePageState state}) {
         if (viewController.uiHiding && state.isSliding ||
             viewController.replying) {
+          lastY = offset.dy;
           return Offset(0, 0);
         }
         if (offset.dy < 0) {
-          if (!viewController.owner && !widget.inline) {
+          if (!viewController.owner && !widget.inline && lastY == 0) {
             viewController.replyPause();
           } else if (viewController.owner) {
             viewController.infoPause();
@@ -328,6 +329,7 @@ class _StoryViewerState extends State<StoryViewer>
             );
           }
         }
+        lastY = offset.dy;
         double limit = ScreenUtil.screenHeight * 0.3;
         double dy = offset.dy < limit ? offset.dy : limit;
         dy = dy < 0 ? 0 : dy;

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/screenutil.dart';
+import 'package:story_viewer/story_viewer.dart';
 import 'viewer.dart';
 import 'viewer_controller.dart';
 import 'widgets/placeholder_image.dart';
@@ -35,10 +36,11 @@ class StoryLayerMediaState extends State<StoryLayerMedia> {
     if (controller.currentStory.imageProvider == null) {
       return Container();
     }
+    StoryItemModel currentItem = controller.currentStory;
     return ExtendedImage(
         width: ScreenUtil.screenWidth,
         height: widget.viewer.inline ? null : ScreenUtil.screenHeight,
-        image: controller.currentStory.imageProvider,
+        image: currentItem.imageProvider,
         enableSlideOutPage: true,
         mode: ExtendedImageMode.gesture,
         enableMemoryCache: true,
@@ -85,6 +87,7 @@ class StoryLayerMediaState extends State<StoryLayerMedia> {
               );
               break;
             case LoadState.completed:
+              controller.load(currentItem.imageProvider);
               SchedulerBinding.instance.addPostFrameCallback((p) {
                 controller.play();
               });

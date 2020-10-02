@@ -9,6 +9,17 @@ import 'package:story_viewer/models/story_item.dart';
 import 'package:story_viewer/models/user.dart';
 import 'package:story_viewer/viewer.dart';
 
+var images1 = [
+  "https://firebasestorage.googleapis.com/v0/b/app-monotony.appspot.com/o/assets%2FScreen%20Shot%202020-09-06%20at%2013.24.29.png?alt=media&token=30f1e802-e3f2-4cdb-b95c-b1f886bfeba2",
+  "https://firebasestorage.googleapis.com/v0/b/app-monotony.appspot.com/o/assets%2FScreen%20Shot%202020-09-06%20at%2013.24.48.png?alt=media&token=69743845-dfcb-4245-83bf-3f543715e2bd",
+  "https://firebasestorage.googleapis.com/v0/b/app-monotony.appspot.com/o/assets%2FScreen%20Shot%202020-09-06%20at%2013.27.04.png?alt=media&token=750c65a5-216b-4e6b-840d-8efe10042ed6"
+];
+var images2 = [
+  "https://firebasestorage.googleapis.com/v0/b/app-monotony.appspot.com/o/assets%2Fmonotony-brand-02.png?alt=media&token=49d1d989-ac74-4d00-a816-e1680172e707",
+  "https://lh3.googleusercontent.com/r87lupz1w9JaLb6_8UZtBWnR1bu4rjC6yWV69pqfSy2PZzB7lAwNjR8fyWyruShu_dk",
+  "https://lh3.googleusercontent.com/vzstCu3rediu8YxljS-3oA7qNDVmet-Wl2VQpoWCOMN4zqirKdOAhNJZXU98Y6QMOiE=s180",
+];
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatefulWidget {
@@ -36,11 +47,6 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
-    var images = [
-      "https://firebasestorage.googleapis.com/v0/b/app-monotony.appspot.com/o/assets%2FScreen%20Shot%202020-09-06%20at%2013.24.29.png?alt=media&token=30f1e802-e3f2-4cdb-b95c-b1f886bfeba2",
-      "https://firebasestorage.googleapis.com/v0/b/app-monotony.appspot.com/o/assets%2FScreen%20Shot%202020-09-06%20at%2013.24.48.png?alt=media&token=69743845-dfcb-4245-83bf-3f543715e2bd",
-      "https://firebasestorage.googleapis.com/v0/b/app-monotony.appspot.com/o/assets%2FScreen%20Shot%202020-09-06%20at%2013.27.04.png?alt=media&token=750c65a5-216b-4e6b-840d-8efe10042ed6"
-    ];
     return Scaffold(
       appBar: AppBar(
         title: const Text('story_viewer'),
@@ -53,9 +59,9 @@ class _HomeState extends State<Home> {
             backgroundColor: Colors.white,
             ratio: StoryRatio.r16_9,
             stories: [
-              StoryItemModel(imageProvider: NetworkImage(images[0])),
-              StoryItemModel(imageProvider: NetworkImage(images[1])),
-              StoryItemModel(imageProvider: NetworkImage(images[2])),
+              StoryItemModel(imageProvider: NetworkImage(images1[0])),
+              StoryItemModel(imageProvider: NetworkImage(images1[1])),
+              StoryItemModel(imageProvider: NetworkImage(images1[2])),
             ],
             userModel: UserModel(
               username: "flutter",

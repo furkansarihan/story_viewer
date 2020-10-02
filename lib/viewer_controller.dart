@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/animation.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:story_viewer/viewer.dart';
 import 'models/story_item.dart';
@@ -22,6 +23,7 @@ class StoryViewerController {
   List<Function> _onUIShows = List<Function>();
   List<Function> _onUIHides = List<Function>();
 
+  Map<ImageProvider, bool> _loadedStories = Map<ImageProvider, bool>();
   List<StoryItemModel> get stories => viewer?.stories ?? [];
   String get ownerUserID => viewer?.displayerUserID ?? "?";
   String get heroTag => viewer?.heroTag ?? "";
@@ -68,6 +70,9 @@ class StoryViewerController {
     if (stories.isEmpty) {
       return null;
     }
+    if (!_loadedStories.containsKey(currentStory.imageProvider)) {
+      return null;
+    }
     if (_uiHiding) {
       _uiHiding = false;
       _callFunctions(_onUIShows);
@@ -111,6 +116,9 @@ class StoryViewerController {
   }
 
   void replyPause() {
+    if (!viewer.hasReply) {
+      return null;
+    }
     _replying = true;
     _playing = false;
     _callFunctions(_onPauseds);
@@ -167,7 +175,12 @@ class StoryViewerController {
         play();
       } else {
         currentIndex = stories.length - 1;
-        animationController.animateTo(animationController.upperBound);
+        animationController.animateTo(
+          animationController.upperBound,
+          duration: Duration(
+            milliseconds: 1,
+          ),
+        );
         complated();
         return null;
       }
@@ -205,6 +218,16 @@ class StoryViewerController {
     animationController.reset();
     animationController.duration = currentStory.duration;
     _callFunctions(_onIndexChangeds);
+  }
+
+  void load(ImageProvider provider) {
+    _loadedStories[provider] = true;
+  }
+
+  bool isLoaded(ImageProvider provider) {
+    return _loadedStories.containsKey(provider)
+        ? _loadedStories[provider]
+        : false;
   }
 
   void addListener({

@@ -29,105 +29,113 @@ class StoryProfileRow extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Expanded(
-              child: viewer.fromAnonymous
-                  ? Container()
-                  : GestureDetector(
-                      onTap: () {
-                        if (viewerController.owner) {
-                          viewer.onCameraTap?.call();
-                          return null;
-                        } else {
-                          viewer.onUserTap?.call(
-                            viewerController: viewerController,
-                          );
-                        }
-                        if (viewer.onCameraTap != null ||
-                            viewer.onUserTap != null) {
-                          viewerController.pause();
-                        }
-                      },
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          Stack(
-                            overflow: Overflow.visible,
-                            children: [
-                              viewer.profilePicture ??
-                                  (viewer.profileHeroTag != null
-                                      ? Hero(
-                                          tag: viewer.profileHeroTag,
-                                          child: profilePicture(),
-                                        )
-                                      : profilePicture()),
-                              if (viewerController.owner &&
-                                  viewer.onCameraTap != null)
-                                Positioned(
-                                  bottom: ScreenUtil().setSp(-8),
-                                  right: ScreenUtil().setSp(-8),
-                                  child: CircleAvatar(
-                                    backgroundColor: Colors.blueAccent,
-                                    radius: ScreenUtil().setSp(24),
-                                    child: Icon(
-                                      Icons.add,
-                                      color: Colors.white,
-                                      size: ScreenUtil().setSp(40),
-                                    ),
-                                  ),
-                                )
-                            ],
-                          ),
-                          Container(
-                            width: ScreenUtil().setWidth(24),
-                          ),
-                          Flexible(
-                            child: Text(
-                              "${userModel.username}  ${getDurationText(_storyDurationSincePosted())}",
-                              textAlign: TextAlign.left,
-                              maxLines: 1,
-                              overflow: TextOverflow.clip,
-                              style: viewer.titleStyle ??
-                                  TextStyle(
-                                      decoration: TextDecoration.none,
-                                      color: Colors.white,
-                                      fontSize: ScreenUtil().setSp(40),
-                                      fontWeight: FontWeight.w500),
-                            ),
-                          ),
-                        ],
-                      ),
-                    )),
-          Row(children: [
-            viewer.onEditStory == null
+            child: viewer.fromAnonymous
                 ? Container()
-                : CupertinoButton(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: ScreenUtil().setWidth(16),
-                    ),
-                    child: Icon(
-                      viewer.customizer.infoIcon,
-                      color: Colors.white,
-                      size: ScreenUtil().setWidth(86),
-                    ),
-                    minSize: ScreenUtil().setWidth(86),
-                    onPressed: onEditPressed,
-                  ),
-            viewer.inline
-                ? Container()
-                : CupertinoButton(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: ScreenUtil().setWidth(16),
-                    ),
-                    child: Icon(
-                      viewer.customizer.closeIcon,
-                      color: Colors.white,
-                      size: ScreenUtil().setWidth(86),
-                    ),
-                    minSize: ScreenUtil().setWidth(86),
-                    onPressed: () {
-                      viewerController.complated();
+                : GestureDetector(
+                    onTap: () {
+                      if (viewerController.owner) {
+                        viewer.onCameraTap?.call();
+                        return null;
+                      } else {
+                        viewer.onUserTap?.call(
+                          viewerController: viewerController,
+                        );
+                      }
+                      if (viewer.onCameraTap != null ||
+                          viewer.onUserTap != null) {
+                        viewerController.pause();
+                      }
                     },
+                    onTapUp: (d) {
+                      bool prewStory =
+                          d.localPosition.dx < ScreenUtil.screenWidth * 0.2;
+                      viewerController.handPlay(prewStory: prewStory);
+                    },
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Stack(
+                          overflow: Overflow.visible,
+                          children: [
+                            viewer.profilePicture ??
+                                (viewer.profileHeroTag != null
+                                    ? Hero(
+                                        tag: viewer.profileHeroTag,
+                                        child: profilePicture(),
+                                      )
+                                    : profilePicture()),
+                            if (viewerController.owner &&
+                                viewer.onCameraTap != null)
+                              Positioned(
+                                bottom: ScreenUtil().setSp(-8),
+                                right: ScreenUtil().setSp(-8),
+                                child: CircleAvatar(
+                                  backgroundColor: Colors.blueAccent,
+                                  radius: ScreenUtil().setSp(24),
+                                  child: Icon(
+                                    Icons.add,
+                                    color: Colors.white,
+                                    size: ScreenUtil().setSp(40),
+                                  ),
+                                ),
+                              )
+                          ],
+                        ),
+                        Container(
+                          width: ScreenUtil().setWidth(24),
+                        ),
+                        Flexible(
+                          child: Text(
+                            "${userModel.username}  ${getDurationText(_storyDurationSincePosted())}",
+                            textAlign: TextAlign.left,
+                            maxLines: 1,
+                            overflow: TextOverflow.clip,
+                            style: viewer.titleStyle ??
+                                TextStyle(
+                                    decoration: TextDecoration.none,
+                                    color: Colors.white,
+                                    fontSize: ScreenUtil().setSp(40),
+                                    fontWeight: FontWeight.w500),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-          ])
+          ),
+          Row(
+            children: [
+              viewer.onEditStory == null
+                  ? Container()
+                  : CupertinoButton(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: ScreenUtil().setWidth(16),
+                      ),
+                      child: Icon(
+                        viewer.customizer.infoIcon,
+                        color: Colors.white,
+                        size: ScreenUtil().setWidth(86),
+                      ),
+                      minSize: ScreenUtil().setWidth(86),
+                      onPressed: onEditPressed,
+                    ),
+              viewer.inline
+                  ? Container()
+                  : CupertinoButton(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: ScreenUtil().setWidth(16),
+                      ),
+                      child: Icon(
+                        viewer.customizer.closeIcon,
+                        color: Colors.white,
+                        size: ScreenUtil().setWidth(86),
+                      ),
+                      minSize: ScreenUtil().setWidth(86),
+                      onPressed: () {
+                        viewerController.complated();
+                      },
+                    ),
+            ],
+          )
         ],
       ),
     );

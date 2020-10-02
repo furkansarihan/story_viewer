@@ -71,7 +71,6 @@ class _StoryLayerUIState extends State<StoryLayerUI> {
       if (context != null) {
         FocusScope.of(context).requestFocus(textNode);
       }
-      refreshState();
     }
   }
 
