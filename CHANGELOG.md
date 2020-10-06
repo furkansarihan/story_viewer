@@ -1,3 +1,7 @@
+## [0.0.17]
+
+* Breaking Change: "url" parameter changed to "imageProvider" for supporting dynamic image source on StoryItemModel.
+
 ## [0.0.16]
 
 * initializing
