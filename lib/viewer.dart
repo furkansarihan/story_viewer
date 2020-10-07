@@ -153,15 +153,9 @@ class _StoryViewerState extends State<StoryViewer>
       upperBound: 1,
       duration: viewController.currentStory.duration,
     );
-    viewController.animationController.addStatusListener((status) {
-      //print("$status ${viewController.animationController.isAnimating}");
-      if (status == AnimationStatus.forward) {
-      } else if (status == AnimationStatus.completed) {
-        viewController.next();
-      } else if (status == AnimationStatus.dismissed) {
-        viewController.pause();
-      }
-    });
+    viewController.animationController.addStatusListener(
+      viewController.statusListener,
+    );
     viewController.addListener(onComplated: onComplated, onPlayed: onPlayed);
     widget.setupCustomWidgets?.call(
       viewerController: viewController,

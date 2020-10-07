@@ -175,6 +175,7 @@ class StoryViewerController {
         play();
       } else {
         currentIndex = stories.length - 1;
+        animationController.removeStatusListener(statusListener);
         animationController.animateTo(
           animationController.upperBound,
           duration: Duration(
@@ -228,6 +229,16 @@ class StoryViewerController {
     return _loadedStories.containsKey(provider)
         ? _loadedStories[provider]
         : false;
+  }
+
+  void statusListener(status) {
+    //print("$status ${viewController.animationController.isAnimating}");
+    if (status == AnimationStatus.forward) {
+    } else if (status == AnimationStatus.completed) {
+      next();
+    } else if (status == AnimationStatus.dismissed) {
+      pause();
+    }
   }
 
   void addListener({
