@@ -28,7 +28,7 @@ class _BlurSliderState extends State<BlurSlider> {
   @override
   Widget build(BuildContext context) {
     if (!_showing) {
-      return Container(
+      return SizedBox(
         width: 0,
         height: 0,
       );
@@ -54,24 +54,25 @@ class _BlurSliderState extends State<BlurSlider> {
               Container(
                 margin: const EdgeInsets.all(12),
                 child: Slider(
-                    min: 5,
-                    max: 60,
-                    activeColor: Colors.white,
-                    inactiveColor: Colors.black12,
-                    value: blur,
-                    onChanged: (newBlur) {
-                      if (!_showing) {
-                        return null;
-                      }
-                      if (newBlur == 5) {
-                        _showing = false;
-                        widget?.onSliderEnd();
-                        refreshState();
-                        return null;
-                      }
-                      blur = newBlur;
+                  min: 5,
+                  max: 60,
+                  activeColor: Colors.white,
+                  inactiveColor: Colors.black12,
+                  value: blur,
+                  onChanged: (newBlur) {
+                    if (!_showing) {
+                      return null;
+                    }
+                    if (newBlur == 5) {
+                      _showing = false;
                       refreshState();
-                    }),
+                      widget?.onSliderEnd();
+                      return null;
+                    }
+                    blur = newBlur;
+                    refreshState();
+                  },
+                ),
               ),
             ],
           ),
