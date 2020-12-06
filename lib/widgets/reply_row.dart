@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/screenutil.dart';
+
 import 'package:story_viewer/viewer.dart';
 import 'package:story_viewer/viewer_controller.dart';
 import 'package:story_viewer/widgets/source_row.dart';
@@ -31,7 +31,7 @@ class StoryReplyRow extends StatelessWidget {
     }
     double bottom = MediaQuery.of(context).viewInsets.bottom;
     Widget returnW = Container(
-      width: ScreenUtil.screenWidth,
+      width: MediaQuery.of(context).size.width,
       padding: EdgeInsets.only(bottom: bottom),
       color: Colors.black12,
       child: SafeArea(
@@ -41,7 +41,9 @@ class StoryReplyRow extends StatelessWidget {
             Expanded(
               child: Container(
                 child: Focus(
-                    onFocusChange: onFocusChange, child: textField(context)),
+                  onFocusChange: onFocusChange,
+                  child: textField(context),
+                ),
               ),
             ),
             CupertinoButton(
@@ -49,7 +51,7 @@ class StoryReplyRow extends StatelessWidget {
               child: Icon(
                 viewer.customizer.sendIcon,
                 color: Colors.white,
-                size: ScreenUtil().setWidth(76),
+                size: 32,
               ),
               onPressed: () {
                 viewer.onStoryReplied?.call(
@@ -84,11 +86,10 @@ class StoryReplyRow extends StatelessWidget {
         focusNode: textNode,
         controller: textController,
         keyboardAppearance: MediaQuery.of(context).platformBrightness,
-        padding: EdgeInsets.all(ScreenUtil().setWidth(32)),
+        padding: const EdgeInsets.all(12),
         placeholderStyle: TextStyle(
           decoration: TextDecoration.none,
           color: Colors.white54,
-          fontSize: ScreenUtil().setSp(44),
         ),
         placeholder: viewer.customizer.replyPlaceholder,
         decoration: BoxDecoration(),
@@ -96,7 +97,6 @@ class StoryReplyRow extends StatelessWidget {
         style: TextStyle(
           decoration: TextDecoration.none,
           color: Colors.white,
-          fontSize: ScreenUtil().setSp(44),
         ),
         onSubmitted: (String message) {
           viewer.onStoryReplied?.call(
@@ -113,7 +113,7 @@ class StoryReplyRow extends StatelessWidget {
           controller: textController,
           keyboardAppearance: MediaQuery.of(context).platformBrightness,
           decoration: InputDecoration(
-            contentPadding: EdgeInsets.all(ScreenUtil().setWidth(32)),
+            contentPadding: const EdgeInsets.all(14),
             border: InputBorder.none,
             helperStyle: TextStyle(
               decoration: TextDecoration.none,
@@ -122,7 +122,6 @@ class StoryReplyRow extends StatelessWidget {
             hintStyle: TextStyle(
               decoration: TextDecoration.none,
               color: Colors.white54,
-              fontSize: ScreenUtil().setSp(44),
             ),
             hintText: viewer.customizer.replyPlaceholder,
           ),
@@ -130,7 +129,6 @@ class StoryReplyRow extends StatelessWidget {
           style: TextStyle(
             decoration: TextDecoration.none,
             color: Colors.white,
-            fontSize: ScreenUtil().setSp(44),
           ),
           onSubmitted: (String message) {
             viewer.onStoryReplied?.call(

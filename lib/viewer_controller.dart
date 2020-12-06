@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/animation.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_screenutil/screenutil.dart';
+
 import 'package:story_viewer/viewer.dart';
 import 'models/story_item.dart';
 
@@ -35,7 +35,6 @@ class StoryViewerController {
           ? stories.elementAt(currentIndex)
           : StoryItemModel();
 
-  bool get isLong => (ScreenUtil.screenHeight / ScreenUtil.screenWidth) > 1.78;
   bool get owner => currentStory.ownerID == ownerUserID;
   String get currentHeroTag =>
       viewer?.heroTag != null ? heroTag : "${currentStory.id}$heroKey";

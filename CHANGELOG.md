@@ -1,3 +1,8 @@
+## [0.0.19]
+
+* Breaking Change: "profilePictureUrl" parameter changed to "profilePicture" for supporting dynamic image source on UserModel.
+* Unnecessary dependencies removed
+
 ## [0.0.18]
 
 * Breaking Change: "url" parameter changed to "imageProvider" for supporting dynamic image source on StoryItemModel.

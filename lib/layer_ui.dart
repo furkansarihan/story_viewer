@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import 'viewer.dart';
 import 'viewer_controller.dart';
 import 'widgets/fast_emojis.dart';
@@ -88,14 +88,13 @@ class _StoryLayerUIState extends State<StoryLayerUI> {
 
   @override
   Widget build(BuildContext context) {
+    bool isLong = MediaQuery.of(context).size.aspectRatio > 9 / 16;
     Widget returnW = Column(
-      //mainAxisSize: MainAxisSize.min,
       key: ObjectKey("layer_ui"),
       children: [
         Container(
-          height: controller.isLong && !viewer.inline
-              ? 0
-              : MediaQuery.of(context).padding.top,
+          height:
+              isLong && !viewer.inline ? 0 : MediaQuery.of(context).padding.top,
         ),
         StoryProgressRow(
           key: ObjectKey("progressrow"),
@@ -131,7 +130,7 @@ class _StoryLayerUIState extends State<StoryLayerUI> {
         children: [
           GradientShadow(
             key: GlobalKey(),
-            height: ScreenUtil().setWidth(viewer.inline ? 176 : 256),
+            height: viewer.inline ? 48 : 64,
             stops: [0.0, 1.0],
             alphas: [0, 70],
             top: true,
@@ -145,14 +144,14 @@ class _StoryLayerUIState extends State<StoryLayerUI> {
         children: [
           GradientShadow(
             key: GlobalKey(),
-            height: ScreenUtil().setWidth(viewer.inline ? 176 : 256),
+            height: viewer.inline ? 48 : 64,
             stops: [0.0, 1.0],
             alphas: [0, 70],
             top: true,
           ),
           GradientShadow(
             key: GlobalKey(),
-            height: ScreenUtil().setWidth(384),
+            height: 72,
             stops: [0.0, 1.0],
             alphas: [0, 150],
             top: false,
@@ -177,12 +176,12 @@ class _StoryLayerUIState extends State<StoryLayerUI> {
                       duration: Duration(milliseconds: 300),
                       curve: Curves.easeInOutCirc,
                       color: showEmojis ? Colors.black45 : Colors.transparent,
-                      height: ScreenUtil.screenHeight,
+                      height: MediaQuery.of(context).size.height,
                     ),
                     AnimatedContainer(
                         duration: Duration(milliseconds: 300),
                         curve: Curves.easeInOutCirc,
-                        height: (ScreenUtil.screenHeight -
+                        height: (MediaQuery.of(context).size.height -
                             MediaQuery.of(context).viewInsets.bottom),
                         child: fastEmojis),
                   ],
@@ -219,8 +218,8 @@ class _StoryLayerUIState extends State<StoryLayerUI> {
       duration: Duration(milliseconds: 150),
       child: IgnorePointer(
         child: Container(
-          width: ScreenUtil().setWidth(256),
-          height: ScreenUtil.screenHeight,
+          width: 64,
+          height: MediaQuery.of(context).size.height,
           decoration: new BoxDecoration(
             gradient: new LinearGradient(
                 colors: [

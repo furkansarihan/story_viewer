@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/screenutil.dart';
+
 import 'package:story_viewer/models/user.dart';
 import 'package:story_viewer/viewer.dart';
 import 'package:story_viewer/viewer_controller.dart';
@@ -20,11 +20,8 @@ class StoryProfileRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(
-        horizontal: ScreenUtil().setWidth(24),
-        vertical: ScreenUtil().setWidth(24),
-      ),
-      width: ScreenUtil.screenWidth,
+      padding: const EdgeInsets.all(8),
+      width: MediaQuery.of(context).size.width,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
@@ -47,8 +44,8 @@ class StoryProfileRow extends StatelessWidget {
                       }
                     },
                     onTapUp: (d) {
-                      bool prewStory =
-                          d.localPosition.dx < ScreenUtil.screenWidth * 0.2;
+                      bool prewStory = d.localPosition.dx <
+                          MediaQuery.of(context).size.width * 0.2;
                       viewerController.handPlay(prewStory: prewStory);
                     },
                     child: Row(
@@ -61,29 +58,27 @@ class StoryProfileRow extends StatelessWidget {
                                 (viewer.profileHeroTag != null
                                     ? Hero(
                                         tag: viewer.profileHeroTag,
-                                        child: profilePicture(),
+                                        child: profilePicture(context),
                                       )
-                                    : profilePicture()),
+                                    : profilePicture(context)),
                             if (viewerController.owner &&
                                 viewer.onCameraTap != null)
                               Positioned(
-                                bottom: ScreenUtil().setSp(-8),
-                                right: ScreenUtil().setSp(-8),
+                                bottom: -2,
+                                right: -2,
                                 child: CircleAvatar(
                                   backgroundColor: Colors.blueAccent,
-                                  radius: ScreenUtil().setSp(24),
+                                  radius: 8,
                                   child: Icon(
                                     Icons.add,
                                     color: Colors.white,
-                                    size: ScreenUtil().setSp(40),
+                                    size: 14,
                                   ),
                                 ),
                               )
                           ],
                         ),
-                        Container(
-                          width: ScreenUtil().setWidth(24),
-                        ),
+                        const SizedBox(width: 12),
                         Flexible(
                           child: Text(
                             "${userModel.username}  ${getDurationText(_storyDurationSincePosted())}",
@@ -91,11 +86,11 @@ class StoryProfileRow extends StatelessWidget {
                             maxLines: 1,
                             overflow: TextOverflow.clip,
                             style: viewer.titleStyle ??
-                                TextStyle(
-                                    decoration: TextDecoration.none,
-                                    color: Colors.white,
-                                    fontSize: ScreenUtil().setSp(40),
-                                    fontWeight: FontWeight.w500),
+                                Theme.of(context).textTheme.bodyText1.merge(
+                                      TextStyle(
+                                        color: Colors.white,
+                                      ),
+                                    ),
                           ),
                         ),
                       ],
@@ -107,29 +102,21 @@ class StoryProfileRow extends StatelessWidget {
               viewer.onEditStory == null
                   ? Container()
                   : CupertinoButton(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: ScreenUtil().setWidth(16),
-                      ),
+                      padding: const EdgeInsets.symmetric(horizontal: 6),
                       child: Icon(
                         viewer.customizer.infoIcon,
                         color: Colors.white,
-                        size: ScreenUtil().setWidth(86),
                       ),
-                      minSize: ScreenUtil().setWidth(86),
                       onPressed: onEditPressed,
                     ),
               viewer.inline
                   ? Container()
                   : CupertinoButton(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: ScreenUtil().setWidth(16),
-                      ),
+                      padding: const EdgeInsets.symmetric(horizontal: 6),
                       child: Icon(
                         viewer.customizer.closeIcon,
                         color: Colors.white,
-                        size: ScreenUtil().setWidth(86),
                       ),
-                      minSize: ScreenUtil().setWidth(86),
                       onPressed: () {
                         viewerController.complated();
                       },
@@ -141,16 +128,12 @@ class StoryProfileRow extends StatelessWidget {
     );
   }
 
-  Widget profilePicture() {
-    return ClipOval(
-        child: userModel.profilePictureUrl.isNotEmpty
-            ? Image.network(
-                viewer.userModel.profilePictureUrl,
-                width: ScreenUtil().setWidth(viewer.inline ? 64 : 86),
-                height: ScreenUtil().setWidth(viewer.inline ? 64 : 86),
-                fit: BoxFit.fitHeight,
-              )
-            : Container());
+  Widget profilePicture(BuildContext context) {
+    return CircleAvatar(
+      backgroundColor: Colors.grey[500],
+      backgroundImage: viewer.userModel.profilePicture,
+      radius: viewer.inline ? 12 : 16,
+    );
   }
 
   void onEditPressed() {
@@ -172,8 +155,9 @@ class StoryProfileRow extends StatelessWidget {
       return DateTime.now();
     }
     return DateTime.fromMillisecondsSinceEpoch(
-        DateTime.now().millisecondsSinceEpoch +
-            viewer.serverTimeGap.inMilliseconds);
+      DateTime.now().millisecondsSinceEpoch +
+          viewer.serverTimeGap.inMilliseconds,
+    );
   }
 
   String getDurationText(Duration duration) {

@@ -1,5 +1,5 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/screenutil.dart';
 
 class FastEmojis extends StatelessWidget {
   final Function(String emoji) onEmojiSelected;
@@ -7,7 +7,6 @@ class FastEmojis extends StatelessWidget {
   const FastEmojis({Key key, this.onEmojiSelected}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    double size = ScreenUtil().setWidth(384);
     return Center(
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -16,39 +15,48 @@ class FastEmojis extends StatelessWidget {
           Row(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              emojIcon("😂", size, EdgeInsets.all(12)),
-              emojIcon("😯", size, EdgeInsets.all(12)),
-              emojIcon("😍", size, EdgeInsets.all(12)),
-              emojIcon("😢", size, EdgeInsets.all(12))
+              FastEmoji(emoji: "😂", onSelected: onEmojiSelected),
+              FastEmoji(emoji: "😯", onSelected: onEmojiSelected),
+              FastEmoji(emoji: "😍", onSelected: onEmojiSelected),
+              FastEmoji(emoji: "😢", onSelected: onEmojiSelected)
             ],
           ),
           Row(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              emojIcon("👏", size, EdgeInsets.all(12)),
-              emojIcon("🔥", size, EdgeInsets.all(12)),
-              emojIcon("🎉", size, EdgeInsets.all(12)),
-              emojIcon("💯", size, EdgeInsets.all(12))
+              FastEmoji(emoji: "👏", onSelected: onEmojiSelected),
+              FastEmoji(emoji: "🔥", onSelected: onEmojiSelected),
+              FastEmoji(emoji: "🎉", onSelected: onEmojiSelected),
+              FastEmoji(emoji: "💯", onSelected: onEmojiSelected)
             ],
           )
         ],
       ),
     );
   }
+}
 
-  Widget emojIcon(String emoji, double size, EdgeInsets padd) {
-    return GestureDetector(
-        onTap: () {
-          onEmojiSelected?.call(emoji);
-        },
-        child: Padding(
-            padding: padd,
-            child: Text(
-              emoji,
-              style: TextStyle(
-                decoration: TextDecoration.none,
-                fontSize: ScreenUtil().setSp(size),
-              ),
-            )));
+class FastEmoji extends StatelessWidget {
+  final String emoji;
+  final Function(String emoji) onSelected;
+  const FastEmoji({
+    Key key,
+    this.emoji,
+    this.onSelected,
+  }) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return CupertinoButton(
+      onPressed: () {
+        onSelected?.call(emoji);
+      },
+      child: Text(
+        emoji,
+        style: TextStyle(
+          decoration: TextDecoration.none,
+          fontSize: 32,
+        ),
+      ),
+    );
   }
 }

@@ -1,10 +1,12 @@
+import 'package:flutter/material.dart';
+
 class UserModel {
   final String id;
   final String username;
-  final String profilePictureUrl;
+  final ImageProvider profilePicture;
   const UserModel({
     this.id = "",
     this.username = "",
-    this.profilePictureUrl = "",
+    this.profilePicture,
   });
 }

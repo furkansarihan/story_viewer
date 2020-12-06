@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:ui' as ui;
 
-import 'package:flutter_screenutil/screenutil.dart';
-
 class BlurSlider extends StatefulWidget {
   final String slideToSee;
   final Function onSliderEnd;
@@ -49,13 +47,12 @@ class _BlurSliderState extends State<BlurSlider> {
               Text(
                 widget.slideToSee,
                 style: TextStyle(
-                  fontSize: ScreenUtil().setSp(52),
                   color: Colors.white,
                   decoration: TextDecoration.none,
                 ),
               ),
               Container(
-                margin: EdgeInsets.all(ScreenUtil().setWidth(32)),
+                margin: const EdgeInsets.all(12),
                 child: Slider(
                     min: 5,
                     max: 60,

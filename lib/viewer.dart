@@ -1,7 +1,6 @@
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_screenutil/screenutil.dart';
 import 'package:story_viewer/layer_additional.dart';
 import 'package:story_viewer/story_viewer.dart';
 import 'blur_slider.dart';
@@ -187,19 +186,13 @@ class _StoryViewerState extends State<StoryViewer>
   @override
   void dispose() {
     viewController.animationController.dispose();
-
     widget.onDispose?.call();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    ScreenUtil.init(
-      context,
-      width: 1080,
-      height: 1920,
-      allowFontScaling: true,
-    );
+    bool isLong = MediaQuery.of(context).size.aspectRatio > 9 / 16;
     List<Widget> layers = [
       Container(
         color: widget.backgroundColor ?? Colors.black,
@@ -242,7 +235,7 @@ class _StoryViewerState extends State<StoryViewer>
       alignment: widget.mediaAlignment ?? Alignment.center,
       children: layers,
     );
-    if (viewController.isLong) {
+    if (isLong) {
       body = SafeArea(
         bottom: false,
         child: body,
@@ -252,31 +245,34 @@ class _StoryViewerState extends State<StoryViewer>
       return body;
     }
     body = GestureDetector(
-        onTapUp: (d) {
-          bool prewStory = d.localPosition.dx < ScreenUtil.screenWidth * 0.2;
-          viewController.handPlay(prewStory: prewStory);
-        },
-        onTapDown: (d) {
-          bool prewShadowShow =
-              d.localPosition.dx < ScreenUtil.screenWidth * 0.2;
-          viewController.handPause(prewShadowShow: prewShadowShow);
-        },
-        onTapCancel: () {
-          viewController.cancelHider();
-        },
-        onVerticalDragEnd: widget.inline
-            ? (c) {
-                viewController.handPlay(prewStory: false);
-              }
-            : null,
-        onHorizontalDragEnd: widget.inline
-            ? (c) {
-                viewController.handPlay(prewStory: false);
-              }
-            : null,
-        child: body);
+      onTapUp: (d) {
+        bool prewStory =
+            d.localPosition.dx < MediaQuery.of(context).size.width * 0.2;
+        viewController.handPlay(prewStory: prewStory);
+      },
+      onTapDown: (d) {
+        bool prewShadowShow =
+            d.localPosition.dx < MediaQuery.of(context).size.width * 0.2;
+        viewController.handPause(prewShadowShow: prewShadowShow);
+      },
+      onTapCancel: () {
+        viewController.cancelHider();
+      },
+      onVerticalDragEnd: widget.inline
+          ? (c) {
+              viewController.handPlay(prewStory: false);
+            }
+          : null,
+      onHorizontalDragEnd: widget.inline
+          ? (c) {
+              viewController.handPlay(prewStory: false);
+            }
+          : null,
+      child: body,
+    );
     if (widget.inline) {
-      double _width = ScreenUtil.screenWidth - (widget.padding.horizontal);
+      double _width =
+          MediaQuery.of(context).size.width - (widget.padding.horizontal);
       double _height;
       switch (widget.ratio) {
         case StoryRatio.r16_9:
@@ -297,13 +293,15 @@ class _StoryViewerState extends State<StoryViewer>
     }
     return ExtendedImageSlidePage(
       slidePageBackgroundHandler: (Offset offset, Size pageSize) {
-        double opacity = 1 - offset.dy.abs() / ScreenUtil.screenHeight;
+        double opacity =
+            1 - offset.dy.abs() / MediaQuery.of(context).size.height;
         opacity = opacity > 0 ? opacity : 0;
         opacity = opacity < 1 ? opacity : 1;
         return Colors.black.withOpacity(opacity);
       },
       slideScaleHandler: (Offset offset, {ExtendedImageSlidePageState state}) {
-        double scale = (offset.dy / (ScreenUtil.screenHeight * 0.4)) / 10;
+        double scale =
+            (offset.dy / (MediaQuery.of(context).size.height * 0.4)) / 10;
         return 1 - scale;
       },
       slideOffsetHandler: (Offset offset, {ExtendedImageSlidePageState state}) {
@@ -324,7 +322,7 @@ class _StoryViewerState extends State<StoryViewer>
           }
         }
         lastY = offset.dy;
-        double limit = ScreenUtil.screenHeight * 0.3;
+        double limit = MediaQuery.of(context).size.height * 0.3;
         double dy = offset.dy < limit ? offset.dy : limit;
         dy = dy < 0 ? 0 : dy;
         return Offset(0, dy);
@@ -349,8 +347,12 @@ class _StoryViewerState extends State<StoryViewer>
         }
       },
       child: AnnotatedRegion<SystemUiOverlayStyle>(
-          value: SystemUiOverlayStyle.light,
-          child: Material(color: Colors.transparent, child: body)),
+        value: SystemUiOverlayStyle.light,
+        child: Material(
+          color: Colors.transparent,
+          child: body,
+        ),
+      ),
     );
   }
 

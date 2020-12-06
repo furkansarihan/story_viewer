@@ -36,8 +36,8 @@ StoryViewer(
         StoryItemModel(imageProvider: AssetImage(assetName)),
     ],
     userModel: UserModel(
-        username: "story_viewer",
-        profilePictureUrl: "profile_url",
+        username: username,
+        profilePicture: NetworkImage(profileURL),
     ),
 );
 ```
@@ -66,5 +66,3 @@ Check out ```example/lib/detailed_example.dart``` for more!
 | Package Name| Type | Description | 
 | ----------- | ----------- | ----------- |
 | extended_image| Core | Caching images, slide out page |
-| flutter_screenutil | Core | Device-Size spesific visual behaviours|
-| flutter_spinkit | Visual | Loading animation|

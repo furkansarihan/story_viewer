@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import 'package:story_viewer/viewer.dart';
 import 'package:story_viewer/viewer_controller.dart';
 import 'package:story_viewer/widgets/progress_widget.dart';
@@ -17,10 +17,7 @@ class StoryProgressRow extends StatelessWidget {
     return Padding(
       padding: viewer.inline
           ? viewer.progressRowPadding ??
-              EdgeInsets.only(
-                  top: ScreenUtil().setWidth(24),
-                  right: ScreenUtil().setWidth(24),
-                  left: ScreenUtil().setWidth(24))
+              const EdgeInsets.only(top: 6, right: 6, left: 6)
           : viewer.progressRowPadding ?? EdgeInsets.zero,
       child: Row(
         children: [
@@ -33,17 +30,18 @@ class StoryProgressRow extends StatelessWidget {
               )
             else
               Flexible(
-                  flex: 1,
-                  child: Container(
-                    margin: EdgeInsets.symmetric(horizontal: 0.5),
-                    decoration: BoxDecoration(
-                      color: i < viewerController.currentIndex
-                          ? progressColor
-                          : progressColor.withAlpha(100),
-                      borderRadius: viewer.progressBorderRadius,
-                    ),
-                    height: viewer.progressHeight,
-                  )),
+                flex: 1,
+                child: Container(
+                  margin: EdgeInsets.symmetric(horizontal: 0.5),
+                  decoration: BoxDecoration(
+                    color: i < viewerController.currentIndex
+                        ? progressColor
+                        : progressColor.withAlpha(100),
+                    borderRadius: viewer.progressBorderRadius,
+                  ),
+                  height: viewer.progressHeight,
+                ),
+              ),
         ],
       ),
     );

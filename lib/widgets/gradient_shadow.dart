@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/screenutil.dart';
 
 class GradientShadow extends StatelessWidget {
   final bool top;
@@ -24,26 +23,22 @@ class GradientShadow extends StatelessWidget {
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    Color _c;
-    if (color == null) {
-      _c = Colors.black;
-    } else {
-      _c = color;
-    }
+    Color _c = color ?? Colors.black;
     Widget returnW = IgnorePointer(
       child: Container(
-        width: width ?? ScreenUtil.screenWidth,
-        height: height ?? ScreenUtil.screenHeight,
+        width: width ?? MediaQuery.of(context).size.width,
+        height: height ?? MediaQuery.of(context).size.height,
         decoration: BoxDecoration(
           borderRadius: borderRadius,
           gradient: LinearGradient(
-              colors: [
-                for (var alpha in alphas) _c.withAlpha(alpha),
-              ],
-              begin: FractionalOffset(0.0, top ? 1.0 : 0.0),
-              end: FractionalOffset(0.0, top ? 0.0 : 1.0),
-              stops: stops,
-              tileMode: TileMode.clamp),
+            colors: [
+              for (var alpha in alphas) _c.withAlpha(alpha),
+            ],
+            begin: FractionalOffset(0.0, top ? 1.0 : 0.0),
+            end: FractionalOffset(0.0, top ? 0.0 : 1.0),
+            stops: stops,
+            tileMode: TileMode.clamp,
+          ),
         ),
       ),
     );

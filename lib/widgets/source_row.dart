@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/screenutil.dart';
+
 import 'package:story_viewer/viewer.dart';
 
 class SourceRow extends StatelessWidget {
@@ -16,18 +16,13 @@ class SourceRow extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
         Padding(
-          padding: EdgeInsets.fromLTRB(
-            ScreenUtil().setWidth(12),
-            0,
-            ScreenUtil().setWidth(12),
-            ScreenUtil().setWidth(16),
-          ),
+          padding: EdgeInsets.fromLTRB(6, 0, 6, 8),
           child: Icon(
             camera
                 ? viewer.customizer.cameraSourceIcon
                 : viewer.customizer.gallerySourceIcon,
             color: Colors.white,
-            size: ScreenUtil().setWidth(64),
+            size: 24,
           ),
         ),
         Text(
@@ -38,10 +33,10 @@ class SourceRow extends StatelessWidget {
           textAlign: TextAlign.left,
           maxLines: 1,
           style: TextStyle(
-              decoration: TextDecoration.none,
-              color: Colors.white,
-              fontSize: ScreenUtil().setSp(40),
-              fontWeight: FontWeight.normal),
+            decoration: TextDecoration.none,
+            color: Colors.white,
+            fontWeight: FontWeight.normal,
+          ),
         ),
       ],
     );

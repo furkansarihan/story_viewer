@@ -83,7 +83,7 @@ class _DetailedHomeState extends State<DetailedHome> {
               ],
               userModel: UserModel(
                 username: "monotony",
-                profilePictureUrl: images2[2],
+                profilePicture: NetworkImage(images2[2]),
               ),
             ),
           ],
@@ -119,7 +119,9 @@ class _DetailedHomeState extends State<DetailedHome> {
       ],
       userModel: UserModel(
         username: "mark",
-        profilePictureUrl: "https://static.toiimg.com/photo/46453492.cms",
+        profilePicture: NetworkImage(
+          "https://static.toiimg.com/photo/46453492.cms",
+        ),
       ),
     );
   }
@@ -167,7 +169,9 @@ class _DetailedHomeState extends State<DetailedHome> {
       ],
       userModel: UserModel(
         username: "zuckerberg",
-        profilePictureUrl: "https://static.toiimg.com/photo/46453492.cms",
+        profilePicture: NetworkImage(
+          "https://static.toiimg.com/photo/46453492.cms",
+        ),
       ),
       profilePicture: ClipOval(
         child: Image.network(

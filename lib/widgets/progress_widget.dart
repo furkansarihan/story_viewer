@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/screenutil.dart';
+
 import 'package:story_viewer/viewer.dart';
 import 'package:story_viewer/viewer_controller.dart';
 
@@ -25,7 +25,8 @@ class StoryProgressWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double storyWidth = ScreenUtil.screenWidth / controller.stories.length - 1;
+    double storyWidth =
+        MediaQuery.of(context).size.width / controller.stories.length - 1;
     controller.addListener(
       onPlayed: onPlayed,
       onPaused: onPaused,

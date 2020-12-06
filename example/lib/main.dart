@@ -65,8 +65,9 @@ class _HomeState extends State<Home> {
             ],
             userModel: UserModel(
               username: "flutter",
-              profilePictureUrl:
-                  "https://cdn-images-1.medium.com/max/1200/1*5-aoK8IBmXve5whBQM90GA.png",
+              profilePicture: NetworkImage(
+                "https://cdn-images-1.medium.com/max/1200/1*5-aoK8IBmXve5whBQM90GA.png",
+              ),
             ),
           ),
           MaterialButton(
