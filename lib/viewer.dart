@@ -192,7 +192,7 @@ class _StoryViewerState extends State<StoryViewer>
 
   @override
   Widget build(BuildContext context) {
-    bool isLong = MediaQuery.of(context).size.aspectRatio > 9 / 16;
+    bool isLong = MediaQuery.of(context).size.aspectRatio < (9 / 17);
     List<Widget> layers = [
       Container(
         color: widget.backgroundColor ?? Colors.black,
