@@ -30,7 +30,6 @@ class StoryViewer extends StatefulWidget {
     StoryViewer viewer,
     StoryViewerController viewerController,
   }) getAdditionalLayersAfterMedia;
-  final String heroKey;
   final String heroTag;
   final String profileHeroTag;
   final int initIndex;
@@ -90,7 +89,6 @@ class StoryViewer extends StatefulWidget {
       this.stories,
       this.fromAnonymous = false,
       this.trusted = true,
-      this.heroKey,
       this.initIndex = 0,
       this.onEachStoryLoadComplated,
       this.onEditStory,

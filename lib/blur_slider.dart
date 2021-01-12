@@ -61,13 +61,13 @@ class _BlurSliderState extends State<BlurSlider> {
                   value: blur,
                   onChanged: (newBlur) {
                     if (!_showing) {
-                      return null;
+                      return;
                     }
                     if (newBlur == 5) {
                       _showing = false;
                       refreshState();
                       widget?.onSliderEnd();
-                      return null;
+                      return;
                     }
                     blur = newBlur;
                     refreshState();

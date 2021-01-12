@@ -32,7 +32,7 @@ class StoryProfileRow extends StatelessWidget {
                     onTap: () {
                       if (viewerController.owner) {
                         viewer.onCameraTap?.call();
-                        return null;
+                        return;
                       } else {
                         viewer.onUserTap?.call(
                           viewerController: viewerController,

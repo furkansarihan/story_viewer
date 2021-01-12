@@ -144,9 +144,9 @@ class _StoryLayerUIState extends State<StoryLayerUI> {
         children: [
           GradientShadow(
             key: GlobalKey(),
-            height: viewer.inline ? 48 : 64,
+            height: viewer.inline ? 48 : 72,
             stops: [0.0, 1.0],
-            alphas: [0, 70],
+            alphas: [0, 120],
             top: true,
           ),
           GradientShadow(

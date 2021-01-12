@@ -25,9 +25,8 @@ class StoryViewerController {
 
   Map<ImageProvider, bool> _loadedStories = Map<ImageProvider, bool>();
   List<StoryItemModel> get stories => viewer?.stories ?? [];
-  String get ownerUserID => viewer?.displayerUserID ?? "?";
-  String get heroTag => viewer?.heroTag ?? "";
-  String get heroKey => viewer?.heroKey ?? "";
+  String get ownerUserID => viewer?.displayerUserID ?? '';
+  String get heroTag => viewer?.heroTag ?? '';
 
   int currentIndex;
   StoryItemModel get currentStory =>
@@ -37,7 +36,7 @@ class StoryViewerController {
 
   bool get owner => currentStory.ownerID == ownerUserID;
   String get currentHeroTag =>
-      viewer?.heroTag != null ? heroTag : "${currentStory.id}$heroKey";
+      viewer?.heroTag ?? currentStory?.hashCode?.toString() ?? '?';
 
   StoryViewerController({
     this.currentIndex = 0,
@@ -55,22 +54,22 @@ class StoryViewerController {
 
   void play() {
     if (_playing) {
-      return null;
+      return;
     }
     if (_replying) {
-      return null;
+      return;
     }
     if (!trusted) {
-      return null;
+      return;
     }
     if (_slideInfo) {
-      return null;
+      return;
     }
     if (stories.isEmpty) {
-      return null;
+      return;
     }
     if (!_loadedStories.containsKey(currentStory.imageProvider)) {
-      return null;
+      return;
     }
     if (_uiHiding) {
       _uiHiding = false;
@@ -108,7 +107,7 @@ class StoryViewerController {
 
   void pause() {
     if (!_playing) {
-      return null;
+      return;
     }
     _playing = false;
     _callFunctions(_onPauseds);
@@ -116,7 +115,7 @@ class StoryViewerController {
 
   void replyPause() {
     if (!viewer.hasReply) {
-      return null;
+      return;
     }
     _replying = true;
     _playing = false;
@@ -137,7 +136,7 @@ class StoryViewerController {
 
   void handPause({bool prewShadowShow}) {
     if (!_playing) {
-      return null;
+      return;
     }
     if (prewShadowShow) {
       prevShadower = Timer(Duration(milliseconds: 75), () {
@@ -182,7 +181,7 @@ class StoryViewerController {
           ),
         );
         complated();
-        return null;
+        return;
       }
     }
     animationController.reset();
@@ -231,7 +230,6 @@ class StoryViewerController {
   }
 
   void statusListener(status) {
-    //print("$status ${viewController.animationController.isAnimating}");
     if (status == AnimationStatus.forward) {
     } else if (status == AnimationStatus.completed) {
       next();
