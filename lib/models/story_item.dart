@@ -8,10 +8,10 @@ class StoryItemModel {
   final DateTime storyTime;
   final Duration displayDuration;
   const StoryItemModel({
-    this.id = "",
-    this.ownerID = "",
+    this.id = '',
+    this.ownerID = '',
     this.imageProvider,
-    this.source = "gallery",
+    this.source = 'gallery',
     this.storyTime,
     this.displayDuration,
   });

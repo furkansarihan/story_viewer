@@ -44,14 +44,16 @@ class StoryViewer extends StatefulWidget {
     StoryViewer viewer,
     StoryViewerController viewerController,
   }) onEditStory;
-  final Function onUserTap;
-  final Function onCameraTap;
+  final Function({
+    StoryViewerController viewerController,
+  }) onUserTap;
   final Function onDispose;
   final Widget profilePicture;
   final Customizer customValues;
   final Alignment mediaAlignment;
   final BoxFit mediaFit;
   final Color backgroundColor;
+  final BorderRadiusGeometry borderRadius;
   final Color placeholderBackground;
   final List<Color> placeholderBackgrounds;
   final Duration serverTimeGap;
@@ -96,7 +98,6 @@ class StoryViewer extends StatefulWidget {
       this.heroTag,
       this.onStoryReplied,
       this.onUserTap,
-      this.onCameraTap,
       this.profilePicture,
       this.customValues,
       this.getAdditionalLayersBeforeMedia,
@@ -114,6 +115,7 @@ class StoryViewer extends StatefulWidget {
       this.progressRowPadding,
       this.progressBorderRadius = BorderRadius.zero,
       this.progressColor = Colors.white,
+      this.borderRadius,
       this.progressHeight = 4,
       this.titleStyle,
       this.setupCustomWidgets,

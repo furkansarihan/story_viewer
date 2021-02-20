@@ -5,8 +5,8 @@ class UserModel {
   final String username;
   final ImageProvider profilePicture;
   const UserModel({
-    this.id = "",
-    this.username = "",
+    this.id = '',
+    this.username = '',
     this.profilePicture,
   });
 }

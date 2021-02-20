@@ -34,10 +34,10 @@ class StoryLayerMediaState extends State<StoryLayerMedia> {
   @override
   Widget build(BuildContext context) {
     if (controller.currentStory.imageProvider == null) {
-      return SizedBox();
+      return const SizedBox.shrink();
     }
     StoryItemModel currentItem = controller.currentStory;
-    return ExtendedImage(
+    Widget returnW = ExtendedImage(
       width: MediaQuery.of(context).size.width,
       height: widget.viewer.inline ? null : MediaQuery.of(context).size.height,
       image: currentItem.imageProvider,
@@ -97,6 +97,13 @@ class StoryLayerMediaState extends State<StoryLayerMedia> {
         }
       },
     );
+    if (widget.viewer.borderRadius != null) {
+      return ClipRRect(
+        borderRadius: widget.viewer.borderRadius,
+        child: returnW,
+      );
+    }
+    return returnW;
   }
 
   void refreshState() {

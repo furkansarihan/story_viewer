@@ -90,14 +90,14 @@ class _StoryLayerUIState extends State<StoryLayerUI> {
   Widget build(BuildContext context) {
     bool isLong = MediaQuery.of(context).size.aspectRatio > 9 / 16;
     Widget returnW = Column(
-      key: ObjectKey("layer_ui"),
+      key: ObjectKey('layer_ui'),
       children: [
         Container(
           height:
               isLong && !viewer.inline ? 0 : MediaQuery.of(context).padding.top,
         ),
         StoryProgressRow(
-          key: ObjectKey("progressrow"),
+          key: ObjectKey('progressrow'),
           viewer: viewer,
           viewerController: controller,
         ),
@@ -195,7 +195,6 @@ class _StoryLayerUIState extends State<StoryLayerUI> {
               textController: textController,
               textNode: textNode,
               onFocusChange: (hasFocus) {
-                print("hasFocus $hasFocus");
                 if (hasFocus) {
                   controller.replyPause();
                 }

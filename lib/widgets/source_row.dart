@@ -10,7 +10,7 @@ class SourceRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool camera = source == "camera";
+    bool camera = source == 'camera';
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.start,
@@ -26,7 +26,6 @@ class SourceRow extends StatelessWidget {
           ),
         ),
         Text(
-          //camera ? l["camera"] : l["gallery"],
           camera
               ? viewer.customizer.cameraSource
               : viewer.customizer.gallerySource,

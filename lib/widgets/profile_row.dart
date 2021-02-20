@@ -27,61 +27,27 @@ class StoryProfileRow extends StatelessWidget {
         children: <Widget>[
           Expanded(
             child: viewer.fromAnonymous
-                ? Container()
+                ? const SizedBox.shrink()
                 : GestureDetector(
                     onTap: () {
-                      if (viewerController.owner) {
-                        viewer.onCameraTap?.call();
-                        return;
-                      } else {
-                        viewer.onUserTap?.call(
-                          viewerController: viewerController,
-                        );
-                      }
-                      if (viewer.onCameraTap != null ||
-                          viewer.onUserTap != null) {
-                        viewerController.pause();
-                      }
-                    },
-                    onTapUp: (d) {
-                      bool prewStory = d.localPosition.dx <
-                          MediaQuery.of(context).size.width * 0.2;
-                      viewerController.handPlay(prewStory: prewStory);
+                      viewer.onUserTap?.call(
+                        viewerController: viewerController,
+                      );
                     },
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
-                        Stack(
-                          overflow: Overflow.visible,
-                          children: [
-                            viewer.profilePicture ??
-                                (viewer.profileHeroTag != null
-                                    ? Hero(
-                                        tag: viewer.profileHeroTag,
-                                        child: profilePicture(context),
-                                      )
-                                    : profilePicture(context)),
-                            if (viewerController.owner &&
-                                viewer.onCameraTap != null)
-                              Positioned(
-                                bottom: -2,
-                                right: -2,
-                                child: CircleAvatar(
-                                  backgroundColor: Colors.blueAccent,
-                                  radius: 8,
-                                  child: Icon(
-                                    Icons.add,
-                                    color: Colors.white,
-                                    size: 14,
-                                  ),
-                                ),
-                              )
-                          ],
-                        ),
+                        viewer.profilePicture ??
+                            (viewer.profileHeroTag != null
+                                ? Hero(
+                                    tag: viewer.profileHeroTag,
+                                    child: profilePicture(context),
+                                  )
+                                : profilePicture(context)),
                         const SizedBox(width: 12),
                         Flexible(
                           child: Text(
-                            "${userModel.username}  ${getDurationText(_storyDurationSincePosted())}",
+                            '${userModel.username}  ${getDurationText(_storyDurationSincePosted())}',
                             textAlign: TextAlign.left,
                             maxLines: 1,
                             overflow: TextOverflow.clip,
@@ -146,8 +112,9 @@ class StoryProfileRow extends StatelessWidget {
 
   Duration _storyDurationSincePosted() {
     return Duration(
-        milliseconds: _currentTime().millisecondsSinceEpoch -
-            viewerController.currentStory.timestamp.millisecondsSinceEpoch);
+      milliseconds: _currentTime().millisecondsSinceEpoch -
+          viewerController.currentStory.timestamp.millisecondsSinceEpoch,
+    );
   }
 
   DateTime _currentTime() {
@@ -161,16 +128,18 @@ class StoryProfileRow extends StatelessWidget {
   }
 
   String getDurationText(Duration duration) {
-    if (duration.inSeconds == 0) return "";
-    if (duration.isNegative) return "";
+    if (duration.inSeconds == 0) return '';
+    if (duration.isNegative) return '';
     if (duration.inMinutes < 1) {
-      return "•  ${duration.inSeconds}${viewer.customizer.seconds}";
+      return '•  ${duration.inSeconds}${viewer.customizer.seconds}';
     } else if (duration.inMinutes < 60) {
-      return "•  ${duration.inMinutes}${viewer.customizer.minutes}";
+      return '•  ${duration.inMinutes}${viewer.customizer.minutes}';
     } else if (duration.inHours < 24) {
-      return "•  ${duration.inHours}${viewer.customizer.hours}";
+      return '•  ${duration.inHours}${viewer.customizer.hours}';
+    } else if (duration.inDays < 7) {
+      return '•  ${duration.inDays}${viewer.customizer.days}';
     } else {
-      return "•  ${duration.inDays}${viewer.customizer.days}";
+      return '•  ${duration.inDays ~/ 7}${viewer.customizer.weeks}';
     }
   }
 }

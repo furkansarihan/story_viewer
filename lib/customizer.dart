@@ -9,6 +9,7 @@ class Customizer {
   final String minutes;
   final String hours;
   final String days;
+  final String weeks;
   final IconData closeIcon;
   final IconData infoIcon;
   final IconData failedImageIcon;
@@ -17,14 +18,15 @@ class Customizer {
   final IconData cameraSourceIcon;
 
   Customizer({
-    this.cameraSource = "Camera",
-    this.gallerySource = "Gallery",
-    this.replyPlaceholder = "Message...",
-    this.slideToSee = "Slide to see...",
-    this.seconds = "s",
-    this.minutes = "m",
-    this.hours = "h",
-    this.days = "d",
+    this.cameraSource = 'Camera',
+    this.gallerySource = 'Gallery',
+    this.replyPlaceholder = 'Message...',
+    this.slideToSee = 'Slide to see...',
+    this.seconds = 's',
+    this.minutes = 'm',
+    this.hours = 'h',
+    this.days = 'd',
+    this.weeks = 'w',
     this.closeIcon = Icons.close,
     this.infoIcon = Icons.more_horiz,
     this.failedImageIcon = Icons.broken_image,

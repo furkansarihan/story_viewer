@@ -13,21 +13,39 @@ class FastEmojis extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Row(
-            mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              FastEmoji(emoji: "😂", onSelected: onEmojiSelected),
-              FastEmoji(emoji: "😯", onSelected: onEmojiSelected),
-              FastEmoji(emoji: "😍", onSelected: onEmojiSelected),
-              FastEmoji(emoji: "😢", onSelected: onEmojiSelected)
+              const SizedBox(width: 16),
+              Expanded(
+                child: FastEmoji(emoji: '😂', onSelected: onEmojiSelected),
+              ),
+              Expanded(
+                child: FastEmoji(emoji: '😯', onSelected: onEmojiSelected),
+              ),
+              Expanded(
+                child: FastEmoji(emoji: '😍', onSelected: onEmojiSelected),
+              ),
+              Expanded(
+                child: FastEmoji(emoji: '😢', onSelected: onEmojiSelected),
+              ),
+              const SizedBox(width: 16),
             ],
           ),
           Row(
-            mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              FastEmoji(emoji: "👏", onSelected: onEmojiSelected),
-              FastEmoji(emoji: "🔥", onSelected: onEmojiSelected),
-              FastEmoji(emoji: "🎉", onSelected: onEmojiSelected),
-              FastEmoji(emoji: "💯", onSelected: onEmojiSelected)
+              const SizedBox(width: 16),
+              Expanded(
+                child: FastEmoji(emoji: '👏', onSelected: onEmojiSelected),
+              ),
+              Expanded(
+                child: FastEmoji(emoji: '🔥', onSelected: onEmojiSelected),
+              ),
+              Expanded(
+                child: FastEmoji(emoji: '🎉', onSelected: onEmojiSelected),
+              ),
+              Expanded(
+                child: FastEmoji(emoji: '💯', onSelected: onEmojiSelected),
+              ),
+              const SizedBox(width: 16),
             ],
           )
         ],
@@ -48,13 +66,16 @@ class FastEmoji extends StatelessWidget {
   Widget build(BuildContext context) {
     return CupertinoButton(
       onPressed: () {
-        onSelected?.call(emoji);
+        onSelected(emoji);
       },
-      child: Text(
-        emoji,
-        style: TextStyle(
-          decoration: TextDecoration.none,
-          fontSize: 32,
+      child: FittedBox(
+        fit: BoxFit.contain,
+        child: Text(
+          emoji,
+          style: TextStyle(
+            decoration: TextDecoration.none,
+            fontSize: 56,
+          ),
         ),
       ),
     );

@@ -31,22 +31,22 @@ class _DetailedHomeState extends State<DetailedHome> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Hero(
-                  tag: "basic_hero",
+                  tag: 'basic_hero',
                   child: CupertinoButton(
                       child: Column(
                         children: [
-                          Text("Basic"),
+                          Text('Basic'),
                           Icon(Icons.image),
                         ],
                       ),
                       onPressed: () {
-                        pushStoryView(basicStoryViewer(heroTag: "basic_hero"));
+                        pushStoryView(basicStoryViewer(heroTag: 'basic_hero'));
                       }),
                 ),
                 CupertinoButton(
                     child: Column(
                       children: [
-                        Text("Custom"),
+                        Text('Custom'),
                         Icon(Icons.camera),
                       ],
                     ),
@@ -56,7 +56,7 @@ class _DetailedHomeState extends State<DetailedHome> {
                 CupertinoButton(
                     child: Column(
                       children: [
-                        Text("Blurred"),
+                        Text('Blurred'),
                         Icon(Icons.blur_circular),
                       ],
                     ),
@@ -66,8 +66,8 @@ class _DetailedHomeState extends State<DetailedHome> {
               ],
             ),
             StoryViewer(
-              key: ValueKey("2"),
-              loop: true,
+              key: ValueKey('2'),
+              loop: false,
               progressBorderRadius: BorderRadius.all(Radius.circular(12)),
               backgroundColor: Colors.blueGrey,
               ratio: StoryRatio.r4_3,
@@ -82,7 +82,7 @@ class _DetailedHomeState extends State<DetailedHome> {
                 ),
               ],
               userModel: UserModel(
-                username: "monotony",
+                username: 'monotony',
                 profilePicture: NetworkImage(images2[2]),
               ),
             ),
@@ -102,25 +102,28 @@ class _DetailedHomeState extends State<DetailedHome> {
   }
 
   Widget basicStoryViewer({
-    String heroTag = "",
+    String heroTag = '',
     bool trusted = true,
     bool hasReply = true,
   }) {
     return StoryViewer(
-      displayerUserID: "displayer",
+      displayerUserID: 'displayer',
       heroTag: heroTag,
       hasReply: hasReply,
       trusted: trusted,
+      mediaAlignment: Alignment.topCenter,
+      borderRadius: BorderRadius.all(Radius.circular(12)),
+      progressRowPadding: EdgeInsets.all(8),
       stories: [
         StoryItemModel(
           imageProvider: NetworkImage(
-              "https://media.vanityfair.com/photos/5d1517768d443600098464f6/9:16/w_747,h_1328,c_limit/mark-zuckerberg-democracy.jpg"),
+              'https://i.pinimg.com/originals/7e/43/61/7e436110ed2827aacf105ff7355eb2aa.jpg'),
         ),
       ],
       userModel: UserModel(
-        username: "mark",
+        username: 'mark',
         profilePicture: NetworkImage(
-          "https://static.toiimg.com/photo/46453492.cms",
+          'https://static.toiimg.com/photo/46453492.cms',
         ),
       ),
     );
@@ -130,22 +133,22 @@ class _DetailedHomeState extends State<DetailedHome> {
     StoryViewerController controller = StoryViewerController();
     controller.addListener(
       onPlayed: () {
-        print("'onPlayed' callback outside of story_viewer");
+        print('onPlayed: callback outside of story_viewer');
       },
       onPaused: () {
-        print("'onPaused' callback outside of story_viewer");
+        print('onPaused: callback outside of story_viewer');
       },
       onIndexChanged: () {
-        print("'onIndexChanged' callback outside of story_viewer");
+        print('onIndexChanged: callback outside of story_viewer');
       },
       onComplated: () {
-        print("'onComplated' callback outside of story_viewer");
+        print('onComplated: callback outside of story_viewer');
       },
       onUIHide: () {
-        print("'onUIHide' callback outside of story_viewer");
+        print('onUIHide: callback outside of story_viewer');
       },
       onUIShow: () {
-        print("'onUIShow' callback outside of story_viewer");
+        print('onUIShow: callback outside of story_viewer');
       },
     );
     return StoryViewer(
@@ -160,22 +163,22 @@ class _DetailedHomeState extends State<DetailedHome> {
           displayDuration: Duration(seconds: 20),
           storyTime: DateTime(2020, 10),
           imageProvider: NetworkImage(
-              "https://media.vanityfair.com/photos/5d1517768d443600098464f6/9:16/w_747,h_1328,c_limit/mark-zuckerberg-democracy.jpg"),
+              'https://media.vanityfair.com/photos/5d1517768d443600098464f6/9:16/w_747,h_1328,c_limit/mark-zuckerberg-democracy.jpg'),
         ),
         StoryItemModel(
           imageProvider: NetworkImage(
-              "https://media.vanityfair.com/photos/5d1517768d443600098464f6/9:16/w_747,h_1328,c_limit/mark-zuckerberg-democracy.jpg"),
+              'https://media.vanityfair.com/photos/5d1517768d443600098464f6/9:16/w_747,h_1328,c_limit/mark-zuckerberg-democracy.jpg'),
         ),
       ],
       userModel: UserModel(
-        username: "zuckerberg",
+        username: 'zuckerberg',
         profilePicture: NetworkImage(
-          "https://static.toiimg.com/photo/46453492.cms",
+          'https://static.toiimg.com/photo/46453492.cms',
         ),
       ),
       profilePicture: ClipOval(
         child: Image.network(
-          "https://static.toiimg.com/photo/46453492.cms",
+          'https://static.toiimg.com/photo/46453492.cms',
           width: 32,
           height: 32,
           fit: BoxFit.fitHeight,
@@ -211,7 +214,7 @@ class _DetailedHomeState extends State<DetailedHome> {
               ],
             )),
             child: Text(
-              "This is an additional layer for ${viewerController.currentIndex}",
+              'This is an additional layer for ${viewerController.currentIndex}',
               style: TextStyle(color: Colors.white, fontSize: 24),
             ),
           )),

@@ -9,7 +9,7 @@ class BlurSlider extends StatefulWidget {
     Key key,
     this.onSliderEnd,
     this.showBlurSlier,
-    this.slideToSee = "",
+    this.slideToSee = '',
   }) : super(key: key);
 
   @override
