@@ -117,6 +117,7 @@ class _StoryLayerUIState extends State<StoryLayerUI> {
         onEmojiSelected: (String emoji) {
           FocusScope.of(context).requestFocus(FocusNode());
           viewer.onStoryReplied?.call(
+            viewerController: controller,
             storyID: controller.currentStory.id,
             message: emoji,
           );

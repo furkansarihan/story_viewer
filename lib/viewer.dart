@@ -39,7 +39,11 @@ class StoryViewer extends StatefulWidget {
   final StoryRatio ratio;
   final bool showSource;
   final Function({String storyID}) onEachStoryLoadComplated;
-  final Function({String storyID, String message}) onStoryReplied;
+  final Function({
+    StoryViewerController viewerController,
+    String storyID,
+    String message,
+  }) onStoryReplied;
   final Function({
     StoryViewer viewer,
     StoryViewerController viewerController,
@@ -56,6 +60,7 @@ class StoryViewer extends StatefulWidget {
   final BorderRadiusGeometry borderRadius;
   final Color placeholderBackground;
   final List<Color> placeholderBackgrounds;
+  final SystemUiOverlayStyle systemOverlayStyle;
   final Duration serverTimeGap;
   final bool Function() willPop;
   final EdgeInsets progressRowPadding;
@@ -108,6 +113,7 @@ class StoryViewer extends StatefulWidget {
       this.backgroundColor,
       this.placeholderBackground,
       this.placeholderBackgrounds,
+      this.systemOverlayStyle,
       this.serverTimeGap,
       this.willPop,
       this.hasReply = false,
@@ -195,7 +201,7 @@ class _StoryViewerState extends State<StoryViewer>
     bool isLong = MediaQuery.of(context).size.aspectRatio < (9 / 17);
     List<Widget> layers = [
       Container(
-        color: widget.backgroundColor ?? Colors.black,
+        color: widget.backgroundColor ?? Colors.transparent,
       ),
     ];
     if (widget.getAdditionalLayersBeforeMedia != null) {
@@ -347,7 +353,16 @@ class _StoryViewerState extends State<StoryViewer>
         }
       },
       child: AnnotatedRegion<SystemUiOverlayStyle>(
-        value: SystemUiOverlayStyle.light,
+        value: widget.systemOverlayStyle ??
+            SystemUiOverlayStyle(
+              statusBarIconBrightness: Brightness.light,
+              statusBarBrightness: Brightness.dark,
+              systemNavigationBarColor: Theme.of(context).canvasColor,
+              systemNavigationBarIconBrightness:
+                  Theme.of(context).brightness == Brightness.dark
+                      ? Brightness.light
+                      : Brightness.dark,
+            ),
         child: Material(
           color: Colors.transparent,
           child: body,

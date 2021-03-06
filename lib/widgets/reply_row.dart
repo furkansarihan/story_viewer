@@ -33,7 +33,7 @@ class StoryReplyRow extends StatelessWidget {
     Widget returnW = Container(
       width: MediaQuery.of(context).size.width,
       padding: EdgeInsets.only(bottom: bottom),
-      color: Colors.black12,
+      color: Colors.black26,
       child: SafeArea(
         top: false,
         child: Row(
@@ -55,6 +55,7 @@ class StoryReplyRow extends StatelessWidget {
               ),
               onPressed: () {
                 viewer.onStoryReplied?.call(
+                  viewerController: viewerController,
                   storyID: viewerController.currentStory.id,
                   message: textController.text,
                 );
@@ -100,6 +101,7 @@ class StoryReplyRow extends StatelessWidget {
         ),
         onSubmitted: (String message) {
           viewer.onStoryReplied?.call(
+            viewerController: viewerController,
             storyID: viewerController.currentStory.id,
             message: message,
           );
@@ -132,6 +134,7 @@ class StoryReplyRow extends StatelessWidget {
           ),
           onSubmitted: (String message) {
             viewer.onStoryReplied?.call(
+              viewerController: viewerController,
               storyID: viewerController.currentStory.id,
               message: message,
             );

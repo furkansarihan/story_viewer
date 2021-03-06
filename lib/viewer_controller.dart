@@ -134,7 +134,7 @@ class StoryViewerController {
     _callFunctions(_onPauseds);
   }
 
-  void handPause({bool prewShadowShow}) {
+  void handPause({bool prewShadowShow = false}) {
     if (!_playing) {
       return;
     }

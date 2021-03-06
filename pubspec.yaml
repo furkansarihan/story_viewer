@@ -11,7 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
   
-  extended_image: ^1.5.0
+  extended_image: ^1.6.0
 
 dev_dependencies:
   flutter_test:
