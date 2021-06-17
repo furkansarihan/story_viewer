@@ -8,9 +8,9 @@ class StoryProgressWidget extends StatelessWidget {
   final StoryViewerController viewerController;
 
   const StoryProgressWidget({
-    Key key,
-    this.viewer,
-    this.viewerController,
+    Key? key,
+    required this.viewer,
+    required this.viewerController,
   }) : super(key: key);
 
   StoryViewerController get controller => viewerController;
@@ -25,38 +25,41 @@ class StoryProgressWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double storyWidth =
+    final storyWidth =
         MediaQuery.of(context).size.width / controller.stories.length - 1;
     controller.addListener(
       onPlayed: onPlayed,
       onPaused: onPaused,
     );
-    Color progressColor = viewer.progressColor ?? Colors.white;
+
+    final progressColor = viewer.progressColor;
+
     return Flexible(
       flex: 1,
       child: AnimatedBuilder(
-          animation: controller.animationController,
-          builder: (context, child) => Container(
+        animation: controller.animationController,
+        builder: (context, child) => Container(
+          height: viewer.progressHeight,
+          width: storyWidth,
+          decoration: BoxDecoration(
+            color: progressColor.withAlpha(100),
+            borderRadius: viewer.progressBorderRadius,
+          ),
+          margin: EdgeInsets.symmetric(horizontal: 0.5),
+          child: Stack(
+            children: [
+              Container(
+                width: controller.animationController.value * storyWidth,
                 height: viewer.progressHeight,
-                width: storyWidth,
                 decoration: BoxDecoration(
-                  color: progressColor.withAlpha(100),
+                  color: progressColor,
                   borderRadius: viewer.progressBorderRadius,
                 ),
-                margin: EdgeInsets.symmetric(horizontal: 0.5),
-                child: Stack(
-                  children: [
-                    Container(
-                      width: controller.animationController.value * storyWidth,
-                      height: viewer.progressHeight,
-                      decoration: BoxDecoration(
-                        color: progressColor,
-                        borderRadius: viewer.progressBorderRadius,
-                      ),
-                    ),
-                  ],
-                ),
-              )),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

@@ -6,14 +6,14 @@ import 'package:story_viewer/viewer_controller.dart';
 import 'package:story_viewer/widgets/source_row.dart';
 
 class StoryReplyRow extends StatelessWidget {
-  final StoryViewer viewer;
-  final TextEditingController textController;
-  final StoryViewerController viewerController;
-  final Function(bool hasFocus) onFocusChange;
-  final FocusNode textNode;
+  final StoryViewer? viewer;
+  final TextEditingController? textController;
+  final StoryViewerController? viewerController;
+  final Function(bool hasFocus)? onFocusChange;
+  final FocusNode? textNode;
 
   const StoryReplyRow({
-    Key key,
+    Key? key,
     this.viewer,
     this.viewerController,
     this.textController,
@@ -23,7 +23,7 @@ class StoryReplyRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (viewerController.owner) {
+    if (viewerController!.owner) {
       return Container(
         width: 0,
         height: 0,
@@ -49,15 +49,15 @@ class StoryReplyRow extends StatelessWidget {
             CupertinoButton(
               padding: EdgeInsets.zero,
               child: Icon(
-                viewer.customizer.sendIcon,
+                viewer!.customizer.sendIcon,
                 color: Colors.white,
                 size: 32,
               ),
               onPressed: () {
-                viewer.onStoryReplied?.call(
+                viewer!.onStoryReplied?.call(
                   viewerController: viewerController,
-                  storyID: viewerController.currentStory.id,
-                  message: textController.text,
+                  storyID: viewerController!.currentStory.id,
+                  message: textController!.text,
                 );
               },
             )
@@ -65,14 +65,14 @@ class StoryReplyRow extends StatelessWidget {
         ),
       ),
     );
-    if (viewer.showSource) {
+    if (viewer!.showSource) {
       returnW = Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SourceRow(
             viewer: viewer,
-            source: viewerController.currentStory.source,
+            source: viewerController!.currentStory.source,
           ),
           returnW,
         ],
@@ -92,7 +92,7 @@ class StoryReplyRow extends StatelessWidget {
           decoration: TextDecoration.none,
           color: Colors.white54,
         ),
-        placeholder: viewer.customizer.replyPlaceholder,
+        placeholder: viewer!.customizer.replyPlaceholder,
         decoration: BoxDecoration(),
         maxLines: 1,
         style: TextStyle(
@@ -100,9 +100,9 @@ class StoryReplyRow extends StatelessWidget {
           color: Colors.white,
         ),
         onSubmitted: (String message) {
-          viewer.onStoryReplied?.call(
+          viewer!.onStoryReplied?.call(
             viewerController: viewerController,
-            storyID: viewerController.currentStory.id,
+            storyID: viewerController!.currentStory.id,
             message: message,
           );
         },
@@ -125,7 +125,7 @@ class StoryReplyRow extends StatelessWidget {
               decoration: TextDecoration.none,
               color: Colors.white54,
             ),
-            hintText: viewer.customizer.replyPlaceholder,
+            hintText: viewer!.customizer.replyPlaceholder,
           ),
           maxLines: 1,
           style: TextStyle(
@@ -133,9 +133,9 @@ class StoryReplyRow extends StatelessWidget {
             color: Colors.white,
           ),
           onSubmitted: (String message) {
-            viewer.onStoryReplied?.call(
+            viewer!.onStoryReplied?.call(
               viewerController: viewerController,
-              storyID: viewerController.currentStory.id,
+              storyID: viewerController!.currentStory.id,
               message: message,
             );
           },

@@ -3,13 +3,14 @@ import 'dart:ui' as ui;
 
 class BlurSlider extends StatefulWidget {
   final String slideToSee;
-  final Function onSliderEnd;
-  final bool showBlurSlier;
+  final Function? onSliderEnd;
+  final bool? showBlurSlier;
+
   const BlurSlider({
-    Key key,
+    Key? key,
+    this.slideToSee = '',
     this.onSliderEnd,
     this.showBlurSlier,
-    this.slideToSee = '',
   }) : super(key: key);
 
   @override
@@ -17,8 +18,9 @@ class BlurSlider extends StatefulWidget {
 }
 
 class _BlurSliderState extends State<BlurSlider> {
-  bool _showing;
+  bool? _showing;
   double blur = 60;
+
   @override
   void initState() {
     _showing = widget.showBlurSlier;
@@ -27,7 +29,7 @@ class _BlurSliderState extends State<BlurSlider> {
 
   @override
   Widget build(BuildContext context) {
-    if (!_showing) {
+    if (!_showing!) {
       return SizedBox(
         width: 0,
         height: 0,
@@ -60,13 +62,13 @@ class _BlurSliderState extends State<BlurSlider> {
                   inactiveColor: Colors.black12,
                   value: blur,
                   onChanged: (newBlur) {
-                    if (!_showing) {
+                    if (!_showing!) {
                       return;
                     }
                     if (newBlur == 5) {
                       _showing = false;
                       refreshState();
-                      widget?.onSliderEnd();
+                      widget.onSliderEnd!();
                       return;
                     }
                     blur = newBlur;

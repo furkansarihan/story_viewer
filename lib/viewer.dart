@@ -1,73 +1,74 @@
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:story_viewer/layer_additional.dart';
-import 'package:story_viewer/story_viewer.dart';
+
 import 'blur_slider.dart';
+import 'customizer.dart';
+import 'layer_additional.dart';
 import 'layer_media.dart';
 import 'layer_ui.dart';
 import 'models/story_item.dart';
 import 'models/user.dart';
-import 'customizer.dart';
+import 'story_viewer.dart';
 import 'viewer_controller.dart';
 
 enum StoryRatio { r9_16, r16_9, r3_4, r4_3 }
 
 class StoryViewer extends StatefulWidget {
-  final StoryViewerController viewerController;
-  final String displayerUserID;
-  final UserModel userModel;
-  final List<StoryItemModel> stories;
+  final StoryViewerController? viewerController;
+  final String? displayerUserID;
+  final UserModel? userModel;
+  final List<StoryItemModel>? stories;
   final void Function({
     StoryViewer viewer,
-    StoryViewerController viewerController,
-  }) setupCustomWidgets;
+    StoryViewerController? viewerController,
+  })? setupCustomWidgets;
   final List<Widget> Function({
-    StoryViewer viewer,
-    StoryViewerController viewerController,
-  }) getAdditionalLayersBeforeMedia;
+    StoryViewer? viewer,
+    StoryViewerController? viewerController,
+  })? getAdditionalLayersBeforeMedia;
   final List<Widget> Function({
-    StoryViewer viewer,
-    StoryViewerController viewerController,
-  }) getAdditionalLayersAfterMedia;
-  final String heroTag;
-  final String profileHeroTag;
+    StoryViewer? viewer,
+    StoryViewerController? viewerController,
+  })? getAdditionalLayersAfterMedia;
+  final String? heroTag;
+  final String? profileHeroTag;
   final int initIndex;
   final bool fromAnonymous;
   final bool trusted;
   final bool hasReply;
   final StoryRatio ratio;
   final bool showSource;
-  final Function({String storyID}) onEachStoryLoadComplated;
+  final Function({String storyID})? onEachStoryLoadComplated;
   final Function({
-    StoryViewerController viewerController,
-    String storyID,
-    String message,
-  }) onStoryReplied;
+    StoryViewerController? viewerController,
+    String? storyID,
+    String? message,
+  })? onStoryReplied;
   final Function({
-    StoryViewer viewer,
-    StoryViewerController viewerController,
-  }) onEditStory;
+    StoryViewer? viewer,
+    StoryViewerController? viewerController,
+  })? onEditStory;
   final Function({
-    StoryViewerController viewerController,
-  }) onUserTap;
-  final Function onDispose;
-  final Widget profilePicture;
-  final Customizer customValues;
-  final Alignment mediaAlignment;
-  final BoxFit mediaFit;
-  final Color backgroundColor;
-  final BorderRadiusGeometry borderRadius;
-  final Color placeholderBackground;
-  final List<Color> placeholderBackgrounds;
-  final SystemUiOverlayStyle systemOverlayStyle;
-  final Duration serverTimeGap;
-  final bool Function() willPop;
-  final EdgeInsets progressRowPadding;
+    StoryViewerController? viewerController,
+  })? onUserTap;
+  final Function? onDispose;
+  final Widget? profilePicture;
+  final Customizer? customValues;
+  final Alignment? mediaAlignment;
+  final BoxFit? mediaFit;
+  final Color? backgroundColor;
+  final BorderRadiusGeometry? borderRadius;
+  final Color? placeholderBackground;
+  final List<Color>? placeholderBackgrounds;
+  final SystemUiOverlayStyle? systemOverlayStyle;
+  final Duration? serverTimeGap;
+  final bool Function()? willPop;
+  final EdgeInsets? progressRowPadding;
   final BorderRadius progressBorderRadius;
   final double progressHeight;
   final Color progressColor;
-  final TextStyle titleStyle;
+  final TextStyle? titleStyle;
   final EdgeInsets padding;
   final bool loop;
 
@@ -82,7 +83,7 @@ class StoryViewer extends StatefulWidget {
       Navigator.of(context).pop();
       return true;
     }
-    if (willPop()) {
+    if (willPop!()) {
       Navigator.of(context).pop();
       return true;
     }
@@ -90,7 +91,7 @@ class StoryViewer extends StatefulWidget {
   }
 
   const StoryViewer(
-      {Key key,
+      {Key? key,
       this.viewerController,
       this.userModel,
       this.stories,
@@ -136,9 +137,9 @@ class StoryViewer extends StatefulWidget {
 
 class _StoryViewerState extends State<StoryViewer>
     with TickerProviderStateMixin {
-  StoryViewerController viewController;
+  StoryViewerController? viewController;
   double lastY = 0.0;
-  bool get trusted => viewController.trusted;
+  bool? get trusted => viewController!.trusted;
 
   @override
   void initState() {
@@ -149,19 +150,19 @@ class _StoryViewerState extends State<StoryViewer>
     } else {
       viewController = widget.viewerController;
     }
-    viewController.trusted = widget.trusted;
-    viewController.viewer = widget;
-    viewController.animationController = AnimationController(
+    viewController!.trusted = widget.trusted;
+    viewController!.viewer = widget;
+    viewController!.animationController = AnimationController(
       vsync: this,
       value: 0,
       lowerBound: 0,
       upperBound: 1,
-      duration: viewController.currentStory.duration,
+      duration: viewController!.currentStory.duration,
     );
-    viewController.animationController.addStatusListener(
-      viewController.statusListener,
+    viewController!.animationController.addStatusListener(
+      viewController!.statusListener,
     );
-    viewController.addListener(onComplated: onComplated, onPlayed: onPlayed);
+    viewController!.addListener(onComplated: onComplated, onPlayed: onPlayed);
     widget.setupCustomWidgets?.call(
       viewerController: viewController,
       viewer: widget,
@@ -173,9 +174,9 @@ class _StoryViewerState extends State<StoryViewer>
     widget.pop(context);
   }
 
-  List<String> loadedStories = List<String>();
+  List<String> loadedStories = <String>[];
   void onPlayed() {
-    String currentStoryID = viewController.currentStory.id;
+    String currentStoryID = viewController!.currentStory.id;
     if (loadedStories.contains(currentStoryID)) {
       return null;
     }
@@ -184,14 +185,14 @@ class _StoryViewerState extends State<StoryViewer>
   }
 
   void endblur() {
-    viewController.trusted = true;
+    viewController!.trusted = true;
     refreshState();
-    viewController.play();
+    viewController!.play();
   }
 
   @override
   void dispose() {
-    viewController.animationController.dispose();
+    viewController!.animationController.dispose();
     widget.onDispose?.call();
     super.dispose();
   }
@@ -213,7 +214,7 @@ class _StoryViewerState extends State<StoryViewer>
     }
     layers.addAll([
       StoryLayerMedia(
-        key: ValueKey(viewController.currentStory.imageProvider),
+        key: ValueKey(viewController!.currentStory.imageProvider),
         viewerController: viewController,
         viewer: widget,
       ),
@@ -229,7 +230,7 @@ class _StoryViewerState extends State<StoryViewer>
       if (!widget.inline && !widget.trusted)
         BlurSlider(
           onSliderEnd: endblur,
-          showBlurSlier: !trusted,
+          showBlurSlier: !trusted!,
           slideToSee: widget.customizer.slideToSee,
         ),
       StoryLayerUI(
@@ -247,31 +248,31 @@ class _StoryViewerState extends State<StoryViewer>
         child: body,
       );
     }
-    if (!trusted) {
+    if (!trusted!) {
       return body;
     }
     body = GestureDetector(
       onTapUp: (d) {
         bool prewStory =
             d.localPosition.dx < MediaQuery.of(context).size.width * 0.2;
-        viewController.handPlay(prewStory: prewStory);
+        viewController!.handPlay(prewStory: prewStory);
       },
       onTapDown: (d) {
         bool prewShadowShow =
             d.localPosition.dx < MediaQuery.of(context).size.width * 0.2;
-        viewController.handPause(prewShadowShow: prewShadowShow);
+        viewController!.handPause(prewShadowShow: prewShadowShow);
       },
       onTapCancel: () {
-        viewController.cancelHider();
+        viewController!.cancelHider();
       },
       onVerticalDragEnd: widget.inline
           ? (c) {
-              viewController.handPlay(prewStory: false);
+              viewController!.handPlay(prewStory: false);
             }
           : null,
       onHorizontalDragEnd: widget.inline
           ? (c) {
-              viewController.handPlay(prewStory: false);
+              viewController!.handPlay(prewStory: false);
             }
           : null,
       child: body,
@@ -279,7 +280,7 @@ class _StoryViewerState extends State<StoryViewer>
     if (widget.inline) {
       double _width =
           MediaQuery.of(context).size.width - (widget.padding.horizontal);
-      double _height;
+      double? _height;
       switch (widget.ratio) {
         case StoryRatio.r16_9:
           _height = (_width * 9) / 16;
@@ -305,22 +306,23 @@ class _StoryViewerState extends State<StoryViewer>
         opacity = opacity < 1 ? opacity : 1;
         return Colors.black.withOpacity(opacity);
       },
-      slideScaleHandler: (Offset offset, {ExtendedImageSlidePageState state}) {
+      slideScaleHandler: (Offset offset, {ExtendedImageSlidePageState? state}) {
         double scale =
             (offset.dy / (MediaQuery.of(context).size.height * 0.4)) / 10;
         return 1 - scale;
       },
-      slideOffsetHandler: (Offset offset, {ExtendedImageSlidePageState state}) {
-        if (viewController.uiHiding && state.isSliding ||
-            viewController.replying) {
+      slideOffsetHandler: (Offset offset,
+          {ExtendedImageSlidePageState? state}) {
+        if (viewController!.uiHiding && state!.isSliding ||
+            viewController!.replying) {
           lastY = offset.dy;
           return Offset(0, 0);
         }
         if (offset.dy < 0) {
-          if (!viewController.owner && !widget.inline && lastY == 0) {
-            viewController.replyPause();
-          } else if (viewController.owner) {
-            viewController.infoPause();
+          if (!viewController!.owner && !widget.inline && lastY == 0) {
+            viewController!.replyPause();
+          } else if (viewController!.owner) {
+            viewController!.infoPause();
             widget.onEditStory?.call(
               viewerController: viewController,
               viewer: widget,
@@ -333,23 +335,26 @@ class _StoryViewerState extends State<StoryViewer>
         dy = dy < 0 ? 0 : dy;
         return Offset(0, dy);
       },
-      slideEndHandler: (Offset offset,
-          {ScaleEndDetails details, ExtendedImageSlidePageState state}) {
+      slideEndHandler: (
+        Offset offset, {
+        ScaleEndDetails? details,
+        ExtendedImageSlidePageState? state,
+      }) {
         const int parameter = 6;
-        viewController.play();
-        return doubleCompare(
-                offset.dy.abs(), state.pageSize.height / parameter) >
-            0;
+        viewController!.play();
+        return (doubleCompare(
+                offset.dy.abs(), state!.pageSize.height / parameter) >
+            0);
       },
       slideAxis: SlideAxis.vertical,
       slideType: SlideType.wholePage,
       resetPageDuration: Duration(milliseconds: 100),
       onSlidingPage: (state) {
         if (state.isSliding) {
-          viewController.pause();
-          viewController.cancelHider();
+          viewController!.pause();
+          viewController!.cancelHider();
         } else {
-          viewController.play();
+          viewController!.play();
         }
       },
       child: AnnotatedRegion<SystemUiOverlayStyle>(

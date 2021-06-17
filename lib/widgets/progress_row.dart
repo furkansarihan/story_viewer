@@ -8,12 +8,16 @@ class StoryProgressRow extends StatelessWidget {
   final StoryViewer viewer;
   final StoryViewerController viewerController;
 
-  const StoryProgressRow({Key key, this.viewer, this.viewerController})
-      : super(key: key);
+  const StoryProgressRow({
+    Key? key,
+    required this.viewer,
+    required this.viewerController,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    Color progressColor = viewer.progressColor ?? Colors.white;
+    final progressColor = viewer.progressColor;
+
     return Padding(
       padding: viewer.inline
           ? viewer.progressRowPadding ??
@@ -21,7 +25,7 @@ class StoryProgressRow extends StatelessWidget {
           : viewer.progressRowPadding ?? EdgeInsets.zero,
       child: Row(
         children: [
-          for (var i = 0; i < viewer.stories.length; i++)
+          for (var i = 0; i < viewer.stories!.length; i++)
             if (i == viewerController.currentIndex)
               StoryProgressWidget(
                 key: GlobalKey(),
@@ -34,7 +38,7 @@ class StoryProgressRow extends StatelessWidget {
                 child: Container(
                   margin: EdgeInsets.symmetric(horizontal: 0.5),
                   decoration: BoxDecoration(
-                    color: i < viewerController.currentIndex
+                    color: i < viewerController.currentIndex!
                         ? progressColor
                         : progressColor.withAlpha(100),
                     borderRadius: viewer.progressBorderRadius,

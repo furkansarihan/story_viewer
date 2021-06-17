@@ -3,14 +3,14 @@ import 'package:flutter/widgets.dart';
 class StoryItemModel {
   final String id;
   final String ownerID;
-  final ImageProvider imageProvider;
+  final ImageProvider? imageProvider;
   final String source;
-  final DateTime storyTime;
-  final Duration displayDuration;
+  final DateTime? storyTime;
+  final Duration? displayDuration;
   const StoryItemModel({
     this.id = '',
     this.ownerID = '',
-    this.imageProvider,
+    required this.imageProvider,
     this.source = 'gallery',
     this.storyTime,
     this.displayDuration,
