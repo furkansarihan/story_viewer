@@ -2,30 +2,31 @@ import 'package:flutter/widgets.dart';
 import 'package:story_viewer/story_viewer.dart';
 
 class StoryAdditionalLayer extends StatefulWidget {
-  final StoryViewerController viewerController;
-  final StoryViewer viewer;
+  final StoryViewerController? viewerController;
+  final StoryViewer? viewer;
   final List<Widget> Function({
-    StoryViewer viewer,
-    StoryViewerController viewerController,
-  }) additions;
+    StoryViewer? viewer,
+    StoryViewerController? viewerController,
+  })? additions;
 
   const StoryAdditionalLayer({
-    Key key,
+    Key? key,
     this.viewerController,
     this.viewer,
     this.additions,
   }) : super(key: key);
+
   @override
   _State createState() => _State();
 }
 
 class _State extends State<StoryAdditionalLayer> {
-  StoryViewerController get controller => widget.viewerController;
+  StoryViewerController? get controller => widget.viewerController;
 
   @override
   void initState() {
     super.initState();
-    controller.addListener(
+    controller!.addListener(
       onIndexChanged: onIndexChanged,
     );
   }
@@ -36,13 +37,15 @@ class _State extends State<StoryAdditionalLayer> {
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> layers = widget.additions?.call(
+    List<Widget> layers = widget.additions!.call(
       viewerController: widget.viewerController,
       viewer: widget.viewer,
     );
+
     if (layers.isEmpty) {
-      return Container();
+      return const SizedBox();
     }
+
     return Stack(
       children: layers,
     );

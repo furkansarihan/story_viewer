@@ -9,14 +9,15 @@ import 'widgets/progress_row.dart';
 import 'widgets/reply_row.dart';
 
 class StoryLayerUI extends StatefulWidget {
-  final StoryViewerController viewerController;
-  final StoryViewer viewer;
+  final StoryViewerController? viewerController;
+  final StoryViewer? viewer;
 
   const StoryLayerUI({
-    Key key,
+    Key? key,
     this.viewerController,
     this.viewer,
   }) : super(key: key);
+
   @override
   _StoryLayerUIState createState() => _StoryLayerUIState();
 }
@@ -24,8 +25,8 @@ class StoryLayerUI extends StatefulWidget {
 enum HideState { idle, fadeOut, fadeIn }
 
 class _StoryLayerUIState extends State<StoryLayerUI> {
-  StoryViewerController get controller => widget.viewerController;
-  StoryViewer get viewer => widget.viewer;
+  StoryViewerController? get controller => widget.viewerController;
+  StoryViewer? get viewer => widget.viewer;
 
   TextEditingController textController = TextEditingController();
   FocusNode textNode = FocusNode();
@@ -36,7 +37,7 @@ class _StoryLayerUIState extends State<StoryLayerUI> {
   @override
   void initState() {
     super.initState();
-    controller.addListener(
+    controller!.addListener(
       onIndexChanged: onIndexChanged,
       onUIShow: onUIShow,
       onUIHide: onUIHide,
@@ -67,10 +68,8 @@ class _StoryLayerUIState extends State<StoryLayerUI> {
   }
 
   void onPaused() {
-    if (controller.replying) {
-      if (context != null) {
-        FocusScope.of(context).requestFocus(textNode);
-      }
+    if (controller!.replying) {
+      FocusScope.of(context).requestFocus(textNode);
     }
   }
 
@@ -84,7 +83,7 @@ class _StoryLayerUIState extends State<StoryLayerUI> {
     refreshState();
   }
 
-  bool get showEmojis => controller.replying;
+  bool get showEmojis => controller!.replying;
 
   @override
   Widget build(BuildContext context) {
@@ -93,13 +92,14 @@ class _StoryLayerUIState extends State<StoryLayerUI> {
       key: ObjectKey('layer_ui'),
       children: [
         Container(
-          height:
-              isLong && !viewer.inline ? 0 : MediaQuery.of(context).padding.top,
+          height: isLong && !viewer!.inline
+              ? 0
+              : MediaQuery.of(context).padding.top,
         ),
         StoryProgressRow(
           key: ObjectKey('progressrow'),
-          viewer: viewer,
-          viewerController: controller,
+          viewer: viewer!,
+          viewerController: controller!,
         ),
         StoryProfileRow(
           viewer: viewer,
@@ -114,24 +114,24 @@ class _StoryLayerUIState extends State<StoryLayerUI> {
     Widget fastEmojis = Container();
     if (showEmojis) {
       fastEmojis = FastEmojis(
-        onEmojiSelected: (String emoji) {
+        onEmojiSelected: (String? emoji) {
           FocusScope.of(context).requestFocus(FocusNode());
-          viewer.onStoryReplied?.call(
+          viewer!.onStoryReplied?.call(
             viewerController: controller,
-            storyID: controller.currentStory.id,
+            storyID: controller!.currentStory.id,
             message: emoji,
           );
-          controller.replyPlay();
+          controller!.replyPlay();
         },
       );
     }
 
-    if (!viewer.hasReply) {
+    if (!viewer!.hasReply) {
       returnW = Stack(
         children: [
           GradientShadow(
             key: GlobalKey(),
-            height: viewer.inline ? 48 : 64,
+            height: viewer!.inline ? 48 : 64,
             stops: [0.0, 1.0],
             alphas: [0, 70],
             top: true,
@@ -145,7 +145,7 @@ class _StoryLayerUIState extends State<StoryLayerUI> {
         children: [
           GradientShadow(
             key: GlobalKey(),
-            height: viewer.inline ? 48 : 72,
+            height: viewer!.inline ? 48 : 72,
             stops: [0.0, 1.0],
             alphas: [0, 120],
             top: true,
@@ -163,12 +163,12 @@ class _StoryLayerUIState extends State<StoryLayerUI> {
             child: GestureDetector(
                 onTapUp: (t) {
                   FocusScope.of(context).requestFocus(FocusNode());
-                  controller.replyPlay();
+                  controller!.replyPlay();
                 },
                 onVerticalDragUpdate: (down) {
                   if (down.delta.dy > 25) {
                     FocusScope.of(context).requestFocus(FocusNode());
-                    controller.replyPlay();
+                    controller!.replyPlay();
                   }
                 },
                 child: Stack(
@@ -197,7 +197,7 @@ class _StoryLayerUIState extends State<StoryLayerUI> {
               textNode: textNode,
               onFocusChange: (hasFocus) {
                 if (hasFocus) {
-                  controller.replyPause();
+                  controller!.replyPause();
                 }
               },
             ),

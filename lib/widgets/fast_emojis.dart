@@ -2,9 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class FastEmojis extends StatelessWidget {
-  final Function(String emoji) onEmojiSelected;
+  final void Function(String? emoji)? onEmojiSelected;
 
-  const FastEmojis({Key key, this.onEmojiSelected}) : super(key: key);
+  const FastEmojis({
+    Key? key,
+    this.onEmojiSelected,
+  }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -55,23 +59,25 @@ class FastEmojis extends StatelessWidget {
 }
 
 class FastEmoji extends StatelessWidget {
-  final String emoji;
-  final Function(String emoji) onSelected;
+  final String? emoji;
+  final void Function(String? emoji)? onSelected;
+
   const FastEmoji({
-    Key key,
+    Key? key,
     this.emoji,
     this.onSelected,
   }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return CupertinoButton(
       onPressed: () {
-        onSelected(emoji);
+        onSelected!(emoji);
       },
       child: FittedBox(
         fit: BoxFit.contain,
         child: Text(
-          emoji,
+          emoji!,
           style: TextStyle(
             decoration: TextDecoration.none,
             fontSize: 56,

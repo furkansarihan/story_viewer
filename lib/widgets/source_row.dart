@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:story_viewer/viewer.dart';
 
 class SourceRow extends StatelessWidget {
-  final StoryViewer viewer;
-  final String source;
+  final StoryViewer? viewer;
+  final String? source;
 
-  const SourceRow({Key key, this.viewer, this.source}) : super(key: key);
+  const SourceRow({Key? key, this.viewer, this.source}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,16 +19,16 @@ class SourceRow extends StatelessWidget {
           padding: EdgeInsets.fromLTRB(6, 0, 6, 8),
           child: Icon(
             camera
-                ? viewer.customizer.cameraSourceIcon
-                : viewer.customizer.gallerySourceIcon,
+                ? viewer!.customizer.cameraSourceIcon
+                : viewer!.customizer.gallerySourceIcon,
             color: Colors.white,
             size: 24,
           ),
         ),
         Text(
           camera
-              ? viewer.customizer.cameraSource
-              : viewer.customizer.gallerySource,
+              ? viewer!.customizer.cameraSource
+              : viewer!.customizer.gallerySource,
           textAlign: TextAlign.left,
           maxLines: 1,
           style: TextStyle(
