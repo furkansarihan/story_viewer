@@ -47,9 +47,6 @@ class _StoryProgressWidgetState extends State<StoryProgressWidget>
 
   @override
   Widget build(BuildContext context) {
-    double storyWidth =
-        MediaQuery.of(context).size.width / widget.viewer.stories.length - 1;
-
     Color progressColor = Colors.white;
     return BlocListener<StoryViewerCubit, StoryViewerState>(
       listenWhen: (previous, current) {
@@ -64,26 +61,31 @@ class _StoryProgressWidgetState extends State<StoryProgressWidget>
       },
       child: Flexible(
         flex: 1,
-        child: AnimatedBuilder(
-          animation: animationController,
-          builder: (context, child) => Container(
+        child: Container(
+          constraints: BoxConstraints.expand(
             height: widget.viewer.progressHeight,
-            width: storyWidth,
-            decoration: BoxDecoration(
-              color: progressColor.withAlpha(100),
-              borderRadius: widget.viewer.progressBorderRadius,
-            ),
-            margin: EdgeInsets.symmetric(horizontal: 0.5),
-            child: Stack(
-              children: [
-                Container(
-                  width: animationController.value * storyWidth,
-                  decoration: BoxDecoration(
-                    color: progressColor,
-                    borderRadius: widget.viewer.progressBorderRadius,
-                  ),
+          ),
+          decoration: BoxDecoration(
+            color: progressColor.withAlpha(100),
+            borderRadius: widget.viewer.progressBorderRadius,
+          ),
+          margin: EdgeInsets.symmetric(horizontal: 0.5),
+          child: AnimatedBuilder(
+            animation: animationController,
+            builder: (context, child) => Transform(
+              transform: Matrix4.diagonal3Values(
+                animationController.value,
+                1.0,
+                1.0,
+              ),
+              alignment: Alignment.centerLeft,
+              child: Container(
+                height: widget.viewer.progressHeight,
+                decoration: BoxDecoration(
+                  color: progressColor,
+                  borderRadius: widget.viewer.progressBorderRadius,
                 ),
-              ],
+              ),
             ),
           ),
         ),

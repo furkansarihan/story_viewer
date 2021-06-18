@@ -54,7 +54,14 @@ class StoryViewerCubit extends Cubit<StoryViewerState> {
 
   void play() {
     cancelTimers();
-    if (!currentStoryLoaded) return;
+    if (!currentStoryLoaded) {
+      emit(state.copyWith(
+        uiShowing: true,
+        previewShadowShowing: false,
+        nextShadowShowing: false,
+      ));
+      return;
+    }
     emit(state.copyWith(
       storyPlaying: true,
       uiShowing: true,
@@ -110,7 +117,8 @@ class StoryViewerCubit extends Cubit<StoryViewerState> {
   }
 
   void end() {
-    // handle pop story page
-    Navigator.of(_context).pop();
+    play();
+    // TODO: handle pop story page
+    //Navigator.of(_context).pop();
   }
 }

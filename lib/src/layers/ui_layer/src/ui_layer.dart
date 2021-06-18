@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:story_viewer/src/cubit/story_viewer_cubit.dart';
+import 'package:story_viewer/src/layers/gesture_layer/gesture_layer.dart';
 
 import 'package:story_viewer/story_viewer.dart';
 
+import 'widgets/profile_row.dart';
 import 'widgets/progress_row.dart';
 
 class UiLayer extends StatelessWidget {
@@ -29,11 +31,29 @@ class UiLayer extends StatelessWidget {
             overflow: Overflow.visible,
             alignment: Alignment.topCenter,
             children: [
+              Container(
+                height: 80,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [Colors.black38, Colors.transparent]),
+                ),
+              ),
               Positioned(
                 left: 0,
+                top: 0,
+                bottom: 0,
                 child: PreviewShadow(),
               ),
               StoryProgressRow(viewer),
+              const GestureLayer(),
+              Positioned(
+                top: viewer.progressRowPadding.vertical + viewer.progressHeight,
+                left: 0,
+                right: 0,
+                child: viewer.profileRow ?? ProfileRow(),
+              ),
             ],
           ),
         );
@@ -54,7 +74,6 @@ class PreviewShadow extends StatelessWidget {
       builder: (context, state) {
         return AnimatedContainer(
           width: 80,
-          height: MediaQuery.of(context).size.height,
           duration: const Duration(milliseconds: 200),
           decoration: BoxDecoration(
             gradient: LinearGradient(

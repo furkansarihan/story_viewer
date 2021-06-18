@@ -55,31 +55,76 @@ class _HomeState extends State<Home> {
           MaterialButton(
             child: Text('Show Story'),
             onPressed: () {
-              pushStoryView(storyViewer());
+              pushStoryView(storyViewer(true));
             },
+          ),
+          Padding(
+            padding: EdgeInsets.all(16),
+            child: AspectRatio(
+              aspectRatio: 16 / 9,
+              child: storyViewer(false),
+            ),
           ),
         ],
       ),
     );
   }
 
-  storyViewer() => StoryViewer(
+  storyViewer(bool dismissible) => StoryViewer(
         //padding: EdgeInsets.all(8),
         //backgroundColor: Colors.white,
         //ratio: StoryRatio.r16_9,
+        dismissible: dismissible,
         progressBorderRadius: BorderRadius.circular(12),
         stories: [
-          StoryModel(imageProvider: NetworkImage(images2[0])),
-          StoryModel(imageProvider: NetworkImage(images2[1])),
-          StoryModel(imageProvider: NetworkImage(images2[2])),
-          StoryModel(imageProvider: NetworkImage(images2[3])),
-        ],
-        /*userModel: UserModel(
-          username: 'flutter',
-          profilePicture: NetworkImage(
-            'https://cdn-images-1.medium.com/max/1200/1*5-aoK8IBmXve5whBQM90GA.png',
+          StoryModel(
+            imageProvider: NetworkImage(images2[0]),
+            postedAt: DateTime(2021, 6, 18, 16),
           ),
-        ),*/
+          StoryModel(
+            imageProvider: NetworkImage(images2[1]),
+            postedAt: DateTime(2021, 6, 18),
+          ),
+          StoryModel(
+            imageProvider: NetworkImage(images2[2]),
+            postedAt: DateTime(2021, 2, 22),
+          ),
+          StoryModel(
+            imageProvider: NetworkImage(images2[3]),
+          ),
+        ],
+        profileRow: ProfileRow(
+          userModel: UserModel(
+            username: 'story_viewer',
+            profilePicture: NetworkImage(
+              'https://secure.gravatar.com/avatar/ba6b323ae0e4f1bafb2dcf72d63d559e?s=256&d=mm&r=pg',
+            ),
+          ),
+          trailingWidgets: [
+            CupertinoButton(
+              padding: const EdgeInsets.symmetric(horizontal: 4),
+              child: Icon(
+                Icons.more_horiz_rounded,
+                color: Colors.white,
+                size: 32,
+              ),
+              onPressed: () {
+                print('IconButton');
+              },
+            ),
+            CupertinoButton(
+              padding: const EdgeInsets.symmetric(horizontal: 4),
+              child: Icon(
+                Icons.close_rounded,
+                color: Colors.white,
+                size: 32,
+              ),
+              onPressed: () {
+                print('IconButton');
+              },
+            ),
+          ],
+        ),
       );
 
   pushStoryView(Widget storyViewer) {

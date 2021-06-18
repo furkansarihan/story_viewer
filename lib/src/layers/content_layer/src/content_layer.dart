@@ -43,8 +43,6 @@ class ImageStory extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ExtendedImage(
-      width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height,
       alignment: Alignment.topCenter,
       fit: BoxFit.fitWidth,
       image: image,

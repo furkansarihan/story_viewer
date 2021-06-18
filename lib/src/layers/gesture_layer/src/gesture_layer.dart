@@ -36,6 +36,8 @@ class GestureLayer extends StatelessWidget {
             );
       },
       onTapCancel: () {
+        // TODO: fix
+        if (!context.read<StoryViewerCubit>().state.uiShowing) return;
         log('onTapCancel');
         context.read<StoryViewerCubit>().play();
       },

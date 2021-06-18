@@ -4,7 +4,7 @@ class StoryModel {
   const StoryModel({
     this.id,
     this.ownerID,
-    this.timestamp,
+    this.postedAt,
     this.duration = defaultDuration,
     this.storyType,
     this.imageProvider,
@@ -14,7 +14,7 @@ class StoryModel {
 
   final String id;
   final String ownerID;
-  final DateTime timestamp;
+  final DateTime postedAt;
   final Duration duration;
   final StoryType storyType;
   final ImageProvider imageProvider;
