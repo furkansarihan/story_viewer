@@ -13,6 +13,13 @@ class GestureLayer extends StatelessWidget {
       onTapUp: (d) {
         log('onTapUp');
         // viewController.handPlay(prewStory: prewStory);
+
+        if (context.read<StoryViewerCubit>().state.replying) {
+          FocusScope.of(context).unfocus();
+          context.read<StoryViewerCubit>().play();
+          return;
+        }
+
         if (context.read<StoryViewerCubit>().state.uiShowing) {
           bool prevStory =
               d.localPosition.dx < MediaQuery.of(context).size.width * 0.2;
@@ -43,6 +50,7 @@ class GestureLayer extends StatelessWidget {
       },
       onHorizontalDragStart: (details) {
         log('onHorizontalDragStart');
+        FocusScope.of(context).unfocus();
         context.read<StoryViewerCubit>().pause(
               hideUi: false,
             );

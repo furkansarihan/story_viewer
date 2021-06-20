@@ -27,8 +27,11 @@ class ContentLayer extends StatelessWidget {
         log('BlocBuilder: ExtendedImage: ${state.storyIndex}');
         // TODO: switch case for story types
         //return ButtonBar();
-        return ImageStory(
-          context.watch<StoryViewerCubit>().currentStory.imageProvider,
+        return ClipRRect(
+          borderRadius: BorderRadius.circular(viewer.contentBorderRadius),
+          child: ImageStory(
+            context.watch<StoryViewerCubit>().currentStory.imageProvider,
+          ),
         );
       },
     );

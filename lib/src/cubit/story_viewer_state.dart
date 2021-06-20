@@ -6,12 +6,14 @@ class StoryViewerState extends Equatable {
     this.storyPlaying = false,
     this.uiShowing = true,
     this.previewShadowShowing = false,
+    this.replying = false,
   });
 
   final int storyIndex;
   final bool storyPlaying;
   final bool uiShowing;
   final bool previewShadowShowing;
+  final bool replying;
 
   @override
   List<Object> get props => [
@@ -19,6 +21,7 @@ class StoryViewerState extends Equatable {
         storyPlaying,
         uiShowing,
         previewShadowShowing,
+        replying,
       ];
 
   StoryViewerState copyWith({
@@ -27,12 +30,14 @@ class StoryViewerState extends Equatable {
     bool uiShowing,
     bool previewShadowShowing,
     bool nextShadowShowing,
+    bool replying,
   }) {
     return StoryViewerState(
       storyIndex: storyIndex ?? this.storyIndex,
       storyPlaying: storyPlaying ?? this.storyPlaying,
       uiShowing: uiShowing ?? this.uiShowing,
       previewShadowShowing: previewShadowShowing ?? this.previewShadowShowing,
+      replying: replying ?? this.replying,
     );
   }
 }

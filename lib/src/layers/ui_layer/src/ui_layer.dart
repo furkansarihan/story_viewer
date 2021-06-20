@@ -32,7 +32,7 @@ class UiLayer extends StatelessWidget {
             alignment: Alignment.topCenter,
             children: [
               Container(
-                height: 80,
+                height: 86,
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                       begin: Alignment.topCenter,
@@ -46,13 +46,24 @@ class UiLayer extends StatelessWidget {
                 bottom: 0,
                 child: PreviewShadow(),
               ),
-              StoryProgressRow(viewer),
+              Positioned(
+                top: 0,
+                right: 0,
+                left: 0,
+                child: StoryProgressRow(viewer),
+              ),
               const GestureLayer(),
               Positioned(
                 top: viewer.progressRowPadding.vertical + viewer.progressHeight,
                 left: 0,
                 right: 0,
                 child: viewer.profileRow ?? ProfileRow(),
+              ),
+              Positioned(
+                bottom: 0,
+                left: 0,
+                right: 0,
+                child: viewer.replyRow ?? const SizedBox.shrink(),
               ),
             ],
           ),

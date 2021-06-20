@@ -70,11 +70,12 @@ class _HomeState extends State<Home> {
     );
   }
 
-  storyViewer(bool dismissible) => StoryViewer(
+  storyViewer(bool fullScreen) => StoryViewer(
         //padding: EdgeInsets.all(8),
         //backgroundColor: Colors.white,
         //ratio: StoryRatio.r16_9,
-        dismissible: dismissible,
+        contentBorderRadius: 8,
+        fullScreen: fullScreen,
         progressBorderRadius: BorderRadius.circular(12),
         stories: [
           StoryModel(
@@ -122,6 +123,39 @@ class _HomeState extends State<Home> {
               onPressed: () {
                 print('IconButton');
               },
+            ),
+          ],
+        ),
+        replyRow: StoryReplyRow(
+          textFieldPadding: EdgeInsets.symmetric(vertical: 4, horizontal: 2),
+          textFieldDecoration: BoxDecoration(
+            border: Border.all(color: Colors.white),
+            borderRadius: BorderRadius.circular(24),
+          ),
+          textFieldPlaceholder: 'Reply to story_viewer...',
+          leadingIcons: [
+            IconButton(
+              icon: Icon(
+                Icons.add,
+                color: Colors.white,
+              ),
+              onPressed: null,
+            ),
+          ],
+          trailingIcons: [
+            IconButton(
+              icon: Icon(
+                Icons.add,
+                color: Colors.white,
+              ),
+              onPressed: null,
+            ),
+            IconButton(
+              icon: Icon(
+                Icons.ac_unit_outlined,
+                color: Colors.white,
+              ),
+              onPressed: null,
             ),
           ],
         ),

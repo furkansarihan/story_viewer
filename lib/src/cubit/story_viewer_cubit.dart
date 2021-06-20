@@ -67,12 +67,14 @@ class StoryViewerCubit extends Cubit<StoryViewerState> {
       uiShowing: true,
       previewShadowShowing: false,
       nextShadowShowing: false,
+      replying: false,
     ));
   }
 
   void pause({
     bool hideUi = false,
     bool showPrevShadow = false,
+    bool replyStart,
   }) {
     if (hideUi) {
       uiHideTimer = Timer(Duration(milliseconds: 750), () {
@@ -86,7 +88,7 @@ class StoryViewerCubit extends Cubit<StoryViewerState> {
         prevShadowTimer.cancel();
       });
     }
-    emit(state.copyWith(storyPlaying: false));
+    emit(state.copyWith(storyPlaying: false, replying: replyStart));
   }
 
   void next() {

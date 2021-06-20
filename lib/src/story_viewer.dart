@@ -15,38 +15,44 @@ class StoryViewer extends StatelessWidget {
     Key key,
     this.systemOverlayStyle,
     this.stories,
+    this.contentBorderRadius = 0.0,
     this.progressHeight = 2,
     this.progressBorderRadius = BorderRadius.zero,
     this.progressRowPadding = const EdgeInsets.only(
-      top: 8,
+      top: 6,
       left: 4,
       right: 4,
     ),
     this.profileRow,
+    this.replyRow,
     this.onSwipeUp,
     this.swipeUpTreshold = 30,
-    this.dismissible = true,
+    this.fullScreen = true,
     this.backgroundColor = Colors.black,
   }) : super(key: key);
 
   final SystemUiOverlayStyle systemOverlayStyle;
   final List<StoryModel> stories;
 
+  final double contentBorderRadius;
+
   final double progressHeight;
   final BorderRadiusGeometry progressBorderRadius;
   final EdgeInsets progressRowPadding;
-  final ProfileRow profileRow;
+
+  final Widget profileRow;
+  final Widget replyRow;
 
   final Function onSwipeUp;
   final double swipeUpTreshold;
-  final bool dismissible;
+  final bool fullScreen;
   final Color backgroundColor;
 
   @override
   Widget build(BuildContext context) {
     Widget body = BlocProvider<StoryViewerCubit>(
-      create: (context) => StoryViewerCubit(context, this),
-      child: dismissible
+      create: (c) => StoryViewerCubit(context, this),
+      child: fullScreen
           ? _Root(this)
           : Stack(
               alignment: Alignment.topCenter,
@@ -87,14 +93,15 @@ class _Root extends StatelessWidget {
       },
       builder: (context, state) {
         return DismissiblePage(
-          minRadius: 0,
-          maxRadius: 24,
+          minRadius: viewer.contentBorderRadius,
+          maxRadius: viewer.contentBorderRadius * 2,
           backgroundColor: viewer.backgroundColor,
           direction: DismissDirection.down,
           onDismiss: () => Navigator.of(context).pop(),
           isFullScreen: false,
           onDragStart: (details) {
             log('onDragStart');
+            FocusScope.of(context).unfocus();
             context.read<StoryViewerCubit>().pause();
           },
           onDragUpdate: (details) {
@@ -111,7 +118,12 @@ class _Root extends StatelessWidget {
           child: Stack(
             alignment: Alignment.topCenter,
             children: [
-              ContentLayer(viewer),
+              Positioned(
+                top: 0,
+                right: 0,
+                left: 0,
+                child: ContentLayer(viewer),
+              ),
               UiLayer(viewer),
             ],
           ),
