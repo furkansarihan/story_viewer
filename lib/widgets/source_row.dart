@@ -31,11 +31,11 @@ class SourceRow extends StatelessWidget {
               : viewer.customizer.gallerySource,
           textAlign: TextAlign.left,
           maxLines: 1,
-          style: TextStyle(
-            decoration: TextDecoration.none,
-            color: Colors.white,
-            fontWeight: FontWeight.normal,
-          ),
+          style: Theme.of(context).textTheme.caption.merge(TextStyle(
+                decoration: TextDecoration.none,
+                color: Colors.white,
+                fontWeight: FontWeight.normal,
+              )),
         ),
       ],
     );
