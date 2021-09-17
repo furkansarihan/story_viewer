@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class FastEmojis extends StatelessWidget {
   final Function(String emoji) onEmojiSelected;
 
-  const FastEmojis({Key key, this.onEmojiSelected}) : super(key: key);
+  const FastEmojis({Key? key, required this.onEmojiSelected}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -58,9 +58,9 @@ class FastEmoji extends StatelessWidget {
   final String emoji;
   final Function(String emoji) onSelected;
   const FastEmoji({
-    Key key,
-    this.emoji,
-    this.onSelected,
+    Key? key,
+    required this.emoji,
+    required this.onSelected,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {

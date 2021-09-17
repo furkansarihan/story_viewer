@@ -7,12 +7,12 @@ class StoryAdditionalLayer extends StatefulWidget {
   final List<Widget> Function({
     StoryViewer viewer,
     StoryViewerController viewerController,
-  }) additions;
+  })? additions;
 
   const StoryAdditionalLayer({
-    Key key,
-    this.viewerController,
-    this.viewer,
+    Key? key,
+    required this.viewerController,
+    required this.viewer,
     this.additions,
   }) : super(key: key);
   @override
@@ -20,12 +20,12 @@ class StoryAdditionalLayer extends StatefulWidget {
 }
 
 class _State extends State<StoryAdditionalLayer> {
-  StoryViewerController get controller => widget.viewerController;
+  StoryViewerController? get controller => widget.viewerController;
 
   @override
   void initState() {
     super.initState();
-    controller.addListener(
+    controller!.addListener(
       onIndexChanged: onIndexChanged,
     );
   }
@@ -36,15 +36,15 @@ class _State extends State<StoryAdditionalLayer> {
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> layers = widget.additions?.call(
+    List<Widget>? layers = widget.additions?.call(
       viewerController: widget.viewerController,
       viewer: widget.viewer,
     );
-    if (layers.isEmpty) {
-      return Container();
+    if (layers?.isEmpty ?? true) {
+      return const SizedBox.shrink();
     }
     return Stack(
-      children: layers,
+      children: layers!,
     );
   }
 

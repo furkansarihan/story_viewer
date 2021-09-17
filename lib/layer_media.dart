@@ -9,22 +9,22 @@ import 'viewer_controller.dart';
 import 'widgets/placeholder_image.dart';
 
 class StoryLayerMedia extends StatefulWidget {
-  final StoryViewerController viewerController;
-  final StoryViewer viewer;
+  final StoryViewerController? viewerController;
+  final StoryViewer? viewer;
 
-  const StoryLayerMedia({Key key, this.viewerController, this.viewer})
+  const StoryLayerMedia({Key? key, this.viewerController, this.viewer})
       : super(key: key);
   @override
   StoryLayerMediaState createState() => StoryLayerMediaState();
 }
 
 class StoryLayerMediaState extends State<StoryLayerMedia> {
-  StoryViewerController get controller => widget.viewerController;
+  StoryViewerController? get controller => widget.viewerController;
 
   @override
   void initState() {
     super.initState();
-    controller.addListener(onIndexChanged: onIndexChanged);
+    controller!.addListener(onIndexChanged: onIndexChanged);
   }
 
   void onIndexChanged() {
@@ -33,19 +33,19 @@ class StoryLayerMediaState extends State<StoryLayerMedia> {
 
   @override
   Widget build(BuildContext context) {
-    if (controller.currentStory.imageProvider == null) {
+    if (controller!.currentStory.imageProvider == null) {
       return const SizedBox.shrink();
     }
-    StoryItemModel currentItem = controller.currentStory;
+    StoryItemModel currentItem = controller!.currentStory;
     Widget returnW = ExtendedImage(
       width: MediaQuery.of(context).size.width,
-      height: widget.viewer.inline ? null : MediaQuery.of(context).size.height,
-      image: currentItem.imageProvider,
+      height: widget.viewer!.inline ? null : MediaQuery.of(context).size.height,
+      image: currentItem.imageProvider!,
       enableSlideOutPage: true,
       mode: ExtendedImageMode.gesture,
       enableMemoryCache: true,
-      alignment: widget.viewer.mediaAlignment ?? Alignment.center,
-      fit: widget.viewer.mediaFit ?? BoxFit.fitWidth,
+      alignment: widget.viewer!.mediaAlignment ?? Alignment.center,
+      fit: widget.viewer!.mediaFit ?? BoxFit.fitWidth,
       initGestureConfigHandler: (s) {
         return GestureConfig(
           maxScale: 1.0,
@@ -56,7 +56,7 @@ class StoryLayerMediaState extends State<StoryLayerMedia> {
       },
       heroBuilderForSlidingPage: (Widget result) {
         return Hero(
-          tag: controller.currentHeroTag,
+          tag: controller!.currentHeroTag,
           child: result,
           flightShuttleBuilder: (BuildContext flightContext,
               Animation<double> animation,
@@ -64,8 +64,8 @@ class StoryLayerMediaState extends State<StoryLayerMedia> {
               BuildContext fromHeroContext,
               BuildContext toHeroContext) {
             final Hero hero = flightDirection == HeroFlightDirection.pop
-                ? fromHeroContext.widget
-                : toHeroContext.widget;
+                ? fromHeroContext.widget as Hero
+                : toHeroContext.widget as Hero;
             return hero.child;
           },
         );
@@ -76,30 +76,30 @@ class StoryLayerMediaState extends State<StoryLayerMedia> {
           case LoadState.loading:
             return PlaceholderImage(
               loading: true,
-              backgroundColor: widget.viewer.placeholderBackground,
-              backgroundColors: widget.viewer.placeholderBackgrounds,
+              backgroundColor: widget.viewer!.placeholderBackground,
+              backgroundColors: widget.viewer!.placeholderBackgrounds,
             );
             break;
           case LoadState.failed:
             return PlaceholderImage(
-              backgroundColor: widget.viewer.placeholderBackground,
-              backgroundColors: widget.viewer.placeholderBackgrounds,
-              iconData: widget.viewer.customizer.failedImageIcon,
+              backgroundColor: widget.viewer!.placeholderBackground,
+              backgroundColors: widget.viewer!.placeholderBackgrounds,
+              iconData: widget.viewer!.customizer.failedImageIcon,
             );
             break;
           case LoadState.completed:
-            controller.load(currentItem.imageProvider);
-            SchedulerBinding.instance.addPostFrameCallback((p) {
-              controller.play();
+            controller!.load(currentItem.imageProvider);
+            SchedulerBinding.instance!.addPostFrameCallback((p) {
+              controller!.play();
             });
             break;
           default:
         }
       },
     );
-    if (widget.viewer.borderRadius != null) {
+    if (widget.viewer!.borderRadius != null) {
       return ClipRRect(
-        borderRadius: widget.viewer.borderRadius,
+        borderRadius: widget.viewer!.borderRadius as BorderRadius?,
         child: returnW,
       );
     }

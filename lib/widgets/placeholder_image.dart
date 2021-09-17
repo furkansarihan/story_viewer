@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class PlaceholderImage extends StatelessWidget {
-  final IconData iconData;
-  final Widget child;
-  final double width;
-  final double height;
+  final IconData? iconData;
+  final Widget? child;
+  final double? width;
+  final double? height;
   final bool loading;
-  final BorderRadius borderRaius;
-  final Color backgroundColor;
-  final List<Color> backgroundColors;
+  final BorderRadius? borderRaius;
+  final Color? backgroundColor;
+  final List<Color>? backgroundColors;
 
   const PlaceholderImage({
     this.iconData,
@@ -34,14 +34,14 @@ class PlaceholderImage extends StatelessWidget {
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
                 colors: backgroundColors != null
-                    ? backgroundColors.length == 2
-                        ? backgroundColors
+                    ? backgroundColors!.length == 2
+                        ? backgroundColors!
                         : [
-                            Colors.grey[900],
+                            Colors.grey[900]!,
                             Colors.black,
                           ]
                     : [
-                        Colors.grey[900],
+                        Colors.grey[900]!,
                         Colors.black,
                       ],
               )

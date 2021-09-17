@@ -7,45 +7,45 @@ import 'package:story_viewer/viewer.dart';
 import 'models/story_item.dart';
 
 class StoryViewerController {
-  StoryViewer viewer;
-  bool trusted;
+  StoryViewer? viewer;
+  bool? trusted;
   bool _uiHiding = false;
   bool _prewShadowShowing = false;
   bool get uiHiding => _uiHiding;
   bool get isPlaying => _playing;
   bool get replying => _replying;
-  List<Function> _onPlays = List<Function>();
-  List<Function> _onPauseds = List<Function>();
-  List<Function> _onIndexChangeds = List<Function>();
-  List<Function> _onComplateds = List<Function>();
-  List<Function> _onPrewShadowShows = List<Function>();
-  List<Function> _onPrewShadowHides = List<Function>();
-  List<Function> _onUIShows = List<Function>();
-  List<Function> _onUIHides = List<Function>();
+  List<Function> _onPlays = <Function>[];
+  List<Function> _onPauseds = <Function>[];
+  List<Function> _onIndexChangeds = <Function>[];
+  List<Function> _onComplateds = <Function>[];
+  List<Function> _onPrewShadowShows = <Function>[];
+  List<Function> _onPrewShadowHides = <Function>[];
+  List<Function> _onUIShows = <Function>[];
+  List<Function> _onUIHides = <Function>[];
 
-  Map<ImageProvider, bool> _loadedStories = Map<ImageProvider, bool>();
+  Map<ImageProvider?, bool> _loadedStories = Map<ImageProvider?, bool>();
   List<StoryItemModel> get stories => viewer?.stories ?? [];
   String get ownerUserID => viewer?.displayerUserID ?? '';
   String get heroTag => viewer?.heroTag ?? '';
 
-  int currentIndex;
+  int? currentIndex;
   StoryItemModel get currentStory =>
-      stories.length > currentIndex && stories.isNotEmpty
-          ? stories.elementAt(currentIndex)
+      stories.length > currentIndex! && stories.isNotEmpty
+          ? stories.elementAt(currentIndex!)
           : StoryItemModel();
 
   bool get owner => currentStory.ownerID == ownerUserID;
   String get currentHeroTag =>
-      viewer?.heroTag ?? currentStory?.hashCode?.toString() ?? '?';
+      viewer?.heroTag ?? currentStory.hashCode.toString();
 
   StoryViewerController({
     this.currentIndex = 0,
   });
 
-  AnimationController animationController;
-  Timer uiHider;
-  Timer prevShadower;
-  Timer nexter;
+  late AnimationController animationController;
+  Timer? uiHider;
+  Timer? prevShadower;
+  Timer? nexter;
 
   bool _playing = false;
   bool _goingNext = true;
@@ -59,7 +59,7 @@ class StoryViewerController {
     if (_replying) {
       return;
     }
-    if (!trusted) {
+    if (!trusted!) {
       return;
     }
     if (_slideInfo) {
@@ -114,7 +114,7 @@ class StoryViewerController {
   }
 
   void replyPause() {
-    if (!viewer.hasReply) {
+    if (!viewer!.hasReply) {
       return;
     }
     _replying = true;
@@ -165,9 +165,9 @@ class StoryViewerController {
 
   void next() {
     cancelHider();
-    currentIndex = currentIndex + 1;
-    if (currentIndex >= stories.length) {
-      if (viewer.loop) {
+    currentIndex = currentIndex! + 1;
+    if (currentIndex! >= stories.length) {
+      if (viewer!.loop) {
         currentIndex = 0;
         _callFunctions(_onIndexChangeds);
         play();
@@ -192,10 +192,10 @@ class StoryViewerController {
   void previous() {
     cancelHider();
     if (animationController.value < 0.25) {
-      currentIndex = currentIndex - 1;
+      currentIndex = currentIndex! - 1;
       _callFunctions(_onIndexChangeds);
     }
-    if (currentIndex <= 0) {
+    if (currentIndex! <= 0) {
       currentIndex = 0;
     }
     animationController.reset();
@@ -207,11 +207,11 @@ class StoryViewerController {
     _callFunctions(_onComplateds);
   }
 
-  void changeIndex({int newIndex}) {
+  void changeIndex({int? newIndex}) {
     currentIndex = newIndex;
-    if (currentIndex <= 0) {
+    if (currentIndex! <= 0) {
       currentIndex = 0;
-    } else if (currentIndex >= stories.length) {
+    } else if (currentIndex! >= stories.length) {
       currentIndex = stories.length - 1;
     }
     animationController.reset();
@@ -219,11 +219,11 @@ class StoryViewerController {
     _callFunctions(_onIndexChangeds);
   }
 
-  void load(ImageProvider provider) {
+  void load(ImageProvider? provider) {
     _loadedStories[provider] = true;
   }
 
-  bool isLoaded(ImageProvider provider) {
+  bool? isLoaded(ImageProvider provider) {
     return _loadedStories.containsKey(provider)
         ? _loadedStories[provider]
         : false;
@@ -239,14 +239,14 @@ class StoryViewerController {
   }
 
   void addListener({
-    Function onPlayed,
-    Function onPaused,
-    Function onIndexChanged,
-    Function onComplated,
-    Function onPrewShadowShow,
-    Function onPrewShadowHide,
-    Function onUIShow,
-    Function onUIHide,
+    Function? onPlayed,
+    Function? onPaused,
+    Function? onIndexChanged,
+    Function? onComplated,
+    Function? onPrewShadowShow,
+    Function? onPrewShadowHide,
+    Function? onUIShow,
+    Function? onUIHide,
   }) {
     if (onPlayed != null) _onPlays.add(onPlayed);
     if (onPaused != null) _onPauseds.add(onPaused);
@@ -258,5 +258,5 @@ class StoryViewerController {
     if (onUIHide != null) _onUIHides.add(onUIHide);
   }
 
-  void _callFunctions(List<Function> _l) => _l.forEach((_f) => _f?.call());
+  void _callFunctions(List<Function> _l) => _l.forEach((_f) => _f.call());
 }

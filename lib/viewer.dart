@@ -14,60 +14,60 @@ import 'viewer_controller.dart';
 enum StoryRatio { r9_16, r16_9, r3_4, r4_3 }
 
 class StoryViewer extends StatefulWidget {
-  final StoryViewerController viewerController;
-  final String displayerUserID;
-  final UserModel userModel;
-  final List<StoryItemModel> stories;
+  final StoryViewerController? viewerController;
+  final String? displayerUserID;
+  final UserModel? userModel;
+  final List<StoryItemModel>? stories;
   final void Function({
     StoryViewer viewer,
-    StoryViewerController viewerController,
-  }) setupCustomWidgets;
+    StoryViewerController? viewerController,
+  })? setupCustomWidgets;
   final List<Widget> Function({
     StoryViewer viewer,
     StoryViewerController viewerController,
-  }) getAdditionalLayersBeforeMedia;
+  })? getAdditionalLayersBeforeMedia;
   final List<Widget> Function({
     StoryViewer viewer,
     StoryViewerController viewerController,
-  }) getAdditionalLayersAfterMedia;
-  final String heroTag;
-  final String profileHeroTag;
+  })? getAdditionalLayersAfterMedia;
+  final String? heroTag;
+  final String? profileHeroTag;
   final int initIndex;
   final bool fromAnonymous;
   final bool trusted;
   final bool hasReply;
   final StoryRatio ratio;
   final bool showSource;
-  final Function({String storyID}) onEachStoryLoadComplated;
+  final Function({String storyID})? onEachStoryLoadComplated;
   final Function({
-    StoryViewerController viewerController,
-    String storyID,
-    String message,
-  }) onStoryReplied;
+    StoryViewerController? viewerController,
+    String? storyID,
+    String? message,
+  })? onStoryReplied;
   final Function({
-    StoryViewer viewer,
-    StoryViewerController viewerController,
-  }) onEditStory;
+    StoryViewer? viewer,
+    StoryViewerController? viewerController,
+  })? onEditStory;
   final Function({
-    StoryViewerController viewerController,
-  }) onUserTap;
-  final Function onDispose;
-  final Widget profilePicture;
-  final Customizer customValues;
-  final Alignment mediaAlignment;
-  final BoxFit mediaFit;
-  final Color backgroundColor;
-  final BorderRadiusGeometry borderRadius;
-  final Color placeholderBackground;
-  final List<Color> placeholderBackgrounds;
-  final SystemUiOverlayStyle systemOverlayStyle;
-  final Duration serverTimeGap;
-  final bool Function() willPop;
-  final EdgeInsets progressRowPadding;
+    StoryViewerController? viewerController,
+  })? onUserTap;
+  final Function? onDispose;
+  final Widget? profilePicture;
+  final Customizer? customValues;
+  final Alignment? mediaAlignment;
+  final BoxFit? mediaFit;
+  final Color? backgroundColor;
+  final BorderRadiusGeometry? borderRadius;
+  final Color? placeholderBackground;
+  final List<Color>? placeholderBackgrounds;
+  final SystemUiOverlayStyle? systemOverlayStyle;
+  final Duration? serverTimeGap;
+  final bool Function()? willPop;
+  final EdgeInsets? progressRowPadding;
   final BorderRadius progressBorderRadius;
   final double progressHeight;
   final Color progressColor;
-  final TextStyle titleStyle;
+  final TextStyle? titleStyle;
   final EdgeInsets padding;
   final bool loop;
 
@@ -82,7 +82,7 @@ class StoryViewer extends StatefulWidget {
       Navigator.of(context).pop();
       return true;
     }
-    if (willPop()) {
+    if (willPop!()) {
       Navigator.of(context).pop();
       return true;
     }
@@ -90,7 +90,7 @@ class StoryViewer extends StatefulWidget {
   }
 
   const StoryViewer(
-      {Key key,
+      {Key? key,
       this.viewerController,
       this.userModel,
       this.stories,
@@ -136,9 +136,9 @@ class StoryViewer extends StatefulWidget {
 
 class _StoryViewerState extends State<StoryViewer>
     with TickerProviderStateMixin {
-  StoryViewerController viewController;
+  late StoryViewerController viewController;
   double lastY = 0.0;
-  bool get trusted => viewController.trusted;
+  bool? get trusted => viewController.trusted;
 
   @override
   void initState() {
@@ -147,7 +147,7 @@ class _StoryViewerState extends State<StoryViewer>
         currentIndex: widget.initIndex,
       );
     } else {
-      viewController = widget.viewerController;
+      viewController = widget.viewerController!;
     }
     viewController.trusted = widget.trusted;
     viewController.viewer = widget;
@@ -173,7 +173,7 @@ class _StoryViewerState extends State<StoryViewer>
     widget.pop(context);
   }
 
-  List<String> loadedStories = List<String>();
+  List<String> loadedStories = <String>[];
   void onPlayed() {
     String currentStoryID = viewController.currentStory.id;
     if (loadedStories.contains(currentStoryID)) {
@@ -229,7 +229,7 @@ class _StoryViewerState extends State<StoryViewer>
       if (!widget.inline && !widget.trusted)
         BlurSlider(
           onSliderEnd: endblur,
-          showBlurSlier: !trusted,
+          showBlurSlier: !trusted!,
           slideToSee: widget.customizer.slideToSee,
         ),
       StoryLayerUI(
@@ -247,7 +247,7 @@ class _StoryViewerState extends State<StoryViewer>
         child: body,
       );
     }
-    if (!trusted) {
+    if (!trusted!) {
       return body;
     }
     body = GestureDetector(
@@ -279,7 +279,7 @@ class _StoryViewerState extends State<StoryViewer>
     if (widget.inline) {
       double _width =
           MediaQuery.of(context).size.width - (widget.padding.horizontal);
-      double _height;
+      double? _height;
       switch (widget.ratio) {
         case StoryRatio.r16_9:
           _height = (_width * 9) / 16;
@@ -305,13 +305,14 @@ class _StoryViewerState extends State<StoryViewer>
         opacity = opacity < 1 ? opacity : 1;
         return Colors.black.withOpacity(opacity);
       },
-      slideScaleHandler: (Offset offset, {ExtendedImageSlidePageState state}) {
+      slideScaleHandler: (Offset offset, {ExtendedImageSlidePageState? state}) {
         double scale =
             (offset.dy / (MediaQuery.of(context).size.height * 0.4)) / 10;
         return 1 - scale;
       },
-      slideOffsetHandler: (Offset offset, {ExtendedImageSlidePageState state}) {
-        if (viewController.uiHiding && state.isSliding ||
+      slideOffsetHandler: (Offset offset,
+          {ExtendedImageSlidePageState? state}) {
+        if (viewController.uiHiding && state!.isSliding ||
             viewController.replying) {
           lastY = offset.dy;
           return Offset(0, 0);
@@ -333,12 +334,15 @@ class _StoryViewerState extends State<StoryViewer>
         dy = dy < 0 ? 0 : dy;
         return Offset(0, dy);
       },
-      slideEndHandler: (Offset offset,
-          {ScaleEndDetails details, ExtendedImageSlidePageState state}) {
+      slideEndHandler: (
+        Offset offset, {
+        ScaleEndDetails? details,
+        ExtendedImageSlidePageState? state,
+      }) {
         const int parameter = 6;
         viewController.play();
         return doubleCompare(
-                offset.dy.abs(), state.pageSize.height / parameter) >
+                offset.dy.abs(), state!.pageSize.height / parameter) >
             0;
       },
       slideAxis: SlideAxis.vertical,

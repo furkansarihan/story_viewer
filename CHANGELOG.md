@@ -1,3 +1,7 @@
+## [0.1.0]
+
+* nullsafety migration
+
 ## [0.0.19]
 
 * Breaking Change: "profilePictureUrl" parameter changed to "profilePicture" for supporting dynamic image source on UserModel.
