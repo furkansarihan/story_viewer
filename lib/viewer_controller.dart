@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter/animation.dart';
 import 'package:flutter/widgets.dart';
 
 import 'package:story_viewer/viewer.dart';

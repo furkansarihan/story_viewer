@@ -3,7 +3,6 @@
 // BSD-style license that can be found in the LICENSE file.
 
 import 'package:example/detailed_example.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:story_viewer/models/story_item.dart';
 import 'package:story_viewer/models/user.dart';

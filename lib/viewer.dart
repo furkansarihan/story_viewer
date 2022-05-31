@@ -3,13 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:story_viewer/layer_additional.dart';
 import 'package:story_viewer/story_viewer.dart';
-import 'blur_slider.dart';
 import 'layer_media.dart';
 import 'layer_ui.dart';
-import 'models/story_item.dart';
-import 'models/user.dart';
-import 'customizer.dart';
-import 'viewer_controller.dart';
 
 enum StoryRatio { r9_16, r16_9, r3_4, r4_3 }
 
@@ -74,17 +69,15 @@ class StoryViewer extends StatefulWidget {
   Customizer get customizer => customValues ?? Customizer();
   bool get inline => ratio != StoryRatio.r9_16;
 
-  bool pop(BuildContext context) {
+  Future<bool> pop(BuildContext context) async {
     if (inline) {
       return false;
     }
     if (willPop == null) {
-      Navigator.of(context).pop();
-      return true;
+      return await Navigator.of(context).maybePop();
     }
     if (willPop!()) {
-      Navigator.of(context).pop();
-      return true;
+      return await Navigator.of(context).maybePop();
     }
     return false;
   }
@@ -276,6 +269,12 @@ class _StoryViewerState extends State<StoryViewer>
           : null,
       child: body,
     );
+    if (widget.borderRadius != null) {
+      body = ClipRRect(
+        borderRadius: widget.borderRadius as BorderRadius?,
+        child: body,
+      );
+    }
     if (widget.inline) {
       double _width =
           MediaQuery.of(context).size.width - (widget.padding.horizontal);
@@ -334,17 +333,6 @@ class _StoryViewerState extends State<StoryViewer>
         dy = dy < 0 ? 0 : dy;
         return Offset(0, dy);
       },
-      slideEndHandler: (
-        Offset offset, {
-        ScaleEndDetails? details,
-        ExtendedImageSlidePageState? state,
-      }) {
-        const int parameter = 6;
-        viewController.play();
-        return doubleCompare(
-                offset.dy.abs(), state!.pageSize.height / parameter) >
-            0;
-      },
       slideAxis: SlideAxis.vertical,
       slideType: SlideType.wholePage,
       resetPageDuration: Duration(milliseconds: 100),
@@ -373,6 +361,17 @@ class _StoryViewerState extends State<StoryViewer>
         ),
       ),
     );
+  }
+
+  int doubleCompare(double value, double other, {double precision = 1e-10}) {
+    if (value.isNaN || other.isNaN) {
+      throw UnsupportedError('Compared with Infinity or NaN');
+    }
+    final double n = value - other;
+    if (n.abs() < precision) {
+      return 0;
+    }
+    return n < 0 ? -1 : 1;
   }
 
   void refreshState() {

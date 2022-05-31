@@ -4,11 +4,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:story_viewer/models/story_item.dart';
-import 'package:story_viewer/models/user.dart';
 import 'package:story_viewer/story_viewer.dart';
-import 'package:story_viewer/viewer.dart';
-import 'package:story_viewer/viewer_controller.dart';
 
 import 'main.dart';
 

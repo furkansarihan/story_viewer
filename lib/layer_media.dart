@@ -4,9 +4,6 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter/widgets.dart';
 
 import 'package:story_viewer/story_viewer.dart';
-import 'viewer.dart';
-import 'viewer_controller.dart';
-import 'widgets/placeholder_image.dart';
 
 class StoryLayerMedia extends StatefulWidget {
   final StoryViewerController? viewerController;
@@ -42,7 +39,7 @@ class StoryLayerMediaState extends State<StoryLayerMedia> {
       height: widget.viewer!.inline ? null : MediaQuery.of(context).size.height,
       image: currentItem.imageProvider!,
       enableSlideOutPage: true,
-      mode: ExtendedImageMode.gesture,
+      mode: ExtendedImageMode.none,
       enableMemoryCache: true,
       alignment: widget.viewer!.mediaAlignment ?? Alignment.center,
       fit: widget.viewer!.mediaFit ?? BoxFit.fitWidth,
@@ -70,7 +67,6 @@ class StoryLayerMediaState extends State<StoryLayerMedia> {
           },
         );
       },
-      // ignore: missing_return
       loadStateChanged: (ExtendedImageState state) {
         switch (state.extendedImageLoadState) {
           case LoadState.loading:
@@ -79,30 +75,23 @@ class StoryLayerMediaState extends State<StoryLayerMedia> {
               backgroundColor: widget.viewer!.placeholderBackground,
               backgroundColors: widget.viewer!.placeholderBackgrounds,
             );
-            break;
           case LoadState.failed:
             return PlaceholderImage(
               backgroundColor: widget.viewer!.placeholderBackground,
               backgroundColors: widget.viewer!.placeholderBackgrounds,
               iconData: widget.viewer!.customizer.failedImageIcon,
             );
-            break;
           case LoadState.completed:
             controller!.load(currentItem.imageProvider);
-            SchedulerBinding.instance!.addPostFrameCallback((p) {
+            SchedulerBinding.instance.addPostFrameCallback((p) {
               controller!.play();
             });
-            break;
+            return null;
           default:
+            return null;
         }
       },
     );
-    if (widget.viewer!.borderRadius != null) {
-      return ClipRRect(
-        borderRadius: widget.viewer!.borderRadius as BorderRadius?,
-        child: returnW,
-      );
-    }
     return returnW;
   }
 

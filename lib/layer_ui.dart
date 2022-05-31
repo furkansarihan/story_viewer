@@ -68,9 +68,7 @@ class _StoryLayerUIState extends State<StoryLayerUI> {
 
   void onPaused() {
     if (controller!.replying) {
-      if (context != null) {
-        FocusScope.of(context).requestFocus(textNode);
-      }
+      FocusScope.of(context).requestFocus(textNode);
     }
   }
 
@@ -93,8 +91,9 @@ class _StoryLayerUIState extends State<StoryLayerUI> {
       key: ObjectKey('layer_ui'),
       children: [
         Container(
-          height:
-              isLong && !viewer!.inline ? 0 : MediaQuery.of(context).padding.top,
+          height: isLong && !viewer!.inline
+              ? 0
+              : MediaQuery.of(context).padding.top,
         ),
         StoryProgressRow(
           key: ObjectKey('progressrow'),
