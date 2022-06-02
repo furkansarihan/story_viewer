@@ -6,22 +6,25 @@ import 'package:flutter/widgets.dart';
 import 'package:story_viewer/story_viewer.dart';
 
 class StoryLayerMedia extends StatefulWidget {
-  final StoryViewerController? viewerController;
-  final StoryViewer? viewer;
+  final StoryViewerController viewerController;
+  final StoryViewer viewer;
 
-  const StoryLayerMedia({Key? key, this.viewerController, this.viewer})
-      : super(key: key);
+  const StoryLayerMedia({
+    Key? key,
+    required this.viewerController,
+    required this.viewer,
+  }) : super(key: key);
   @override
   StoryLayerMediaState createState() => StoryLayerMediaState();
 }
 
 class StoryLayerMediaState extends State<StoryLayerMedia> {
-  StoryViewerController? get controller => widget.viewerController;
+  StoryViewerController get controller => widget.viewerController;
 
   @override
   void initState() {
     super.initState();
-    controller!.addListener(onIndexChanged: onIndexChanged);
+    controller.addListener(onIndexChanged: onIndexChanged);
   }
 
   void onIndexChanged() {
@@ -30,19 +33,19 @@ class StoryLayerMediaState extends State<StoryLayerMedia> {
 
   @override
   Widget build(BuildContext context) {
-    if (controller!.currentStory.imageProvider == null) {
+    if (controller.currentStory.imageProvider == null) {
       return const SizedBox.shrink();
     }
-    StoryItemModel currentItem = controller!.currentStory;
+    StoryItemModel currentItem = controller.currentStory;
     Widget returnW = ExtendedImage(
       width: MediaQuery.of(context).size.width,
-      height: widget.viewer!.inline ? null : MediaQuery.of(context).size.height,
+      height: widget.viewer.inline ? null : MediaQuery.of(context).size.height,
       image: currentItem.imageProvider!,
       enableSlideOutPage: true,
       mode: ExtendedImageMode.none,
       enableMemoryCache: true,
-      alignment: widget.viewer!.mediaAlignment ?? Alignment.center,
-      fit: widget.viewer!.mediaFit ?? BoxFit.fitWidth,
+      alignment: widget.viewer.mediaAlignment ?? Alignment.center,
+      fit: widget.viewer.mediaFit ?? BoxFit.fitWidth,
       initGestureConfigHandler: (s) {
         return GestureConfig(
           maxScale: 1.0,
@@ -53,7 +56,7 @@ class StoryLayerMediaState extends State<StoryLayerMedia> {
       },
       heroBuilderForSlidingPage: (Widget result) {
         return Hero(
-          tag: controller!.currentHeroTag,
+          tag: controller.currentHeroTag,
           child: result,
           flightShuttleBuilder: (BuildContext flightContext,
               Animation<double> animation,
@@ -72,19 +75,19 @@ class StoryLayerMediaState extends State<StoryLayerMedia> {
           case LoadState.loading:
             return PlaceholderImage(
               loading: true,
-              backgroundColor: widget.viewer!.placeholderBackground,
-              backgroundColors: widget.viewer!.placeholderBackgrounds,
+              backgroundColor: widget.viewer.placeholderBackground,
+              backgroundColors: widget.viewer.placeholderBackgrounds,
             );
           case LoadState.failed:
             return PlaceholderImage(
-              backgroundColor: widget.viewer!.placeholderBackground,
-              backgroundColors: widget.viewer!.placeholderBackgrounds,
-              iconData: widget.viewer!.customizer.failedImageIcon,
+              backgroundColor: widget.viewer.placeholderBackground,
+              backgroundColors: widget.viewer.placeholderBackgrounds,
+              iconData: widget.viewer.customizer.failedImageIcon,
             );
           case LoadState.completed:
-            controller!.load(currentItem.imageProvider);
+            controller.load(currentItem.imageProvider);
             SchedulerBinding.instance.addPostFrameCallback((p) {
-              controller!.play();
+              controller.play();
             });
             return null;
           default:
@@ -92,6 +95,12 @@ class StoryLayerMediaState extends State<StoryLayerMedia> {
         }
       },
     );
+    if (widget.viewer.borderRadius != null) {
+      return ClipRRect(
+        borderRadius: widget.viewer.borderRadius as BorderRadius?,
+        child: returnW,
+      );
+    }
     return returnW;
   }
 

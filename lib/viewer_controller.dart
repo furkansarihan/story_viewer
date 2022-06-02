@@ -6,7 +6,7 @@ import 'package:story_viewer/viewer.dart';
 import 'models/story_item.dart';
 
 class StoryViewerController {
-  StoryViewer? viewer;
+  late StoryViewer viewer;
   bool? trusted;
   bool _uiHiding = false;
   bool _prewShadowShowing = false;
@@ -23,9 +23,9 @@ class StoryViewerController {
   List<Function> _onUIHides = <Function>[];
 
   Map<ImageProvider?, bool> _loadedStories = Map<ImageProvider?, bool>();
-  List<StoryItemModel> get stories => viewer?.stories ?? [];
-  String get ownerUserID => viewer?.displayerUserID ?? '';
-  String get heroTag => viewer?.heroTag ?? '';
+  List<StoryItemModel> get stories => viewer.stories ?? [];
+  String get ownerUserID => viewer.displayerUserID ?? '';
+  String get heroTag => viewer.heroTag ?? '';
 
   int? currentIndex;
   StoryItemModel get currentStory =>
@@ -35,7 +35,7 @@ class StoryViewerController {
 
   bool get owner => currentStory.ownerID == ownerUserID;
   String get currentHeroTag =>
-      viewer?.heroTag ?? currentStory.hashCode.toString();
+      viewer.heroTag ?? currentStory.hashCode.toString();
 
   StoryViewerController({
     this.currentIndex = 0,
@@ -113,7 +113,7 @@ class StoryViewerController {
   }
 
   void replyPause() {
-    if (!viewer!.hasReply) {
+    if (!viewer.hasReply) {
       return;
     }
     _replying = true;
@@ -166,7 +166,7 @@ class StoryViewerController {
     cancelHider();
     currentIndex = currentIndex! + 1;
     if (currentIndex! >= stories.length) {
-      if (viewer!.loop) {
+      if (viewer.loop) {
         currentIndex = 0;
         _callFunctions(_onIndexChangeds);
         play();

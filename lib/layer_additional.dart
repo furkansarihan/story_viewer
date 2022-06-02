@@ -4,10 +4,10 @@ import 'package:story_viewer/story_viewer.dart';
 class StoryAdditionalLayer extends StatefulWidget {
   final StoryViewerController viewerController;
   final StoryViewer viewer;
-  final List<Widget> Function({
+  final List<Widget> Function(
     StoryViewer viewer,
     StoryViewerController viewerController,
-  })? additions;
+  )? additions;
 
   const StoryAdditionalLayer({
     Key? key,
@@ -20,12 +20,12 @@ class StoryAdditionalLayer extends StatefulWidget {
 }
 
 class _State extends State<StoryAdditionalLayer> {
-  StoryViewerController? get controller => widget.viewerController;
+  StoryViewerController get controller => widget.viewerController;
 
   @override
   void initState() {
     super.initState();
-    controller!.addListener(
+    controller.addListener(
       onIndexChanged: onIndexChanged,
     );
   }
@@ -37,8 +37,8 @@ class _State extends State<StoryAdditionalLayer> {
   @override
   Widget build(BuildContext context) {
     List<Widget>? layers = widget.additions?.call(
-      viewerController: widget.viewerController,
-      viewer: widget.viewer,
+      widget.viewer,
+      widget.viewerController,
     );
     if (layers?.isEmpty ?? true) {
       return const SizedBox.shrink();

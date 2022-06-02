@@ -13,18 +13,18 @@ class StoryViewer extends StatefulWidget {
   final String? displayerUserID;
   final UserModel? userModel;
   final List<StoryItemModel>? stories;
-  final void Function({
-    StoryViewer viewer,
-    StoryViewerController? viewerController,
-  })? setupCustomWidgets;
-  final List<Widget> Function({
+  final void Function(
     StoryViewer viewer,
     StoryViewerController viewerController,
-  })? getAdditionalLayersBeforeMedia;
-  final List<Widget> Function({
+  )? setupCustomWidgets;
+  final List<Widget> Function(
     StoryViewer viewer,
     StoryViewerController viewerController,
-  })? getAdditionalLayersAfterMedia;
+  )? getAdditionalLayersBeforeMedia;
+  final List<Widget> Function(
+    StoryViewer viewer,
+    StoryViewerController viewerController,
+  )? getAdditionalLayersAfterMedia;
   final String? heroTag;
   final String? profileHeroTag;
   final int initIndex;
@@ -34,18 +34,18 @@ class StoryViewer extends StatefulWidget {
   final StoryRatio ratio;
   final bool showSource;
   final Function({String storyID})? onEachStoryLoadComplated;
-  final Function({
-    StoryViewerController? viewerController,
+  final Function(
+    StoryViewerController viewerController,
     String? storyID,
     String? message,
-  })? onStoryReplied;
-  final Function({
-    StoryViewer? viewer,
-    StoryViewerController? viewerController,
-  })? onEditStory;
-  final Function({
-    StoryViewerController? viewerController,
-  })? onUserTap;
+  )? onStoryReplied;
+  final Function(
+    StoryViewer viewer,
+    StoryViewerController viewerController,
+  )? onEditStory;
+  final Function(
+    StoryViewerController viewerController,
+  )? onUserTap;
   final Function? onDispose;
   final Widget? profilePicture;
   final Customizer? customValues;
@@ -156,8 +156,8 @@ class _StoryViewerState extends State<StoryViewer>
     );
     viewController.addListener(onComplated: onComplated, onPlayed: onPlayed);
     widget.setupCustomWidgets?.call(
-      viewerController: viewController,
-      viewer: widget,
+      widget,
+      viewController,
     );
     super.initState();
   }
@@ -234,6 +234,12 @@ class _StoryViewerState extends State<StoryViewer>
       alignment: widget.mediaAlignment ?? Alignment.center,
       children: layers,
     );
+    if (widget.borderRadius != null) {
+      body = ClipRRect(
+        borderRadius: widget.borderRadius as BorderRadius?,
+        child: body,
+      );
+    }
     if (isLong) {
       body = SafeArea(
         bottom: false,
@@ -269,12 +275,6 @@ class _StoryViewerState extends State<StoryViewer>
           : null,
       child: body,
     );
-    if (widget.borderRadius != null) {
-      body = ClipRRect(
-        borderRadius: widget.borderRadius as BorderRadius?,
-        child: body,
-      );
-    }
     if (widget.inline) {
       double _width =
           MediaQuery.of(context).size.width - (widget.padding.horizontal);
@@ -322,8 +322,8 @@ class _StoryViewerState extends State<StoryViewer>
           } else if (viewController.owner) {
             viewController.infoPause();
             widget.onEditStory?.call(
-              viewerController: viewController,
-              viewer: widget,
+              widget,
+              viewController,
             );
           }
         }

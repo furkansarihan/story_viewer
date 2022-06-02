@@ -180,10 +180,10 @@ class _DetailedHomeState extends State<DetailedHome> {
           fit: BoxFit.fitHeight,
         ),
       ),
-      getAdditionalLayersBeforeMedia: ({
-        StoryViewer? viewer,
-        StoryViewerController? viewerController,
-      }) {
+      getAdditionalLayersBeforeMedia: (
+        StoryViewer viewer,
+        StoryViewerController viewerController,
+      ) {
         return [
           Container(
             decoration: BoxDecoration(
@@ -192,10 +192,10 @@ class _DetailedHomeState extends State<DetailedHome> {
           )
         ];
       },
-      getAdditionalLayersAfterMedia: ({
-        StoryViewer? viewer,
-        StoryViewerController? viewerController,
-      }) {
+      getAdditionalLayersAfterMedia: (
+        StoryViewer viewer,
+        StoryViewerController viewerController,
+      ) {
         return [
           IntrinsicHeight(
               child: Container(
@@ -210,7 +210,7 @@ class _DetailedHomeState extends State<DetailedHome> {
               ],
             )),
             child: Text(
-              'This is an additional layer for ${viewerController?.currentIndex}',
+              'This is an additional layer for ${viewerController.currentIndex}',
               style: TextStyle(color: Colors.white, fontSize: 24),
             ),
           )),

@@ -6,16 +6,16 @@ import 'package:story_viewer/viewer.dart';
 import 'package:story_viewer/viewer_controller.dart';
 
 class StoryProfileRow extends StatelessWidget {
-  final StoryViewer? viewer;
-  final StoryViewerController? viewerController;
+  final StoryViewer viewer;
+  final StoryViewerController viewerController;
 
   const StoryProfileRow({
     Key? key,
-    this.viewer,
-    this.viewerController,
+    required this.viewer,
+    required this.viewerController,
   }) : super(key: key);
 
-  UserModel get userModel => viewer!.userModel ?? UserModel();
+  UserModel get userModel => viewer.userModel ?? UserModel();
 
   @override
   Widget build(BuildContext context) {
@@ -26,21 +26,19 @@ class StoryProfileRow extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Expanded(
-            child: viewer!.fromAnonymous
+            child: viewer.fromAnonymous
                 ? const SizedBox.shrink()
                 : GestureDetector(
                     onTap: () {
-                      viewer!.onUserTap?.call(
-                        viewerController: viewerController,
-                      );
+                      viewer.onUserTap?.call(viewerController);
                     },
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
-                        viewer!.profilePicture ??
-                            (viewer!.profileHeroTag != null
+                        viewer.profilePicture ??
+                            (viewer.profileHeroTag != null
                                 ? Hero(
-                                    tag: viewer!.profileHeroTag!,
+                                    tag: viewer.profileHeroTag!,
                                     child: profilePicture(context),
                                   )
                                 : profilePicture(context)),
@@ -51,7 +49,7 @@ class StoryProfileRow extends StatelessWidget {
                             textAlign: TextAlign.left,
                             maxLines: 1,
                             overflow: TextOverflow.clip,
-                            style: viewer!.titleStyle ??
+                            style: viewer.titleStyle ??
                                 Theme.of(context).textTheme.bodyText1!.merge(
                                       TextStyle(
                                         color: Colors.white,
@@ -65,26 +63,26 @@ class StoryProfileRow extends StatelessWidget {
           ),
           Row(
             children: [
-              viewer!.onEditStory == null
+              viewer.onEditStory == null
                   ? Container()
                   : CupertinoButton(
                       padding: const EdgeInsets.symmetric(horizontal: 6),
                       child: Icon(
-                        viewer!.customizer.infoIcon,
+                        viewer.customizer.infoIcon,
                         color: Colors.white,
                       ),
                       onPressed: onEditPressed,
                     ),
-              viewer!.inline
+              viewer.inline
                   ? Container()
                   : CupertinoButton(
                       padding: const EdgeInsets.symmetric(horizontal: 6),
                       child: Icon(
-                        viewer!.customizer.closeIcon,
+                        viewer.customizer.closeIcon,
                         color: Colors.white,
                       ),
                       onPressed: () {
-                        viewerController!.complated();
+                        viewerController.complated();
                       },
                     ),
             ],
@@ -97,33 +95,33 @@ class StoryProfileRow extends StatelessWidget {
   Widget profilePicture(BuildContext context) {
     return CircleAvatar(
       backgroundColor: Colors.grey[500],
-      backgroundImage: viewer!.userModel!.profilePicture,
-      radius: viewer!.inline ? 12 : 16,
+      backgroundImage: viewer.userModel!.profilePicture,
+      radius: viewer.inline ? 12 : 16,
     );
   }
 
   void onEditPressed() {
-    viewerController!.pause();
-    viewer!.onEditStory?.call(
-      viewerController: viewerController,
-      viewer: viewer,
+    viewerController.pause();
+    viewer.onEditStory?.call(
+      viewer,
+      viewerController,
     );
   }
 
   Duration _storyDurationSincePosted() {
     return Duration(
       milliseconds: _currentTime().millisecondsSinceEpoch -
-          viewerController!.currentStory.timestamp.millisecondsSinceEpoch,
+          viewerController.currentStory.timestamp.millisecondsSinceEpoch,
     );
   }
 
   DateTime _currentTime() {
-    if (viewer!.serverTimeGap == null) {
+    if (viewer.serverTimeGap == null) {
       return DateTime.now();
     }
     return DateTime.fromMillisecondsSinceEpoch(
       DateTime.now().millisecondsSinceEpoch +
-          viewer!.serverTimeGap!.inMilliseconds,
+          viewer.serverTimeGap!.inMilliseconds,
     );
   }
 
@@ -131,15 +129,15 @@ class StoryProfileRow extends StatelessWidget {
     if (duration.inSeconds == 0) return '';
     if (duration.isNegative) return '';
     if (duration.inMinutes < 1) {
-      return '•  ${duration.inSeconds}${viewer!.customizer.seconds}';
+      return '•  ${duration.inSeconds}${viewer.customizer.seconds}';
     } else if (duration.inMinutes < 60) {
-      return '•  ${duration.inMinutes}${viewer!.customizer.minutes}';
+      return '•  ${duration.inMinutes}${viewer.customizer.minutes}';
     } else if (duration.inHours < 24) {
-      return '•  ${duration.inHours}${viewer!.customizer.hours}';
+      return '•  ${duration.inHours}${viewer.customizer.hours}';
     } else if (duration.inDays < 7) {
-      return '•  ${duration.inDays}${viewer!.customizer.days}';
+      return '•  ${duration.inDays}${viewer.customizer.days}';
     } else {
-      return '•  ${duration.inDays ~/ 7}${viewer!.customizer.weeks}';
+      return '•  ${duration.inDays ~/ 7}${viewer.customizer.weeks}';
     }
   }
 }

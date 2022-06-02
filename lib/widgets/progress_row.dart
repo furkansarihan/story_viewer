@@ -5,24 +5,27 @@ import 'package:story_viewer/viewer_controller.dart';
 import 'package:story_viewer/widgets/progress_widget.dart';
 
 class StoryProgressRow extends StatelessWidget {
-  final StoryViewer? viewer;
-  final StoryViewerController? viewerController;
+  final StoryViewer viewer;
+  final StoryViewerController viewerController;
 
-  const StoryProgressRow({Key? key, this.viewer, this.viewerController})
-      : super(key: key);
+  const StoryProgressRow({
+    Key? key,
+    required this.viewer,
+    required this.viewerController,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    Color progressColor = viewer!.progressColor;
+    Color progressColor = viewer.progressColor;
     return Padding(
-      padding: viewer!.inline
-          ? viewer!.progressRowPadding ??
+      padding: viewer.inline
+          ? viewer.progressRowPadding ??
               const EdgeInsets.only(top: 6, right: 6, left: 6)
-          : viewer!.progressRowPadding ?? EdgeInsets.zero,
+          : viewer.progressRowPadding ?? EdgeInsets.zero,
       child: Row(
         children: [
-          for (var i = 0; i < viewer!.stories!.length; i++)
-            if (i == viewerController!.currentIndex)
+          for (var i = 0; i < viewer.stories!.length; i++)
+            if (i == viewerController.currentIndex)
               StoryProgressWidget(
                 key: GlobalKey(),
                 viewer: viewer,
@@ -34,12 +37,12 @@ class StoryProgressRow extends StatelessWidget {
                 child: Container(
                   margin: EdgeInsets.symmetric(horizontal: 0.5),
                   decoration: BoxDecoration(
-                    color: i < viewerController!.currentIndex!
+                    color: i < viewerController.currentIndex!
                         ? progressColor
                         : progressColor.withAlpha(100),
-                    borderRadius: viewer!.progressBorderRadius,
+                    borderRadius: viewer.progressBorderRadius,
                   ),
-                  height: viewer!.progressHeight,
+                  height: viewer.progressHeight,
                 ),
               ),
         ],
