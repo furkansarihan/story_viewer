@@ -19,6 +19,31 @@ class StoryProfileRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TextStyle style = viewer.titleStyle ??
+        Theme.of(context).textTheme.bodyText1!.merge(
+              TextStyle(
+                color: Colors.white,
+              ),
+            );
+    Widget text = Row(
+      children: [
+        Text(
+          userModel.username,
+          textAlign: TextAlign.left,
+          maxLines: 1,
+          overflow: TextOverflow.clip,
+          style: style,
+        ),
+        Text(' • ', style: style),
+        Text(
+          getDurationText(_storyDurationSincePosted()),
+          textAlign: TextAlign.left,
+          maxLines: 1,
+          overflow: TextOverflow.clip,
+          style: style,
+        ),
+      ],
+    );
     return Container(
       padding: const EdgeInsets.all(8),
       width: MediaQuery.of(context).size.width,
@@ -26,40 +51,37 @@ class StoryProfileRow extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Expanded(
-            child: viewer.fromAnonymous
-                ? const SizedBox.shrink()
-                : GestureDetector(
-                    onTap: () {
-                      viewer.onUserTap?.call(viewerController);
-                    },
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        viewer.profilePicture ??
-                            (viewer.profileHeroTag != null
-                                ? Hero(
-                                    tag: viewer.profileHeroTag!,
-                                    child: profilePicture(context),
-                                  )
-                                : profilePicture(context)),
-                        const SizedBox(width: 12),
-                        Flexible(
-                          child: Text(
-                            '${userModel.username}  ${getDurationText(_storyDurationSincePosted())}',
-                            textAlign: TextAlign.left,
-                            maxLines: 1,
-                            overflow: TextOverflow.clip,
-                            style: viewer.titleStyle ??
-                                Theme.of(context).textTheme.bodyText1!.merge(
-                                      TextStyle(
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                          ),
-                        ),
-                      ],
-                    ),
+            child: GestureDetector(
+              onTap: () {
+                viewer.onUserTap?.call(viewerController);
+              },
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  viewer.profilePicture ??
+                      (viewer.profileHeroTag != null
+                          ? Hero(
+                              tag: viewer.profileHeroTag!,
+                              child: profilePicture(context),
+                            )
+                          : profilePicture(context)),
+                  const SizedBox(width: 12),
+                  Flexible(
+                    child: viewer.profileRowItem != null
+                        ? Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              text,
+                              const SizedBox(height: 2),
+                              viewer.profileRowItem!,
+                            ],
+                          )
+                        : text,
                   ),
+                ],
+              ),
+            ),
           ),
           Row(
             children: [
@@ -129,15 +151,15 @@ class StoryProfileRow extends StatelessWidget {
     if (duration.inSeconds == 0) return '';
     if (duration.isNegative) return '';
     if (duration.inMinutes < 1) {
-      return '•  ${duration.inSeconds}${viewer.customizer.seconds}';
+      return '${duration.inSeconds}${viewer.customizer.seconds}';
     } else if (duration.inMinutes < 60) {
-      return '•  ${duration.inMinutes}${viewer.customizer.minutes}';
+      return '${duration.inMinutes}${viewer.customizer.minutes}';
     } else if (duration.inHours < 24) {
-      return '•  ${duration.inHours}${viewer.customizer.hours}';
+      return '${duration.inHours}${viewer.customizer.hours}';
     } else if (duration.inDays < 7) {
-      return '•  ${duration.inDays}${viewer.customizer.days}';
+      return '${duration.inDays}${viewer.customizer.days}';
     } else {
-      return '•  ${duration.inDays ~/ 7}${viewer.customizer.weeks}';
+      return '${duration.inDays ~/ 7}${viewer.customizer.weeks}';
     }
   }
 }

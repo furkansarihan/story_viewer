@@ -28,7 +28,7 @@ class StoryViewer extends StatefulWidget {
   final String? heroTag;
   final String? profileHeroTag;
   final int initIndex;
-  final bool fromAnonymous;
+  final Widget? profileRowItem;
   final bool trusted;
   final bool hasReply;
   final StoryRatio ratio;
@@ -87,9 +87,9 @@ class StoryViewer extends StatefulWidget {
       this.viewerController,
       this.userModel,
       this.stories,
-      this.fromAnonymous = false,
       this.trusted = true,
       this.initIndex = 0,
+      this.profileRowItem,
       this.onEachStoryLoadComplated,
       this.onEditStory,
       this.onDispose,
