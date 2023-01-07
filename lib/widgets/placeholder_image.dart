@@ -56,6 +56,7 @@ class PlaceholderImage extends StatelessWidget {
     if (loading) {
       return CircularProgressIndicator(
         valueColor: new AlwaysStoppedAnimation<Color>(Colors.grey),
+        strokeWidth: 2,
       );
     } else {
       return Icon(

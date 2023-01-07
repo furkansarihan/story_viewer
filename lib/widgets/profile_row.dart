@@ -88,6 +88,7 @@ class StoryProfileRow extends StatelessWidget {
               viewer.onEditStory == null
                   ? Container()
                   : CupertinoButton(
+                      key: ValueKey('editStory'),
                       padding: const EdgeInsets.symmetric(horizontal: 6),
                       child: Icon(
                         viewer.customizer.infoIcon,
@@ -98,6 +99,7 @@ class StoryProfileRow extends StatelessWidget {
               viewer.inline
                   ? Container()
                   : CupertinoButton(
+                      key: ValueKey('closeStory'),
                       padding: const EdgeInsets.symmetric(horizontal: 6),
                       child: Icon(
                         viewer.customizer.closeIcon,
@@ -116,6 +118,7 @@ class StoryProfileRow extends StatelessWidget {
 
   Widget profilePicture(BuildContext context) {
     return CircleAvatar(
+      key: ValueKey('storyProfilePicture'),
       backgroundColor: Colors.grey[500],
       backgroundImage: viewer.userModel!.profilePicture,
       radius: viewer.inline ? 12 : 16,
