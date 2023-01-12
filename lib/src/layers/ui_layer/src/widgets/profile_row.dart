@@ -15,21 +15,21 @@ class ProfileRow extends StatelessWidget {
     this.storyTimeStyle,
     this.trailingWidgets,
     this.customizer = const Customizer(),
-    Key key,
+    Key? key,
   }) : super(key: key);
 
-  final UserModel userModel;
-  final EdgeInsets profilePicturePadding;
-  final EdgeInsets usernamePadding;
-  final TextStyle usernameStyle;
-  final TextStyle storyTimeStyle;
-  final List<Widget> trailingWidgets;
+  final UserModel? userModel;
+  final EdgeInsets? profilePicturePadding;
+  final EdgeInsets? usernamePadding;
+  final TextStyle? usernameStyle;
+  final TextStyle? storyTimeStyle;
+  final List<Widget>? trailingWidgets;
   final Customizer customizer;
 
   @override
   Widget build(BuildContext context) {
     return Stack(
-      overflow: Overflow.visible,
+      clipBehavior: Clip.none,
       alignment: Alignment.center,
       children: [
         Row(
@@ -48,22 +48,21 @@ class ProfileRow extends StatelessWidget {
                       height: 36,
                       child: CircleAvatar(
                         backgroundColor: Color(0xFF555555),
-                        backgroundImage: userModel.profilePicture,
+                        backgroundImage: userModel!.profilePicture,
                       ),
                     ),
                   )
                 : const SizedBox.shrink(),
             Row(
-              crossAxisAlignment: CrossAxisAlignment.baseline,
               children: [
                 userModel?.username != null
                     ? Text(
-                        userModel.username,
+                        userModel!.username,
                         style: usernameStyle ??
                             Theme.of(context)
                                 .textTheme
                                 .bodyText2
-                                .merge(TextStyle(color: Colors.white)),
+                                ?.merge(TextStyle(color: Colors.white)),
                         maxLines: 1,
                       )
                     : const SizedBox.shrink(),
@@ -88,8 +87,8 @@ class ProfileRow extends StatelessWidget {
 
 class StoryTime extends StatelessWidget {
   const StoryTime({
-    this.customizer,
-    Key key,
+    required this.customizer,
+    Key? key,
   }) : super(key: key);
 
   final Customizer customizer;
@@ -101,32 +100,15 @@ class StoryTime extends StatelessWidget {
         return state1.storyIndex != state2.storyIndex;
       },
       builder: (context, state) {
-        DateTime postedAt =
-            context.watch<StoryViewerCubit>().currentStory.postedAt;
-        if (postedAt == null) return const SizedBox.shrink();
         return Text(
-          getDurationText(_storyDurationSincePosted(postedAt)),
+          getDurationText(
+              context.watch<StoryViewerCubit>().currentStory.howOld),
           style: Theme.of(context)
               .textTheme
               .caption
-              .merge(TextStyle(color: Colors.white60)),
+              ?.merge(TextStyle(color: Colors.white60)),
         );
       },
-    );
-  }
-
-  Duration _storyDurationSincePosted(DateTime postedAt) {
-    return Duration(
-      milliseconds: _currentTime().millisecondsSinceEpoch -
-          postedAt.millisecondsSinceEpoch,
-    );
-  }
-
-  DateTime _currentTime() {
-    return DateTime.fromMillisecondsSinceEpoch(
-      DateTime.now().millisecondsSinceEpoch +
-              customizer.timeGap.inMilliseconds ??
-          0,
     );
   }
 
@@ -157,7 +139,6 @@ class Customizer {
     this.hours = 'h',
     this.days = 'd',
     this.weeks = 'w',
-    this.timeGap = Duration.zero,
   });
   final String now;
   final String seconds;
@@ -165,6 +146,4 @@ class Customizer {
   final String hours;
   final String days;
   final String weeks;
-
-  final Duration timeGap;
 }

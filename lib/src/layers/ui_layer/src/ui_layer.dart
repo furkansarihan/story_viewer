@@ -6,13 +6,12 @@ import 'package:story_viewer/src/layers/gesture_layer/gesture_layer.dart';
 
 import 'package:story_viewer/story_viewer.dart';
 
-import 'widgets/profile_row.dart';
 import 'widgets/progress_row.dart';
 
 class UiLayer extends StatelessWidget {
   const UiLayer(
     this.viewer, {
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   final StoryViewer viewer;
@@ -28,7 +27,7 @@ class UiLayer extends StatelessWidget {
           duration: const Duration(milliseconds: 200),
           opacity: state.uiShowing ? 1 : 0,
           child: Stack(
-            overflow: Overflow.visible,
+            clipBehavior: Clip.none,
             alignment: Alignment.topCenter,
             children: [
               Container(
@@ -74,7 +73,7 @@ class UiLayer extends StatelessWidget {
 }
 
 class PreviewShadow extends StatelessWidget {
-  const PreviewShadow({Key key}) : super(key: key);
+  const PreviewShadow({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

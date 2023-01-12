@@ -1,7 +1,4 @@
-import 'dart:developer';
-
 import 'package:dismissible_page/dismissible_page.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,9 +9,9 @@ import 'models/models.dart';
 
 class StoryViewer extends StatelessWidget {
   const StoryViewer({
-    Key key,
+    Key? key,
     this.systemOverlayStyle,
-    this.stories,
+    required this.stories,
     this.contentBorderRadius = 0.0,
     this.progressHeight = 2,
     this.progressBorderRadius = BorderRadius.zero,
@@ -31,7 +28,7 @@ class StoryViewer extends StatelessWidget {
     this.backgroundColor = Colors.black,
   }) : super(key: key);
 
-  final SystemUiOverlayStyle systemOverlayStyle;
+  final SystemUiOverlayStyle? systemOverlayStyle;
   final List<StoryModel> stories;
 
   final double contentBorderRadius;
@@ -40,10 +37,10 @@ class StoryViewer extends StatelessWidget {
   final BorderRadiusGeometry progressBorderRadius;
   final EdgeInsets progressRowPadding;
 
-  final Widget profileRow;
-  final Widget replyRow;
+  final Widget? profileRow;
+  final Widget? replyRow;
 
-  final Function onSwipeUp;
+  final Function? onSwipeUp;
   final double swipeUpTreshold;
   final bool fullScreen;
   final Color backgroundColor;
@@ -81,7 +78,7 @@ class StoryViewer extends StatelessWidget {
 }
 
 class _Root extends StatelessWidget {
-  const _Root(this.viewer, {Key key}) : super(key: key);
+  const _Root(this.viewer, {Key? key}) : super(key: key);
 
   final StoryViewer viewer;
 
@@ -96,25 +93,25 @@ class _Root extends StatelessWidget {
           minRadius: viewer.contentBorderRadius,
           maxRadius: viewer.contentBorderRadius * 2,
           backgroundColor: viewer.backgroundColor,
-          direction: DismissDirection.down,
-          onDismiss: () => Navigator.of(context).pop(),
+          direction: DismissiblePageDismissDirection.down,
+          onDismissed: () => Navigator.of(context).maybePop(),
           isFullScreen: false,
-          onDragStart: (details) {
-            log('onDragStart');
+          onDragStart: () {
+            debugPrint('onDragStart');
             FocusScope.of(context).unfocus();
             context.read<StoryViewerCubit>().pause();
           },
           onDragUpdate: (details) {
-            log('onDragUpdate: ${details.primaryDelta}');
-            if (details.primaryDelta.abs() > viewer.swipeUpTreshold) {
-              viewer.onSwipeUp?.call();
-            }
+            // TODO:
+            // log('onDragUpdate: ${details.primaryDelta}');
+            // if ((details.primaryDelta?.abs() ?? 0) > viewer.swipeUpTreshold) {
+            //   viewer.onSwipeUp?.call();
+            // }
           },
-          onDragEnd: (details) {
-            log('onDragStart: ${details.primaryVelocity}');
+          onDragEnd: () {
+            // log('onDragStart: ${details.primaryVelocity}');
             context.read<StoryViewerCubit>().play();
           },
-          passive: !state.uiShowing,
           child: Stack(
             alignment: Alignment.topCenter,
             children: [

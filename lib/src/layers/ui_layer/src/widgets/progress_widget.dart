@@ -6,8 +6,8 @@ import 'package:story_viewer/story_viewer.dart';
 
 class StoryProgressWidget extends StatefulWidget {
   const StoryProgressWidget({
-    Key key,
-    this.viewer,
+    Key? key,
+    required this.viewer,
   }) : super(key: key);
 
   final StoryViewer viewer;
@@ -18,7 +18,7 @@ class StoryProgressWidget extends StatefulWidget {
 
 class _StoryProgressWidgetState extends State<StoryProgressWidget>
     with SingleTickerProviderStateMixin {
-  AnimationController animationController;
+  late AnimationController animationController;
 
   @override
   void initState() {

@@ -25,12 +25,12 @@ class StoryViewerState extends Equatable {
       ];
 
   StoryViewerState copyWith({
-    int storyIndex,
-    bool storyPlaying,
-    bool uiShowing,
-    bool previewShadowShowing,
-    bool nextShadowShowing,
-    bool replying,
+    int? storyIndex,
+    bool? storyPlaying,
+    bool? uiShowing,
+    bool? previewShadowShowing,
+    bool? nextShadowShowing,
+    bool? replying,
   }) {
     return StoryViewerState(
       storyIndex: storyIndex ?? this.storyIndex,

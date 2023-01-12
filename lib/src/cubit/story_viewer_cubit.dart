@@ -6,30 +6,29 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:story_viewer/src/models/models.dart';
 import 'package:story_viewer/story_viewer.dart';
 
 part 'story_viewer_state.dart';
 
 class StoryViewerCubit extends Cubit<StoryViewerState> {
   StoryViewerCubit(
-    this._context,
-    this._storyViewer,
+    this.context,
+    this.storyViewer,
   ) : super(const StoryViewerState());
 
-  final BuildContext _context;
-  final StoryViewer _storyViewer;
+  final BuildContext context;
+  final StoryViewer storyViewer;
 
   final List<int> loadedStories = [];
 
-  Timer uiHideTimer;
-  Timer prevShadowTimer;
+  Timer? uiHideTimer;
+  Timer? prevShadowTimer;
 
   // TODO: initialize?
 
-  int get storiesLength => _storyViewer.stories.length;
+  int get storiesLength => storyViewer.stories.length;
   // TODO: if empty list?
-  StoryModel get currentStory => _storyViewer.stories.elementAt(
+  StoryModel get currentStory => storyViewer.stories.elementAt(
         state.storyIndex,
       );
 
@@ -74,18 +73,18 @@ class StoryViewerCubit extends Cubit<StoryViewerState> {
   void pause({
     bool hideUi = false,
     bool showPrevShadow = false,
-    bool replyStart,
+    bool replyStart = false,
   }) {
     if (hideUi) {
       uiHideTimer = Timer(Duration(milliseconds: 750), () {
         emit(state.copyWith(uiShowing: false));
-        uiHideTimer.cancel();
+        uiHideTimer?.cancel();
       });
     }
     if (showPrevShadow) {
       prevShadowTimer = Timer(Duration(milliseconds: 200), () {
         emit(state.copyWith(previewShadowShowing: true));
-        prevShadowTimer.cancel();
+        prevShadowTimer?.cancel();
       });
     }
     emit(state.copyWith(storyPlaying: false, replying: replyStart));

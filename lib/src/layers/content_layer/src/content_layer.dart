@@ -10,7 +10,7 @@ import 'package:story_viewer/src/cubit/story_viewer_cubit.dart';
 import 'package:story_viewer/story_viewer.dart';
 
 class ContentLayer extends StatelessWidget {
-  const ContentLayer(this.viewer, {Key key}) : super(key: key);
+  const ContentLayer(this.viewer, {Key? key}) : super(key: key);
 
   final StoryViewer viewer;
 
@@ -27,10 +27,15 @@ class ContentLayer extends StatelessWidget {
         log('BlocBuilder: ExtendedImage: ${state.storyIndex}');
         // TODO: switch case for story types
         //return ButtonBar();
+        final image =
+            context.watch<StoryViewerCubit>().currentStory.imageProvider;
+        if (image == null) {
+          return const SizedBox.shrink();
+        }
         return ClipRRect(
           borderRadius: BorderRadius.circular(viewer.contentBorderRadius),
           child: ImageStory(
-            context.watch<StoryViewerCubit>().currentStory.imageProvider,
+            image,
           ),
         );
       },
@@ -39,7 +44,7 @@ class ContentLayer extends StatelessWidget {
 }
 
 class ImageStory extends StatelessWidget {
-  const ImageStory(this.image, {Key key}) : super(key: key);
+  const ImageStory(this.image, {Key? key}) : super(key: key);
 
   final ImageProvider image;
 

@@ -10,7 +10,7 @@ import 'progress_widget.dart';
 class StoryProgressRow extends StatelessWidget {
   const StoryProgressRow(
     this.viewer, {
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   final StoryViewer viewer;

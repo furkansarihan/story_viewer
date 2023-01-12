@@ -18,14 +18,16 @@ var images2 = [
   'https://g1.img-dpreview.com/3ACBE6D011274856888F900E563D7A85.jpg',
 ];
 
-void main() => runApp(MyApp());
+void main() => runApp(const MyApp());
 
 class MyApp extends StatefulWidget {
+  const MyApp({super.key});
+
   @override
-  _MyAppState createState() => _MyAppState();
+  MyAppState createState() => MyAppState();
 }
 
-class _MyAppState extends State<MyApp> {
+class MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
@@ -33,16 +35,18 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: Home());
+    return const MaterialApp(home: Home());
   }
 }
 
 class Home extends StatefulWidget {
+  const Home({super.key});
+
   @override
-  _HomeState createState() => _HomeState();
+  HomeState createState() => HomeState();
 }
 
-class _HomeState extends State<Home> {
+class HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,13 +57,13 @@ class _HomeState extends State<Home> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           MaterialButton(
-            child: Text('Show Story'),
+            child: const Text('Show Story'),
             onPressed: () {
               pushStoryView(storyViewer(true));
             },
           ),
           Padding(
-            padding: EdgeInsets.all(16),
+            padding: const EdgeInsets.all(16),
             child: AspectRatio(
               aspectRatio: 16 / 9,
               child: storyViewer(false),
@@ -80,22 +84,27 @@ class _HomeState extends State<Home> {
         stories: [
           StoryModel(
             imageProvider: NetworkImage(images2[0]),
-            postedAt: DateTime(2021, 6, 18, 16),
+            howOld: const Duration(days: 1),
+            storyType: StoryType.image,
           ),
           StoryModel(
             imageProvider: NetworkImage(images2[1]),
-            postedAt: DateTime(2021, 6, 18),
+            howOld: const Duration(days: 1),
+            storyType: StoryType.image,
           ),
           StoryModel(
             imageProvider: NetworkImage(images2[2]),
-            postedAt: DateTime(2021, 2, 22),
+            howOld: const Duration(days: 1),
+            storyType: StoryType.image,
           ),
           StoryModel(
-            imageProvider: NetworkImage(images2[3]),
+            imageProvider: NetworkImage(images2[2]),
+            howOld: const Duration(days: 1),
+            storyType: StoryType.image,
           ),
         ],
         profileRow: ProfileRow(
-          userModel: UserModel(
+          userModel: const UserModel(
             username: 'story_viewer',
             profilePicture: NetworkImage(
               'https://secure.gravatar.com/avatar/ba6b323ae0e4f1bafb2dcf72d63d559e?s=256&d=mm&r=pg',
@@ -104,36 +113,37 @@ class _HomeState extends State<Home> {
           trailingWidgets: [
             CupertinoButton(
               padding: const EdgeInsets.symmetric(horizontal: 4),
-              child: Icon(
+              child: const Icon(
                 Icons.more_horiz_rounded,
                 color: Colors.white,
                 size: 32,
               ),
               onPressed: () {
-                print('IconButton');
+                debugPrint('IconButton');
               },
             ),
             CupertinoButton(
               padding: const EdgeInsets.symmetric(horizontal: 4),
-              child: Icon(
+              child: const Icon(
                 Icons.close_rounded,
                 color: Colors.white,
                 size: 32,
               ),
               onPressed: () {
-                print('IconButton');
+                debugPrint('IconButton');
               },
             ),
           ],
         ),
         replyRow: StoryReplyRow(
-          textFieldPadding: EdgeInsets.symmetric(vertical: 4, horizontal: 2),
+          textFieldPadding:
+              const EdgeInsets.symmetric(vertical: 4, horizontal: 2),
           textFieldDecoration: BoxDecoration(
             border: Border.all(color: Colors.white),
             borderRadius: BorderRadius.circular(24),
           ),
           textFieldPlaceholder: 'Reply to story_viewer...',
-          leadingIcons: [
+          leadingIcons: const [
             IconButton(
               icon: Icon(
                 Icons.add,
@@ -142,7 +152,7 @@ class _HomeState extends State<Home> {
               onPressed: null,
             ),
           ],
-          trailingIcons: [
+          trailingIcons: const [
             IconButton(
               icon: Icon(
                 Icons.add,
@@ -164,7 +174,7 @@ class _HomeState extends State<Home> {
   pushStoryView(Widget storyViewer) {
     Navigator.of(context).push(PageRouteBuilder(
       fullscreenDialog: true,
-      transitionDuration: Duration(milliseconds: 300),
+      transitionDuration: const Duration(milliseconds: 300),
       opaque: false, // set to false
       pageBuilder: (_, __, ___) => storyViewer,
     ));

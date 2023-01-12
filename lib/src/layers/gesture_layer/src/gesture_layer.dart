@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:story_viewer/src/cubit/story_viewer_cubit.dart';
 
 class GestureLayer extends StatelessWidget {
-  const GestureLayer({Key key}) : super(key: key);
+  const GestureLayer({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

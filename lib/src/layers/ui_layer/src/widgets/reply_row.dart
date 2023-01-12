@@ -7,7 +7,7 @@ import 'package:story_viewer/src/cubit/story_viewer_cubit.dart';
 
 class StoryReplyRow extends StatelessWidget {
   const StoryReplyRow({
-    Key key,
+    Key? key,
     this.padding = const EdgeInsets.only(top: 16, bottom: 8),
     this.textFieldPadding = EdgeInsets.zero,
     this.textFieldMargin = EdgeInsets.zero,
@@ -23,13 +23,13 @@ class StoryReplyRow extends StatelessWidget {
   final EdgeInsetsGeometry padding;
   final EdgeInsetsGeometry textFieldPadding;
   final EdgeInsetsGeometry textFieldMargin;
-  final BoxDecoration textFieldDecoration;
+  final BoxDecoration? textFieldDecoration;
   final String textFieldPlaceholder;
-  final TextEditingController textController;
-  final Function(bool hasFocus) onFocusChange;
-  final FocusNode textNode;
-  final List<Widget> leadingIcons;
-  final List<Widget> trailingIcons;
+  final TextEditingController? textController;
+  final Function(bool hasFocus)? onFocusChange;
+  final FocusNode? textNode;
+  final List<Widget>? leadingIcons;
+  final List<Widget>? trailingIcons;
 
   @override
   Widget build(BuildContext context) {
