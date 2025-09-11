@@ -20,7 +20,7 @@ class StoryProfileRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     TextStyle style = viewer.titleStyle ??
-        Theme.of(context).textTheme.bodyText1!.merge(
+        Theme.of(context).textTheme.bodyLarge!.merge(
               TextStyle(
                 color: Colors.white,
               ),

@@ -35,7 +35,7 @@ class SourceRow extends StatelessWidget {
               : viewer.customizer.gallerySource,
           textAlign: TextAlign.left,
           maxLines: 1,
-          style: Theme.of(context).textTheme.caption!.merge(TextStyle(
+          style: Theme.of(context).textTheme.bodySmall!.merge(TextStyle(
                 decoration: TextDecoration.none,
                 color: Colors.white,
                 fontWeight: FontWeight.normal,

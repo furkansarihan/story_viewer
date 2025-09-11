@@ -97,7 +97,7 @@ class StoryLayerMediaState extends State<StoryLayerMedia> {
     );
     if (widget.viewer.borderRadius != null) {
       return ClipRRect(
-        borderRadius: widget.viewer.borderRadius as BorderRadius?,
+        borderRadius: widget.viewer.borderRadius as BorderRadiusGeometry,
         child: returnW,
       );
     }

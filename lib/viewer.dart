@@ -236,7 +236,7 @@ class _StoryViewerState extends State<StoryViewer>
     );
     if (widget.borderRadius != null) {
       body = ClipRRect(
-        borderRadius: widget.borderRadius as BorderRadius?,
+        borderRadius: widget.borderRadius as BorderRadiusGeometry,
         child: body,
       );
     }
@@ -302,7 +302,7 @@ class _StoryViewerState extends State<StoryViewer>
             1 - offset.dy.abs() / MediaQuery.of(context).size.height;
         opacity = opacity > 0 ? opacity : 0;
         opacity = opacity < 1 ? opacity : 1;
-        return Colors.black.withOpacity(opacity);
+        return Color.fromRGBO(0, 0, 0, opacity);
       },
       slideScaleHandler: (Offset offset, {ExtendedImageSlidePageState? state}) {
         double scale =
